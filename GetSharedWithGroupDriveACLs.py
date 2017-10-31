@@ -24,7 +24,9 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputFile.write('Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress\n')
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'emailAddress'], lineterminator='\n')
+outputCSV.writeheader()
+
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r')
 else:
@@ -37,12 +39,12 @@ for row in csv.DictReader(inputFile):
       perm_group = mg.group(1)
       emailAddress = row['permissions.{0}.emailAddress'.format(perm_group)]
       if (row['permissions.{0}.type'.format(perm_group)] == u'group') and (emailAddress in groupList):
-        outputFile.write('{0},{1},{2},id:{3},{4},{5}\n'.format(row['Owner'],
-                                                               row['id'],
-                                                               row['title'],
-                                                               row['permissions.{0}.id'.format(perm_group)],
-                                                               row['permissions.{0}.role'.format(perm_group)],
-                                                               emailAddress))
+        outputCSV.writerow({'Owner': row['Owner'],
+                            'driveFileId': row['id'],
+                            'driveFileTitle': row['title'],
+                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(perm_group)]),
+                            'role': row['permissions.{0}.role'.format(perm_group)],
+                            'emailAddress': emailAddress})
 
 if inputFile != sys.stdin:
   inputFile.close()

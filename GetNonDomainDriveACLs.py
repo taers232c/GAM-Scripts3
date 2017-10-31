@@ -1,4 +1,4 @@
-#!/usr/bin/env python33!!!
+#!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), delete all drive file ACls for files shared outside of a list of specified domains
 # Note: This script can use basic GAM: https://github.com/jay0lee/GAM or advanced GAM: https://github.com/taers232c/GAMADV-X
@@ -27,7 +27,9 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputFile.write('Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress\n')
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress'], lineterminator='\n')
+outputCSV.writeheader()
+
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r')
 else:
@@ -39,13 +41,13 @@ for row in csv.DictReader(inputFile):
     if mg and v:
       perm_group = mg.group(1)
       if row['permissions.{0}.domain'.format(perm_group)] not in domainList:
-        outputFile.write('{0},{1},{2},id:{3},{4},{5},{6}\n'.format(row['Owner'],
-                                                                   row['id'],
-                                                                   row['title'],
-                                                                   row['permissions.{0}.id'.format(perm_group)],
-                                                                   row['permissions.{0}.role'.format(perm_group)],
-                                                                   row['permissions.{0}.type'.format(perm_group)],
-                                                                   v))
+        outputCSV.writerow({'Owner': row['Owner'],
+                            'driveFileId': row['id'],
+                            'driveFileTitle': row['title'],
+                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(perm_group)]),
+                            'role': row['permissions.{0}.role'.format(perm_group)],
+                            'type': row['permissions.{0}.type'.format(perm_group)],
+                            'emailAddress': v})
 
 if inputFile != sys.stdin:
   inputFile.close()

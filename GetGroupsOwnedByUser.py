@@ -18,7 +18,7 @@ GroupsOwnedByUser = {}
 
 if len(sys.argv) > 3:
   filename, fieldname = sys.argv[3].split(':')
-  inputFile = open(filename, 'rb')
+  inputFile = open(filename, 'r')
   for row in csv.DictReader(inputFile):
     SelectedUsers.add(row[fieldname].lower())
   inputFile.close()
@@ -26,7 +26,9 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputFile.write('User,GroupsOwnedByUser\n')
+outputCSV = csv.DictWriter(outputFile, ['User', 'GroupsOwnedByUser'], lineterminator='\n')
+outputCSV.writeheader()
+
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r')
 else:
@@ -40,8 +42,8 @@ for row in csv.DictReader(inputFile):
           GroupsOwnedByUser.setdefault(owner, [])
           GroupsOwnedByUser[owner].append(row['Email'])
 for user in sorted(GroupsOwnedByUser):
-  outputFile.write('{0},{1}\n'.format(user,
-                                      ' '.join(GroupsOwnedByUser[user])))
+  outputCSV.writerow({'Uaer': user,
+                      'GroupsOwnedByUser': ' '.join(GroupsOwnedByUser[user])})
 
 if inputFile != sys.stdin:
   inputFile.close()

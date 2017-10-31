@@ -23,7 +23,9 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputFile.write('Owner,driveFileId,title\n')
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'title'], lineterminator='\n')
+outputCSV.writeheader()
+
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r')
 else:
@@ -38,10 +40,11 @@ for row in csv.DictReader(inputFile):
       perm_group = mg.group(1)
       if v:
         if row['parents.{0}.isRoot'.format(perm_group)] == 'True':
-          outputFile.write('{0},{1},{2}\n'.format(row['Owner'],
-                                                  row['id'],
-                                                  row['title']))
+          outputCSV.writerow({'Owner': row['Owner'],
+                              'driveFileId': row['id'],
+                              'title': row['title']})
           continue
+
 if inputFile != sys.stdin:
   inputFile.close()
 if outputFile != sys.stdout:

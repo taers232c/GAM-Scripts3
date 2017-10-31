@@ -25,7 +25,9 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputFile.write('Org,primaryEmail\n')
+outputCSV = csv.DictWriter(outputFile, ['Org', 'primaryEmail'], lineterminator='\n')
+outputCSV.writeheader()
+
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r')
 else:
@@ -41,8 +43,8 @@ for row in csv.DictReader(inputFile):
           if row['addresses.{0}.type'.format(addr_group)] == 'work':
             org = org_unit_map.format(row['addresses.{0}.countryCode'.format(addr_group)])
             if org:
-              outputFile.write('{0},{1}\n'.format(org,
-                                                  row['primaryEmail']))
+              outputCSV.writerow({'Org': org,
+                                  'primaryEmail': row['primaryEmail']})
 
 if inputFile != sys.stdin:
   inputFile.close()
