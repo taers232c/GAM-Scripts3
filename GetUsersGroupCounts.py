@@ -8,7 +8,7 @@
 # Usage:
 # 1: Get primaryEmail, groups for all users
 #  $ Basic: gam print users fields primaryEmail,name groups > UsersGroups.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./UsersGroups.csv multiprocess all users print users fields primaryEmail,name groups
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./UsersGroups.csv multiprocess all users print users fields primaryEmail,name groups delimiter " "
 # 2: From that list of users, output a CSV file with headers with the same headers as UsersGroups.csv plus GroupsCount
 #    that shows the number of groups
 #  $ python GetUsersGroupCounts.py ./UsersGroups.csv ./UsersGroupsCounts.csv <threshold>
