@@ -44,7 +44,7 @@ prevCreatedDate = None
 prevPaths = None
 
 inputCSV = csv.DictReader(inputFile)
-outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames)
+outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator='\n')
 outputCSV.writeheader()
 
 rows = sorted(inputCSV, key=lambda k: k['createdDate'], reverse=True)

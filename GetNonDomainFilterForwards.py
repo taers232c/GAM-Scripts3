@@ -31,7 +31,7 @@ else:
   inputFile = sys.stdin
 
 filters = csv.DictReader(inputFile)
-outsidefilters = csv.DictWriter(outputFile, filters.fieldnames)
+outsidefilters = csv.DictWriter(outputFile, filters.fieldnames, lineterminator='\n')
 outsidefilters.writeheader()
 for row in filters:
   v = row.get('forward', '')
