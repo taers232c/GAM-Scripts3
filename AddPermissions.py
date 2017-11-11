@@ -10,7 +10,8 @@
 # Usage:
 # 1: Use print filelist to get selected ACLS
 #    Syntax, advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
-#				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>]
+#				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
+#    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users---Drive---Files
 #  $ gam redirect csv ./filelist.csv user testuser@domain.com print filelist id ...
 # 2: From that list of files, output a CSV file with headers "Owner,driveFileId,permissions"
 #    that lists the driveFileIds and permissions to be added

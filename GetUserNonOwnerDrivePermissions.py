@@ -5,7 +5,8 @@
 # Usage:
 # 1: Use print filelist to get selected ACLS
 #    Syntax, advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
-#				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>]
+#				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
+#    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users---Drive---Files
 #    Example, advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id permissions
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,permissionIds"
 #    that lists the driveFileIds and permissionIds for all ACls except those indicating the user as owner
