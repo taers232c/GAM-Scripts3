@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 """
-# Purpose: Add <DriveFilePermissions> to a CSV
+# Purpose: Add <DriveFilePermissionList> to a list of files/folders
 # Note: This script requires advanced GAM: https://github.com/taers232c/GAMADV-X
+# Definitions:
+# <DriveFileACLRole> :: =commenter|editor|organizer|owner|reader|writer
+# <DriveFilePermissionScope> ::= anyone|anyonewithlink|user:<EmailAddress>|group:<EmailAddress>|domain:<DomainName>|domainwithlink:<DomainName>
+# <DriveFilePermission> ::= <DriveFilePermissionScope>;<DriveFileACLRole>
+# <DriveFilePermissionList> ::= "<DriveFilePermission>(,<DriveFilePermission)*"
 # Usage:
 # 1: Use print filelist to get selected ACLS
 #    Syntax, advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
 #				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>]
-#  $ gam redirect csv ./filelist.csv user testuser@domain.com print filelist id
+#  $ gam redirect csv ./filelist.csv user testuser@domain.com print filelist id ...
 # 2: From that list of files, output a CSV file with headers "Owner,driveFileId,permissions"
 #    that lists the driveFileIds and permissions to be added
 #  $ AddPermissions.py filelist.csv addperms.csv '<DriveFilePermissionsList>'
 # 3: Add the ACLS
-#  $ gam csvkmd users addperms.csv keyfield Owner subkeyfield driveFileId datafield permissions delimiter "," add drivefilepermissions csvsubkey driveFileId csvdata permissions
+#  $ gam csvkmd users addperms.csv keyfield Owner subkeyfield driveFileId datafield permissions delimiter "," add permissions csvsubkey driveFileId csvdata permissions
 """
 
 import csv
