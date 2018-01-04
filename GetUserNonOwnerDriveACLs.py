@@ -50,7 +50,7 @@ for row in csv.DictReader(inputFile):
                               'driveFileId': row['id'],
                               'driveFileTitle': row['title'],
                               'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(perm_group)]),
-                              'emailAddress': row.get('permissions.{0}.emailAddress'.format(perm_group), '')})]
+                              'emailAddress': row.get('permissions.{0}.emailAddress'.format(perm_group), '')})
 
 if inputFile != sys.stdin:
   inputFile.close()
