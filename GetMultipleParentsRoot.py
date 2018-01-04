@@ -5,7 +5,7 @@
 # Usage:
 # 1: Get all of the files for testuser@domain.com
 #  $ gam redirect csv ./userfiles.csv user testuser@domain.com print filelist id title parents
-# 2: From that list of files, output a CSV file with headers "Owner,driveFileId,title"
+# 2: From that list of files, output a CSV file with headers "Owner,driveFileId,driveFileTitle"
 #    that lists the driveFileIds for all files that have root as a parent and other parents
 #  $ python GetMultipleParentsRoot.py ./userfiles.csv ./rootparents.csv
 # 3: Inspect rootparents.csv, verify that it makes sense and then proceed
@@ -23,7 +23,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'title'], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle'], lineterminator='\n')
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -42,7 +42,7 @@ for row in csv.DictReader(inputFile):
         if row['parents.{0}.isRoot'.format(perm_group)] == 'True':
           outputCSV.writerow({'Owner': row['Owner'],
                               'driveFileId': row['id'],
-                              'title': row['title']})
+                              'driveFileTitle': row['title']})
           continue
 
 if inputFile != sys.stdin:
