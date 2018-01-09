@@ -8,7 +8,10 @@
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACls with the desired groups
-#  $ python GetSharedWithGroupDriveACLs.py filelistperms.csv sharedwithgroup.csv
+#  $ python GetSharedWithGroupDriveACLs.py filelistperms.csv deleteperms.csv
+# 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
+# 4: Delete the ACLS
+#  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
 import csv
