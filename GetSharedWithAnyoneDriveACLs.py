@@ -9,7 +9,7 @@
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role"
 #    that lists the driveFileIds and permissionIds for all ACls shared with anyone
 #    (n.b., role and title are not used in the next step, they are included for documentation purposes)
-#  $ python GetAnyoneDriveACLs.py filelistperms.csv deleteperms.csv
+#  $ python GetSharedWithAnyoneDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLS
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
