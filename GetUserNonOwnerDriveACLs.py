@@ -33,7 +33,7 @@ outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle'
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], 'r')
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 

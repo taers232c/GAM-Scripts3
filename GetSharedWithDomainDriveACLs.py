@@ -21,7 +21,7 @@ import sys
 
 n_domain = re.compile(r"permissions.(\d+).domain")
 # Substitute your domain(s) in the list below, e.g., domainList = ['domain.com',] domainList = ['domain1.com', 'domain2.com',]
-domainList = []
+domainList = ['domain.com',]
 # Specify desired value of withLink field: True, False, Any (matches True and False)
 desiredWithLink = 'Any'
 
@@ -33,7 +33,7 @@ outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle'
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], 'r')
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 

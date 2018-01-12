@@ -22,7 +22,7 @@ outputCSV.writeheader()
 users = {}
 allFilesCount = len(sys.argv)-2
 for i in range(2, len(sys.argv)):
-  inputFile = open(sys.argv[i], 'r')
+  inputFile = open(sys.argv[i], 'r', encoding='utf-8')
   inputCSV = csv.DictReader(inputFile)
   for row in inputCSV:
     email = row['email']

@@ -23,12 +23,12 @@ else:
   threshold = -1
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'wb')
+  outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], 'rb')
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 

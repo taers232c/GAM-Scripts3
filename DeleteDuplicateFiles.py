@@ -33,7 +33,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
 else:
   outputFile = sys.stdout
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], 'r'!)
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 

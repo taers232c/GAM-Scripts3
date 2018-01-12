@@ -18,7 +18,7 @@ GroupsOwnedByUser = {}
 
 if len(sys.argv) > 3:
   filename, fieldname = sys.argv[3].split(':')
-  inputFile = open(filename, 'r')
+  inputFile = open(filename, 'r', encoding='utf-8')
   for row in csv.DictReader(inputFile):
     SelectedUsers.add(row[fieldname].lower())
   inputFile.close()
@@ -30,7 +30,7 @@ outputCSV = csv.DictWriter(outputFile, ['User', 'GroupsOwnedByUser'], linetermin
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], 'r')
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 
