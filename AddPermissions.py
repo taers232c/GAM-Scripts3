@@ -8,7 +8,7 @@
 # <DriveFilePermission> ::= <DriveFilePermissionScope>;<DriveFileACLRole>
 # <DriveFilePermissionList> ::= "<DriveFilePermission>(,<DriveFilePermission)*"
 # Usage:
-# 1: Use print filelist to get selected ACLS
+# 1: Use print filelist to get selected ACLs
 #    Syntax, advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
 #				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users---Drive---Files
@@ -16,7 +16,7 @@
 # 2: From that list of files, output a CSV file with headers "Owner,driveFileId,permissions"
 #    that lists the driveFileIds and permissions to be added
 #  $ AddPermissions.py filelist.csv addperms.csv '<DriveFilePermissionsList>'
-# 3: Add the ACLS
+# 3: Add the ACLs
 #  $ gam csvkmd users addperms.csv keyfield Owner subkeyfield driveFileId datafield permissions delimiter "," add permissions csvsubkey driveFileId csvdata permissions
 """
 

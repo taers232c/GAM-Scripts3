@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User, get all drive file ACls for files except those indicating the user as owner
-# 1: Use print filelist to get selected ACLS
+# Purpose: For a Google Drive User, get all drive file ACLs for files except those indicating the user as owner
+# 1: Use print filelist to get selected ACLs
 #    gam user testuser@domain.com print filelist id title permissions > filelistperms.csv
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,emailAddress"
 #    that lists the driveFileIds/Titles for all ACLs except those indicating the user as owner

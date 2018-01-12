@@ -1,16 +1,16 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User(s), show all drive file ACls for files shared with the desired groups.
+# Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with the desired groups.
 # Note: This script can use basic GAM: https://github.com/jay0lee/GAM or advanced GAM: https://github.com/taers232c/GAMADV-X
 # Usage:
-# 1: Get ACLS for all files, if you don't want all users, replace all users with your user selection in the command below
+# 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
-#    that lists the driveFileIds and permissionIds for all ACls with the desired groups
+#    that lists the driveFileIds and permissionIds for all ACLs with the desired groups
 #  $ python GetSharedWithGroupDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 4: Delete the ACLS
+# 4: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 

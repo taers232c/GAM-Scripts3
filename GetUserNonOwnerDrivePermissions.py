@@ -1,19 +1,19 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User, delete all drive file ACls except those indicating the user as owner
+# Purpose: For a Google Drive User, delete all drive file ACLs except those indicating the user as owner
 # Note: This script requires advanced GAM: https://github.com/taers232c/GAMADV-X
 # Usage:
-# 1: Use print filelist to get selected ACLS
+# 1: Use print filelist to get selected ACLs
 #    Syntax, advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
 #				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users---Drive---Files
 #    Example, advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionIds"
-#    that lists the driveFileIds and permissionIds for all ACls except those indicating the user as owner
+#    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
 #    (n.b., driveFileTitle is not used in the next step, it is included for documentation purposes)
 #  $ python GetUserNonOwnerDrivePermissions.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 4: Delete the ACLS
+# 4: Delete the ACLs
 #  $ gam csvkmd users deleteperms.csv keyfield Owner subkeyfield driveFileId datafield permissionIds delimiter "," delete permissions csvsubkey driveFileId csvdata permissionIds
 """
 
