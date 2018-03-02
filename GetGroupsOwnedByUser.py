@@ -42,7 +42,7 @@ for row in csv.DictReader(inputFile):
           GroupsOwnedByUser.setdefault(owner, [])
           GroupsOwnedByUser[owner].append(row['Email'])
 for user in sorted(GroupsOwnedByUser):
-  outputCSV.writerow({'Uaer': user,
+  outputCSV.writerow({'User': user,
                       'GroupsOwnedByUser': ' '.join(GroupsOwnedByUser[user])})
 
 if inputFile != sys.stdin:
