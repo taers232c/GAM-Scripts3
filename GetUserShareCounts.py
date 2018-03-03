@@ -5,8 +5,8 @@
 # Note: This script can use basic GAM: https://github.com/jay0lee/GAM or advanced GAM: https://github.com/taers232c/GAMADV-X
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Example, Basic GAM: gam all users print filelist id title permissions > filelistperms.csv
-#  $ Example, advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
+#  $ Example, Basic GAM: gam all users print filelist id title owners permissions > filelistperms.csv
+#  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title owners permissions
 # 2: From that list of ACLs, output a CSV file with headers:
 #      Owner - email address of file owner
 #      Total - total files owned by Owner
@@ -81,7 +81,7 @@ else:
 
 userShareCounts = {}
 for row in csv.DictReader(inputFile):
-  owner = row['Owner']
+  owner = row['owners.0.emailAddress']
   userShareCounts.setdefault(owner, zeroCounts.copy())
   counterSet = {TOTAL_COUNTER: False, SHARED_COUNTER: False, SHARED_EXTERNAL_COUNTER: False, SHARED_INTERNAL_COUNTER: False}
   for k, v in iter(row.items()):
