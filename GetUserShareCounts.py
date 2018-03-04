@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), output a CSV file showing the share type counts for files shared by the user(s)
-# Customize: Set domainList to the list of domains you consider internal
-# Note: This script can use basic GAM: https://github.com/jay0lee/GAM or advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/jay0lee/GAM
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set DOMAIN_LIST to the list of domains you consider internal
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Example, Basic GAM: gam all users print filelist id title owners permissions > filelistperms.csv
@@ -11,8 +13,8 @@
 #      Owner - email address of file owner
 #      Total - total files owned by Owner
 #      Shared - number of files shared
-#      Shared External - number of files shared publically (anyone) or to a domain/group/user where the domain is not in domainList
-#      Shared Internal - number of files shared to a domain/group/user where the domain is in domainList
+#      Shared External - number of files shared publically (anyone) or to a domain/group/user where the domain is not in DOMAIN_LIST
+#      Shared Internal - number of files shared to a domain/group/user where the domain is in DOMAIN_LIST
 #      anyone - number of shares to anyone
 #      anyoneWithLink - number of shares to anyone with a link
 #      externalDomain - number of shares to an external domain
@@ -35,8 +37,8 @@ def incrementCounter(counter):
     userShareCounts[owner][counter] += 1
     counterSet[counter] = True
 
-# Substitute your internal domain(s) in the list below, e.g., domainList = ['domain.com',] domainList = ['domain1.com', 'domain2.com',]
-domainList = ['domain.com',]
+# Substitute your internal domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+DOMAIN_LIST = ['domain.com',]
 
 TOTAL_COUNTER = 'Total'
 SHARED_COUNTER = 'Shared'
@@ -65,7 +67,7 @@ COUNT_CATEGORIES = {
   'group': {False: 'externalGroup', True: 'internalGroup'},
   'user': {False: 'externalUser', True: 'internalUser'},
   }
-id_n_type = re.compile(r"permissions.(\d+).type")
+PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
@@ -85,24 +87,22 @@ for row in csv.DictReader(inputFile):
   userShareCounts.setdefault(owner, zeroCounts.copy())
   counterSet = {TOTAL_COUNTER: False, SHARED_COUNTER: False, SHARED_EXTERNAL_COUNTER: False, SHARED_INTERNAL_COUNTER: False}
   for k, v in iter(row.items()):
-    mg = id_n_type.match(k)
+    mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
-      perm_id = mg.group(1)
-      if row['permissions.{0}.role'.format(perm_id)] == 'owner':
+      permissions_N = mg.group(1)
+      if row['permissions.{0}.role'.format(permissions_N)] == 'owner':
         incrementCounter(TOTAL_COUNTER)
       else:
         incrementCounter(SHARED_COUNTER)
         if v == 'anyone':
           incrementCounter(SHARED_EXTERNAL_COUNTER)
-          userShareCounts[owner][COUNT_CATEGORIES[v][row['permissions.{0}.withLink'.format(perm_id)] == 'True']] += 1
+          userShareCounts[owner][COUNT_CATEGORIES[v][row['permissions.{0}.withLink'.format(permissions_N)] == 'True']] += 1
         else:
-          internal = row['permissions.{0}.domain'.format(perm_id)] in domainList
+          internal = row['permissions.{0}.domain'.format(permissions_N)] in DOMAIN_LIST
           incrementCounter([SHARED_EXTERNAL_COUNTER, SHARED_INTERNAL_COUNTER][internal])
           if v == u'domain':
-            userShareCounts[owner][COUNT_CATEGORIES[v][internal][row['permissions.{0}.withLink'.format(perm_id)] == 'True']] += 1
-          elif v == u'group':
-            userShareCounts[owner][COUNT_CATEGORIES[v][internal]] += 1
-          else:
+            userShareCounts[owner][COUNT_CATEGORIES[v][internal][row['permissions.{0}.withLink'.format(permissions_N)] == 'True']] += 1
+          else: # group, user
             userShareCounts[owner][COUNT_CATEGORIES[v][internal]] += 1
 for owner, counts in sorted(iter(userShareCounts.items())):
   row = {'Owner': owner}

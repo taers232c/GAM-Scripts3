@@ -1,13 +1,15 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User, delete all drive file ACLs except those indicating the user as owner
-# Note: This script requires advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script requires Advanced GAM:
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment.
 # Usage:
 # 1: Use print filelist to get selected ACLs
-#    Syntax, advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
-#				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
+#    Syntax: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
+#			[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users---Drive---Files
-#    Example, advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions
+#    Example: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionIds"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
 #    (n.b., driveFileTitle is not used in the next step, it is included for documentation purposes)
@@ -21,7 +23,14 @@ import csv
 import re
 import sys
 
-id_n_address = re.compile(r"permissions.(\d+).id")
+# For GAM, GAMADV-X or GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = false
+FILE_NAME = 'title'
+ALT_FILE_NAME = 'name'
+# For GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = true
+#FILE_NAME = 'name'
+#ALT_FILE_NAME = 'title'
+
+PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
@@ -38,18 +47,15 @@ else:
 for row in csv.DictReader(inputFile):
   permissionIds = []
   for k, v in iter(row.items()):
-    mg = id_n_address.match(k)
-    if mg:
-      perm_group = mg.group(1)
-      if v:
-        if (row['permissions.{0}.type'.format(perm_group)] != 'user'
-            or row['permissions.{0}.role'.format(perm_group)] != 'owner'
-            or row.get('permissions.{0}.emailAddress'.format(perm_group), '') != row['Owner']):
-          permissionIds.append(row['permissions.{0}.id'.format(perm_group)])
+    mg = PERMISSIONS_N_TYPE.match(k)
+    if mg and v:
+      permissions_N = mg.group(1)
+      if v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or row.get('permissions.{0}.emailAddress'.format(permissions_N), '') != row['Owner']:
+        permissionIds.append(row['permissions.{0}.id'.format(permissions_N)])
   if permissionIds:
     outputCSV.writerow({'Owner': row['Owner'],
                         'driveFileId': row['id'],
-                        'driveFileTitle': row['title'],
+                        'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                         'permissionIds': ','.join(permissionIds)})
 
 if inputFile != sys.stdin:

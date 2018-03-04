@@ -1,7 +1,10 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with selected users outside of your domain.
-# Note: This script can use basic GAM: https://github.com/jay0lee/GAM or advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/jay0lee/GAM
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set USER_LIST.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
@@ -18,10 +21,17 @@ import csv
 import re
 import sys
 
-# Substitute your user(s) in the list below, e.g., userList = ['user1@domain.com',] userList = ['user1@domain.com', 'user2@domain.com',]
-userList = ['user@domain.com',]
+# For GAM, GAMADV-X or GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = false
+FILE_NAME = 'title'
+ALT_FILE_NAME = 'name'
+# For GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = true
+#FILE_NAME = 'name'
+#ALT_FILE_NAME = 'title'
 
-id_n_type = re.compile(r"permissions.(\d+).type")
+# Substitute your user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
+USER_LIST = ['user@domain.com',]
+
+PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
@@ -37,18 +47,16 @@ else:
 
 for row in csv.DictReader(inputFile):
   for k, v in iter(row.items()):
-    mg = id_n_type.match(k)
-    if mg:
-      perm_user = mg.group(1)
-      emailAddress = row['permissions.{0}.emailAddress'.format(perm_user)]
-      if ((row['permissions.{0}.type'.format(perm_user)] == u'user') and
-          (emailAddress in userList) and
-          (row['permissions.{0}.role'.format(perm_user)] != 'owner')):
+    mg = PERMISSIONS_N_TYPE.match(k)
+    if mg and v:
+      permissions_N = mg.group(1)
+      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      if v == u'user' and emailAddress in USER_LIST and row['permissions.{0}.role'.format(permissions_N)] != 'owner':
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
-                            'driveFileTitle': row['title'],
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(perm_user)]),
-                            'role': row['permissions.{0}.role'.format(perm_user)],
+                            'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
+                            'role': row['permissions.{0}.role'.format(permissions_N)],
                             'emailAddress': emailAddress})
 
 if inputFile != sys.stdin:

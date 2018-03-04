@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV file showing guardians with student emails
-# Note: This script can use basic GAM: https://github.com/jay0lee/GAM or advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/jay0lee/GAM
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get guardians
 #  $ gam print guardians > ./Guardians.csv
-# 2: Get student emails, 
+# 2: Get student emails,
 #  Basic GAM: gam print users fields primaryemail,id > Students.csv
 #  Advanced GAM: use one of the following to select a collection of users
 # <UserTypeEntity> ::=
@@ -23,7 +25,7 @@
 #        (file <FileName> [charset <Charset>] [delimiter <Character>])|
 #        (csvfile <FileName>(:<FieldName>)+ [charset <Charset>] [columndelimiter <Character>] [quotechar <Character>]
 #                [fields <FieldNameList>] (matchfield <FieldName> <RegularExpression>)* [delimiter <Character>])
-#  $ gam <UserTypeEntity> print users fields primaryemail,id > ./Students.csv 
+#  $ gam <UserTypeEntity> print users fields primaryemail,id > ./Students.csv
 # 3: Output an updated version of Guardians.csv with student emails obtained from Students.csv
 #  $ python GetGuardianStudentEmails.py ./Students.csv ./Guardians.csv ./UpdatedGuardians.csv
 """

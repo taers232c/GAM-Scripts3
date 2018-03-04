@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a CSV file, delete the duplcate rows based an a field. You can optionally delete unwanted fields.
+# Customize: Set ID_FIELD, DELETE_FIELDS, LINE_TERMINATOR
 # Usage:
 # 1: Produce a CSV file Input.csv
 # 2: Delete the duplicate rows
@@ -23,23 +24,25 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-inputData = csv.DictReader(inputFile)
-outputFieldnames = inputData.fieldnames[:]
+inputCSV = csv.DictReader(inputFile)
+outputFieldnames = inputCSV.fieldnames[:]
 deleteFieldnames = []
 for field in DELETE_FIELDS:
   if field in outputFieldnames:
     outputFieldnames.remove(field)
     deleteFieldnames.append(field)
-outputData = csv.DictWriter(outputFile, outputFieldnames, lineterminator=LINE_TERMINATOR)
-outputData.writeheader()
+outputCSV = csv.DictWriter(outputFile, outputFieldnames, lineterminator=LINE_TERMINATOR)
+outputCSV.writeheader()
+
 previousId = None
-for row in sorted(inputData, key=lambda row: (row[ID_FIELD]), reverse=False):
+for row in sorted(inputCSV, key=lambda row: (row[ID_FIELD]), reverse=False):
   currentId = row[ID_FIELD]
   if currentId != previousId:
     for field in deleteFieldnames:
       row.pop(field, None)
-    outputData.writerow(row)
+    outputCSV.writerow(row)
     previousId = currentId
+
 if inputFile != sys.stdin:
   inputFile.close()
 if outputFile != sys.stdout:

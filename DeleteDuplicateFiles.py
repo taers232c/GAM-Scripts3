@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), delete all duplicate drive files
-# Note: This script requires advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script requires Advanced GAM:
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set FILE_NAME and CREATED_DATE based on your environment.
 # Usage:
 # 1: Get information for all files, if you don't want all users, replace all users with your user selection in the command below
 #    These fields are required: fields id,title,createddate,mimetype filepath
 #    You can add additional fields that will be preserved in the output.
 #    You can add a select option if you want to only process files in a specific folder
 #    If you don't want to delete folders, add showmimetype not gfolder
-#  $ gam config drive_v3_native_names false redirect csv ./UserFiles.csv multiprocess all users print filelist fields id,title,createddate,mimetype filepath
-#  $ gam config drive_v3_native_names false redirect csv ./UserFiles.csv user user@domain.com print filelist fields id,title,createddate,mimetype filepath
+#  $ gam redirect csv ./UserFiles.csv multiprocess all users print filelist fields id,title,createddate,mimetype filepath
+#  $ gam redirect csv ./UserFiles.csv user user@domain.com print filelist fields id,title,createddate,mimetype filepath
 #                               select drivefilename "Folder Name" showmimetype not gfolder
 # 2: From that list of files, output a CSV file with the same headers as the input CSV file
 #    that lists the drive file Ids that have the same owner, title, mimeType and paths with a createdDate older than the most recent createdDate
@@ -21,6 +23,13 @@
 
 import csv
 import sys
+
+# For GAMADV-X or GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = false
+FILE_NAME = 'title'
+CREATED_DATE = 'createdDate'
+# For GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = true
+#FILE_NAME = 'name'
+#CREATED_DATE = 'createdTime'
 
 def rowPaths(crow):
   paths = set()
@@ -47,19 +56,19 @@ inputCSV = csv.DictReader(inputFile)
 outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator='\n')
 outputCSV.writeheader()
 
-rows = sorted(inputCSV, key=lambda k: k['createdDate'], reverse=True)
-for row in sorted(rows, key=lambda k: (k['Owner'], k['title'], k['mimeType'], k['paths'])):
+rows = sorted(inputCSV, key=lambda k: k[CREATED_DATE], reverse=True)
+for row in sorted(rows, key=lambda k: (k['Owner'], k[FILE_NAME], k['mimeType'], k['paths'])):
   if ((row['Owner'] == prevOwner)
-      and (row['title'] == prevTitle)
+      and (row[FILE_NAME] == prevTitle)
       and (row['mimeType'] == prevMimeType)
-      and (row['createdDate'] < prevCreatedDate)
+      and (row[CREATED_DATE] < prevCreatedDate)
       and (rowPaths(row) == prevPaths)):
     outputCSV.writerow(row)
   else:
     prevOwner = row['Owner']
-    prevTitle = row['title']
+    prevTitle = row[FILE_NAME]
     prevMimeType = row['mimeType']
-    prevCreatedDate = row['createdDate']
+    prevCreatedDate = row[CREATED_DATE]
     prevPaths = rowPaths(row)
 if inputFile != sys.stdin:
   inputFile.close()

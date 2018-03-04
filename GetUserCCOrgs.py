@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
 # Purpose: Move root users to an Org Unit based on their work address countryCode
-# Note: This script requires advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script requires Advanced GAM:
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set ORG_UNIT_MAP
 # Usage:
 # 1: Get primaryEmail, orgUnitPath, addresses for all root users
 #  $ gam redirect csv ./UserAddresses.csv org "/" print users fields primaryemail,orgunitpath,addresses
@@ -17,9 +19,10 @@ import csv
 import re
 import sys
 
-id_n_type = re.compile(r"addresses.(\d+).type")
 # Change format as desired, {0} is replaced by countryCode
-org_unit_map = '{0}'
+ORG_UNIT_MAP = '{0}'
+
+ADDRESSES_N_TYPE = re.compile(r"addresses.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
@@ -34,17 +37,15 @@ else:
   inputFile = sys.stdin
 
 for row in csv.DictReader(inputFile):
-  for k, v in iter(row.items()):
-    if row['orgUnitPath'] == '/':
-      mg = id_n_type.match(k)
-      if mg:
-        addr_group = mg.group(1)
-        if v:
-          if row['addresses.{0}.type'.format(addr_group)] == 'work':
-            org = org_unit_map.format(row['addresses.{0}.countryCode'.format(addr_group)])
-            if org:
-              outputCSV.writerow({'Org': org,
-                                  'primaryEmail': row['primaryEmail']})
+  if row['orgUnitPath'] == '/':
+    for k, v in iter(row.items()):
+      mg = ADDRESSES_N_TYPE.match(k)
+      if mg and v == 'work':
+        addresses_N = mg.group(1)
+        org = ORG_UNIT_MAP.format(row['addresses.{0}.countryCode'.format(addresses_N)])
+        if org:
+          outputCSV.writerow({'Org': org,
+                              'primaryEmail': row['primaryEmail']})
 
 if inputFile != sys.stdin:
   inputFile.close()

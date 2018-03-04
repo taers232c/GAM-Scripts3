@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User, get all drive file ACLs for files except those indicating the user as owner
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/jay0lee/GAM
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment.
 # 1: Use print filelist to get selected ACLs
 #    gam user testuser@domain.com print filelist id title permissions > filelistperms.csv
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,emailAddress"
@@ -12,7 +16,14 @@ import csv
 import re
 import sys
 
-id_n_address = re.compile(r"permissions.(\d+).id")
+# For GAM, GAMADV-X or GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = false
+FILE_NAME = 'title'
+ALT_FILE_NAME = 'name'
+# For GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = true
+#FILE_NAME = 'name'
+#ALT_FILE_NAME = 'title'
+
+PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
@@ -28,15 +39,14 @@ else:
 
 for row in csv.DictReader(inputFile):
   for k, v in iter(row.items()):
-    mg = id_n_address.match(k)
+    mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
-      perm_group = mg.group(1)
-      emailAddress = row.get('permissions.{0}.emailAddress'.format(perm_group), u'')
-      if (row['permissions.{0}.type'.format(perm_group)] in ['user', 'group']
-          and (row['permissions.{0}.role'.format(perm_group)] != 'owner' or emailAddress != row['Owner'])):
+      permissions_N = mg.group(1)
+      emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), u'')
+      if v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or emailAddress != row['Owner']:
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
-                            'driveFileTitle': row['title'],
+                            'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'emailAddress': emailAddress})
 
 if inputFile != sys.stdin:

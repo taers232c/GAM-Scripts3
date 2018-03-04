@@ -8,7 +8,7 @@ import csv
 import re
 import sys
 
-id_n_address = re.compile(r"permissions.(\d+).id")
+PERMISSIONS_N_ROLE = re.compile(r"permissions.(\d+).role")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
@@ -26,13 +26,11 @@ outputCSV.writeheader()
 
 for row in inputCSV:
   for k, v in iter(row.items()):
-    mg = id_n_address.match(k)
-    if mg:
-      perm_group = mg.group(1)
-      if v:
-        if row['permissions.{0}.role'.format(perm_group)] == 'owner':
-          row['Owner'] = row['permissions.{0}.emailAddress'.format(perm_group)]
-          break
+    mg = PERMISSIONS_N_ROLE.match(k)
+    if mg and v == 'owner':
+      permissions_N = mg.group(1)
+      row['Owner'] = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      break
   outputCSV.writerow(row)
 
 if inputFile != sys.stdin:

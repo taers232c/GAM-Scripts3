@@ -19,12 +19,12 @@ else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['email',], lineterminator='\n')
 outputCSV.writeheader()
+
 users = {}
 allFilesCount = len(sys.argv)-2
 for i in range(2, len(sys.argv)):
   inputFile = open(sys.argv[i], 'r', encoding='utf-8')
-  inputCSV = csv.DictReader(inputFile)
-  for row in inputCSV:
+  for row in csv.DictReader(inputFile):
     email = row['email']
     users.setdefault(email, 0)
     users[email] += 1
@@ -32,5 +32,6 @@ for i in range(2, len(sys.argv)):
 for user, count in sorted(iter(users.items())):
   if count == allFilesCount:
     outputCSV.writerow({'email': user})
+
 if outputFile != sys.stdout:
   outputFile.close()

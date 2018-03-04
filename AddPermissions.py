@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Add <DriveFilePermissionList> to a list of files/folders
-# Note: This script requires advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script requires Advanced GAM:
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
 # Definitions:
 # <DriveFileACLRole> :: =commenter|editor|organizer|owner|reader|writer
 # <DriveFilePermissionScope> ::= anyone|anyonewithlink|user:<EmailAddress>|group:<EmailAddress>|domain:<DomainName>|domainwithlink:<DomainName>
@@ -9,8 +10,8 @@
 # <DriveFilePermissionList> ::= "<DriveFilePermission>(,<DriveFilePermission)*"
 # Usage:
 # 1: Use print filelist to get selected ACLs
-#    Syntax, advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
-#				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
+#    Syntax: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
+#			[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users---Drive---Files
 #  $ gam redirect csv ./filelist.csv user testuser@domain.com print filelist id ...
 # 2: From that list of files, output a CSV file with headers "Owner,driveFileId,permissions"

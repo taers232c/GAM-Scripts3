@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV file showing delegators for delegates
-# Note: This script can use basic GAM: https://github.com/jay0lee/GAM or advanced GAM: https://github.com/taers232c/GAMADV-X
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/jay0lee/GAM
+#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get delegates
 #  $ gam all users print delegates > ./AllDelegates.csv
@@ -20,6 +22,7 @@ else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['Delegate', 'Delegate Email', 'Delegators'], lineterminator='\n')
 outputCSV.writeheader()
+
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
