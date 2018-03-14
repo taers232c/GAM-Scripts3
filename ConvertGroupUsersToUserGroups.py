@@ -9,7 +9,7 @@
 # 1: Get group members
 #  $ Basic: gam print group-members fields email,type > GroupUsers.csv
 #  $ Advanced: gam redirect csv ./GroupUsers.csv print group-members fields email,type
-# 2: From that list of group members, output a CSV file with headers primaryEmail,Groups that shows the groups for each user
+# 2: From that list of group members, output a CSV file with headers primaryEmail,GroupsCount,Groups that shows the groups for each user
 #  $ python ConvertGroupUsersToUserGroups.py ./GroupUsers.csv ./UserGroups.csv
 """
 
@@ -22,7 +22,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['primaryEmail', 'Groups'], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['primaryEmail', 'GroupsCount', 'Groups'], lineterminator='\n')
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -38,6 +38,7 @@ for row in csv.DictReader(inputFile):
 
 for user, groups in sorted(iter(UserGroups.items())):
   outputCSV.writerow({'primaryEmail': user,
+                      'GroupsCount': len(groups),
                       'Groups': DELIMITER.join(groups)})
 
 if inputFile != sys.stdin:
