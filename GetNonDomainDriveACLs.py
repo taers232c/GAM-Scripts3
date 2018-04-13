@@ -51,7 +51,13 @@ for row in csv.DictReader(inputFile):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissionsN = mg.group(1)
-      if row['permissions.{0}.domain'.format(permissionsN)] not in DOMAIN_LIST:
+      domain = row.get('permissions.{0}.domain'.format(permissionsN), '')
+      if not domain:
+        if v not in ['user', 'group']:
+          continue
+        emailAddress = row['permissions.{0}.emailAddress'.format(permissionsN)]
+        domain = emailAddress[emailAddress.find(u'@')+1:]
+      if domain not in DOMAIN_LIST:
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),

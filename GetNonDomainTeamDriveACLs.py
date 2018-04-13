@@ -44,7 +44,12 @@ for row in csv.DictReader(inputFile):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if row['permissions.{0}.domain'.format(permissions_N)] not in DOMAIN_LIST:
+      if not domain:
+        if v not in ['user', 'group']:
+          continue
+        emailAddress = row['permissions.{0}.emailAddress'.format(permissionsN)]
+        domain = emailAddress[emailAddress.find(u'@')+1:]
+      if domain not in DOMAIN_LIST:
         outputCSV.writerow({'teamDriveId': row['id'],
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
                             'role': row['permissions.{0}.role'.format(permissions_N)],
