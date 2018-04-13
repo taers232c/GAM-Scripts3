@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User, get all drive file ACLs for files shared with a list of specified domains
+# Purpose: For a Google Drive User, delete all drive file ACLs for files shared with a list of specified domains
 # except those indicating the user as owner
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
@@ -49,8 +49,11 @@ for row in csv.DictReader(inputFile):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      domain = row['permissions.{0}.domain'.format(permissions_N)]
-      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      domain = row.get('permissions.{0}.domain'.format(permissionsN), '')
+      emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), '')
+      if not domain:
+        if v in ['user', 'group']:
+          domain = emailAddress[emailAddress.find(u'@')+1:]
       if (domain in DOMAIN_LIST) and (v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or emailAddress != row['Owner']):
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],

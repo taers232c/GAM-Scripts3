@@ -53,15 +53,16 @@ for row in csv.DictReader(inputFile):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      domain = row['permissions.{0}.domain'.format(permissions_N)]
-      if v == 'domain' and domain in DOMAIN_LIST and (DESIRED_WITHLINK == 'Any' or DESIRED_WITHLINK == row['permissions.{0}.withLink'.format(permissions_N)]):
-        outputCSV.writerow({'Owner': row['Owner'],
-                            'driveFileId': row['id'],
-                            'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                            'role': row['permissions.{0}.role'.format(permissions_N)],
-                            'domain': domain,
-                            'withLink': row['permissions.{0}.withLink'.format(permissions_N)]})
+      if v == 'domain':
+        domain = row['permissions.{0}.domain'.format(permissions_N)]
+        if domain in DOMAIN_LIST and (DESIRED_WITHLINK == 'Any' or DESIRED_WITHLINK == row['permissions.{0}.withLink'.format(permissions_N)]):
+          outputCSV.writerow({'Owner': row['Owner'],
+                              'driveFileId': row['id'],
+                              'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                              'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
+                              'role': row['permissions.{0}.role'.format(permissions_N)],
+                              'domain': domain,
+                              'withLink': row['permissions.{0}.withLink'.format(permissions_N)]})
 
 if inputFile != sys.stdin:
   inputFile.close()

@@ -50,14 +50,15 @@ for row in csv.DictReader(inputFile):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
-      if v == u'group' and emailAddress in GROUP_LIST:
-        outputCSV.writerow({'Owner': row['Owner'],
-                            'driveFileId': row['id'],
-                            'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                            'role': row['permissions.{0}.role'.format(permissions_N)],
-                            'emailAddress': emailAddress})
+      if v == u'group':
+        emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+        if emailAddress in GROUP_LIST:
+          outputCSV.writerow({'Owner': row['Owner'],
+                              'driveFileId': row['id'],
+                              'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                              'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
+                              'role': row['permissions.{0}.role'.format(permissions_N)],
+                              'emailAddress': emailAddress})
 
 if inputFile != sys.stdin:
   inputFile.close()
