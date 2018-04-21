@@ -19,6 +19,9 @@
 import csv
 import sys
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 if len(sys.argv) > 3:
   threshold = int(sys.argv[3])
 else:
@@ -34,10 +37,10 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-inputCSV = csv.DictReader(inputFile)
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 fieldnames = inputCSV.fieldnames[:]
 fieldnames.insert(fieldnames.index('Groups'), 'GroupsCount')
-outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 for row in inputCSV:

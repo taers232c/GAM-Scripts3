@@ -13,6 +13,8 @@ import sys
 
 ID_FIELD = 'id' # Field name to use for duplicate checking
 DELETE_FIELDS = [] # Fields to delete; Single field ['Field',]; multiple fields ['Field1', 'Field2', ...]
+
+QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
@@ -24,14 +26,14 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-inputCSV = csv.DictReader(inputFile)
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 outputFieldnames = inputCSV.fieldnames[:]
 deleteFieldnames = []
 for field in DELETE_FIELDS:
   if field in outputFieldnames:
     outputFieldnames.remove(field)
     deleteFieldnames.append(field)
-outputCSV = csv.DictWriter(outputFile, outputFieldnames, lineterminator=LINE_TERMINATOR)
+outputCSV = csv.DictWriter(outputFile, outputFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 previousId = None

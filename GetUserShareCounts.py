@@ -32,13 +32,16 @@ import csv
 import re
 import sys
 
+# Substitute your internal domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+DOMAIN_LIST = ['domain.com',]
+
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 def incrementCounter(counter):
   if not counterSet[counter]:
     userShareCounts[owner][counter] += 1
     counterSet[counter] = True
-
-# Substitute your internal domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-DOMAIN_LIST = ['domain.com',]
 
 TOTAL_COUNTER = 'Total'
 SHARED_COUNTER = 'Shared'
@@ -73,7 +76,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, HEADERS, lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, HEADERS, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -82,7 +85,7 @@ else:
   inputFile = sys.stdin
 
 userShareCounts = {}
-for row in csv.DictReader(inputFile):
+for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   owner = row['owners.0.emailAddress']
   userShareCounts.setdefault(owner, zeroCounts.copy())
   counterSet = {TOTAL_COUNTER: False, SHARED_COUNTER: False, SHARED_EXTERNAL_COUNTER: False, SHARED_INTERNAL_COUNTER: False}

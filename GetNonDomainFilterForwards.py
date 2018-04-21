@@ -23,6 +23,9 @@ import sys
 # Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 FORWARD_DOMAIN = re.compile(r"^forward .*@(.*)$")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
@@ -34,8 +37,8 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-inputCSV = csv.DictReader(inputFile)
-outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator='\n')
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 for row in inputCSV:

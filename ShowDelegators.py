@@ -14,13 +14,16 @@
 import csv
 import sys
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 delegates = {}
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Delegate', 'Delegate Email', 'Delegators'], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['Delegate', 'Delegate Email', 'Delegators'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -28,7 +31,7 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-for row in csv.DictReader(inputFile):
+for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   delegate = row['Delegate']
   delegates.setdefault(delegate, {'Delegate Email': row['Delegate Email'], 'Delegators': []})
   delegates[delegate]['Delegators'].append(row['Delegator'])

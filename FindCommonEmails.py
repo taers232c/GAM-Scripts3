@@ -13,18 +13,21 @@
 import csv
 import sys
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 if sys.argv[1] != '-':
   outputFile = open(sys.argv[1], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['email',], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['email',], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 users = {}
 allFilesCount = len(sys.argv)-2
 for i in range(2, len(sys.argv)):
   inputFile = open(sys.argv[i], 'r', encoding='utf-8')
-  for row in csv.DictReader(inputFile):
+  for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     email = row['email']
     users.setdefault(email, 0)
     users[email] += 1

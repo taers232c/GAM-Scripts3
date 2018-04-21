@@ -17,12 +17,14 @@ import csv
 import sys
 
 DELIMITER = ' '
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['primaryEmail', 'GroupsCount', 'Groups'], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['primaryEmail', 'GroupsCount', 'Groups'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -31,7 +33,7 @@ else:
   inputFile = sys.stdin
 
 UserGroups = {}
-for row in csv.DictReader(inputFile):
+for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   if row['type'] == 'USER':
     UserGroups.setdefault(row['email'], [])
     UserGroups[row['email']].append(row['group'])

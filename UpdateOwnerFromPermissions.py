@@ -8,6 +8,9 @@ import csv
 import re
 import sys
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 PERMISSIONS_N_ROLE = re.compile(r"permissions.(\d+).role")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
@@ -19,9 +22,9 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
-inputCSV = csv.DictReader(inputFile)
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 
-outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 for row in inputCSV:

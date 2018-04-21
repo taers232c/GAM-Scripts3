@@ -17,6 +17,9 @@
 import csv
 import sys
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 # Leave SelectedUsers empty to show groups owned by any user
 # Set to a specific set of users, e.g., SelectedUsers = set('user1@domain.com', 'user2@domain.com')
 # Set to a list of users read from a CSV file passed on the command line
@@ -27,7 +30,7 @@ GroupsOwnedByUser = {}
 if len(sys.argv) > 3:
   filename, fieldname = sys.argv[3].split(':')
   inputFile = open(filename, 'r', encoding='utf-8')
-  for row in csv.DictReader(inputFile):
+  for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     SelectedUsers.add(row[fieldname].lower())
   inputFile.close()
 
@@ -35,7 +38,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['User', 'GroupsOwnedByUser'], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['User', 'GroupsOwnedByUser'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -43,7 +46,7 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-for row in csv.DictReader(inputFile):
+for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   for k, v in iter(row.items()):
     if row['OwnersCount'] != '0':
       for owner in row['Owners'].lower().split(' '):

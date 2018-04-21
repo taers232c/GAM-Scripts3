@@ -34,13 +34,16 @@ DOMAIN_LIST = ['domain.com',]
 # Specify desired value of withLink field: True, False, Any (matches True and False)
 DESIRED_WITHLINK = 'Any'
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'domain', 'withLink'], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'domain', 'withLink'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -48,7 +51,7 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-for row in csv.DictReader(inputFile):
+for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:

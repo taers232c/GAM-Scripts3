@@ -22,13 +22,16 @@ import sys
 # Change format as desired, {0} is replaced by countryCode
 ORG_UNIT_MAP = '{0}'
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 ADDRESSES_N_TYPE = re.compile(r"addresses.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Org', 'primaryEmail'], lineterminator='\n')
+outputCSV = csv.DictWriter(outputFile, ['Org', 'primaryEmail'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -36,7 +39,7 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
-for row in csv.DictReader(inputFile):
+for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   if row['orgUnitPath'] == '/':
     for k, v in iter(row.items()):
       mg = ADDRESSES_N_TYPE.match(k)

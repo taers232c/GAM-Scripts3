@@ -31,6 +31,9 @@ CREATED_DATE = 'createdDate'
 #FILE_NAME = 'name'
 #CREATED_DATE = 'createdTime'
 
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 def rowPaths(crow):
   paths = set()
   for i in range(0, int(crow['paths'])):
@@ -52,8 +55,8 @@ prevMimeType = None
 prevCreatedDate = None
 prevPaths = None
 
-inputCSV = csv.DictReader(inputFile)
-outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator='\n')
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 rows = sorted(inputCSV, key=lambda k: k[CREATED_DATE], reverse=True)
