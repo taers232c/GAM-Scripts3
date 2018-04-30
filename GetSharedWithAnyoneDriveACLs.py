@@ -38,7 +38,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'discoverable'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -55,7 +55,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                           'driveFileId': row['id'],
                           'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                           'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                          'role': row['permissions.{0}.role'.format(permissions_N)]})
+                          'role': row['permissions.{0}.role'.format(permissions_N)],
+                          'discoverable': row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False')})
 
 if inputFile != sys.stdin:
   inputFile.close()
