@@ -53,21 +53,21 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
-      permissionsN = mg.group(1)
-      domain = row.get('permissions.{0}.domain'.format(permissionsN), '')
+      permissions_N = mg.group(1)
+      domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
       if not domain:
         if v not in ['user', 'group']:
           continue
-        emailAddress = row['permissions.{0}.emailAddress'.format(permissionsN)]
+        emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
         domain = emailAddress[emailAddress.find(u'@')+1:]
       if domain not in DOMAIN_LIST:
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissionsN)]),
-                            'role': row['permissions.{0}.role'.format(permissionsN)],
+                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
+                            'role': row['permissions.{0}.role'.format(permissions_N)],
                             'type': v,
-                            'emailAddress': row['permissions.{0}.emailAddress'.format(permissionsN)]})
+                            'emailAddress': row['permissions.{0}.emailAddress'.format(permissions_N)]})
 
 if inputFile != sys.stdin:
   inputFile.close()
