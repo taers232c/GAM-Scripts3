@@ -3,7 +3,7 @@
 # Purpose: For a Google Drive User(s), delete all drive file ACLs for Team Drive files shared with a list of specified domains
 # Note: This script requires Advanced GAM with Team Drive support:
 #	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST.
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST and DESIRED_WITHLINK.
 # Usage:
 # 1: List all Team Drives, if you don't want all users, replace all users with your user selection in the command below
 #  $ gam redirect csv ./AllTeamDrives.csv all users print teamdrives role organizer fields id,name
