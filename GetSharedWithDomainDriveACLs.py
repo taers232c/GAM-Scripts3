@@ -10,7 +10,7 @@
 #  $ Example, Basic GAM: gam all users print filelist id title permissions > filelistperms.csv
 #  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,withLink"
-#    that lists the driveFileIds and permissionIds for all ACLs except those from the specified domains.
+#    that lists the driveFileIds and permissionIds for all ACLs shared with the desired domains.
 #    (n.b., role, type, emailAddress and title are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedWithDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
@@ -54,18 +54,18 @@ else:
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
-    if mg and v:
+    if mg and v == 'domain':
       permissions_N = mg.group(1)
-      if v == 'domain':
-        domain = row['permissions.{0}.domain'.format(permissions_N)]
-        if domain in DOMAIN_LIST and (DESIRED_WITHLINK == 'Any' or DESIRED_WITHLINK == row['permissions.{0}.withLink'.format(permissions_N)]):
-          outputCSV.writerow({'Owner': row['Owner'],
-                              'driveFileId': row['id'],
-                              'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                              'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                              'role': row['permissions.{0}.role'.format(permissions_N)],
-                              'domain': domain,
-                              'withLink': row['permissions.{0}.withLink'.format(permissions_N)]})
+      domain = row['permissions.{0}.domain'.format(permissions_N)]
+      withLink = row.get('permissions.{0}.withLink'.format(permissions_N), str(row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N)) == 'False'))
+      if domain in DOMAIN_LIST and (DESIRED_WITHLINK == 'Any' or DESIRED_WITHLINK == withLink):
+        outputCSV.writerow({'Owner': row['Owner'],
+                            'driveFileId': row['id'],
+                            'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
+                            'role': row['permissions.{0}.role'.format(permissions_N)],
+                            'domain': domain,
+                            'withLink': withLink})
 
 if inputFile != sys.stdin:
   inputFile.close()
