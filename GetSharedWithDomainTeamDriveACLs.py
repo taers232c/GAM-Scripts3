@@ -13,7 +13,7 @@
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid id title permissions
 # 4: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,withLink"
 #    that lists the driveFileIds and permissionIds for all ACLs from the specified domains.
-#    (n.b., role, type, emailAddress and title are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, role, domain and withLink are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedWithDomainTeamDriveACLs.py filelistperms.csv deleteperms.csv
 # 5: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 6: Delete the ACLs
