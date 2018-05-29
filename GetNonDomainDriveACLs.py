@@ -9,9 +9,9 @@
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Example, Basic GAM: gam all users print filelist id title permissions > filelistperms.csv
 #  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs except those from the specified domains.
-#    (n.b., role, type, emailAddress and title are not used in the next step, they are included for documentation purposes)
+#    (n.b., role, type, emailAddress, domain and driveFileTitle are not used in the next step, they are included for documentation purposes)
 #  $ python GetNonDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
@@ -41,7 +41,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain'],
+                           lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -54,12 +55,14 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
-      if not domain:
-        if v not in ['user', 'group']:
-          continue
+      if v == u'domain':
+        domain = row['permissions.{0}.domain'.format(permissions_N)]
+        emailAddress = ''
+      elif v in ['user', 'group']:
         emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
         domain = emailAddress[emailAddress.find(u'@')+1:]
+      else:
+        continue
       if domain not in DOMAIN_LIST:
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
@@ -67,7 +70,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
                             'role': row['permissions.{0}.role'.format(permissions_N)],
                             'type': v,
-                            'emailAddress': row['permissions.{0}.emailAddress'.format(permissions_N)]})
+                            'emailAddress': emailAddress,
+                            'domain': domain})
 
 if inputFile != sys.stdin:
   inputFile.close()

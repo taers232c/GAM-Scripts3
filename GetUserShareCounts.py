@@ -102,10 +102,9 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           userShareCounts[owner][COUNT_CATEGORIES[v][row['permissions.{0}.withLink'.format(permissions_N)] == 'True']] += 1
         else:
           domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
-          if not domain:
-            if v in ['user', 'group']:
-              emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
-              domain = emailAddress[emailAddress.find(u'@')+1:]
+          if not domain and v in ['user', 'group']:
+            emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+            domain = emailAddress[emailAddress.find(u'@')+1:]
           internal = domain in DOMAIN_LIST
           incrementCounter([SHARED_EXTERNAL_COUNTER, SHARED_INTERNAL_COUNTER][internal])
           if v == u'domain':

@@ -52,11 +52,14 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
-      emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), '')
-      if not domain:
-        if v in ['user', 'group']:
-          domain = emailAddress[emailAddress.find(u'@')+1:]
+      if v == u'domain':
+        domain = row['permissions.{0}.domain'.format(permissions_N)]
+        emailAddress = ''
+      elif v in ['user', 'group']:
+        emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+        domain = emailAddress[emailAddress.find(u'@')+1:]
+      else:
+        continue
       if (domain in DOMAIN_LIST) and (v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or emailAddress != row['Owner']):
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
@@ -65,7 +68,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'role': row['permissions.{0}.role'.format(permissions_N)],
                             'type': v,
                             'emailAddress': emailAddress,
-                            'domain': row['permissions.{0}.domain'.format(permissions_N)]})
+                            'domain': domain})
 
 if inputFile != sys.stdin:
   inputFile.close()
