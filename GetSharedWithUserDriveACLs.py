@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with selected users.
+# Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with selected users or all users in selected domains.
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set USER_LIST.
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set USER_LIST and DOMAIN_LIST.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
@@ -29,8 +29,12 @@ ALT_FILE_NAME = 'name'
 #FILE_NAME = 'name'
 #ALT_FILE_NAME = 'title'
 
-# Substitute your user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
-USER_LIST = ['user@domain.com',]
+# Substitute your specific user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
+# The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, USER_LIST = []
+USER_LIST = ['user1@domain.com',]
+# Substitute your domain(s) in the list below if you want all users in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+# The list should be empty if you're only specifiying users in USER_LIST, e,g, DOMAIN__LIST = []
+DOMAIN_LIST = ['domain.com',]
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -55,7 +59,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v == u'user':
       permissions_N = mg.group(1)
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
-      if emailAddress in USER_LIST and row['permissions.{0}.role'.format(permissions_N)] != 'owner':
+      domain = row['permissions.{0}.domain'.format(permissions_N)]
+      if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and (emailAddress in USER_LIST or domain in DOMAIN_LIST):
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
