@@ -4,6 +4,7 @@
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set INCLUDE_PRIMARY = True/False, OPTIONAL_MERGE_FIELDS
 # Usage:
 # 1: Get Users
 #  Basic GAM:
@@ -36,6 +37,11 @@ import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+# Should primary email address be include?
+INCLUDE_PRIMARY = True
+# Select optional fields from Sendas.csv to merge with Users.csv
+# Choose from: 'replyToAddress','isPrimary','isDefault','treatAsAlias','verificationStatus','signature'
+OPTIONAL_MERGE_FIELDS = []
 
 usersSendasAddresses = {}
 
@@ -45,7 +51,8 @@ else:
   inputFile = sys.stdin
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   usersSendasAddresses.setdefault(row['User'], [])
-  usersSendasAddresses[row['User']].append(row['sendAsEmail'])
+  if row['isPrimary'] == 'False' or INCLUDE_PRIMARY:
+    usersSendasAddresses[row['User']].append(row)
 if inputFile != sys.stdin:
   inputFile.close()
 
@@ -62,12 +69,15 @@ else:
   outputFile = sys.stdout
 outputFieldnames = inputCSV.fieldnames[:]
 outputFieldnames.append('sendAsEmail')
+outputFieldnames.extend(OPTIONAL_MERGE_FIELDS)
 outputCSV = csv.DictWriter(outputFile, outputFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 for row in inputCSV:
   for sendAs in usersSendasAddresses.get(row['primaryEmail'], []):
-    row['sendAsEmail'] = sendAs
+    row['sendAsEmail'] = sendAs['sendAsEmail']
+    for field in OPTIONAL_MERGE_FIELDS:
+      row[field] = sendAs[field]
     outputCSV.writerow(row)
 
 inputFile.close()
