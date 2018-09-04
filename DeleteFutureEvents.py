@@ -5,13 +5,13 @@
 #	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get calendar events for a user
-#  $ Example, user's primary calendar: gam redirect csv ./UserEvents.csv user user@domain.com print events primary singleevents orderby starttime maxattendees 1 > UserEvents.csv
-#  $ Example, all calendars a user owns: gam redirect csv ./UserEvents.csv user user@domain.com print events minaccessrole owner singleevents orderby starttime maxattendees 1 > UserEvents.csv
+#  $ Example, user's primary calendar: gam redirect csv ./UserEvents.csv user user@domain.com print events primary singleevents orderby starttime maxattendees 1
+#  $ Example, all calendars a user owns: gam redirect csv ./UserEvents.csv user user@domain.com print events minaccessrole owner singleevents orderby starttime maxattendees 1
 # 2: From that list of Events, output a CSV file with only the rows with an event start date >= a specified date
 #  $ python DeleteFutureEvents.py yyyy-mm-dd UserEvents.csv UserFutureEvents.csv
 # 3: Delete the events
-#  $ Parallel, faster: gam csv UserFutureEvents.csv gam user ~primaryEmail delete event calendars ~calendarId eventid ~id doit
-#  $ Serial, cleaner output: gam csvkmd users UserFutureEvents.csv keyfield primaryEmail subkeyfield calendarId datafield id delete event calendars csvsubkey calendarId  events csvdata id doit
+#  $ Parallel, faster: gam csv UserFutureEvents.csv gam user ~primaryEmail delete event calendars ~calendarId events ~id doit
+#  $ Serial, cleaner output: gam csvkmd users UserFutureEvents.csv keyfield primaryEmail subkeyfield calendarId datafield id delete event calendars csvsubkey calendarId events csvdata id doit
 # 4: Empty the calendars trash
 #  $ gam csvkmd users UserFutureEvents.csv keyfield primaryEmail datafield calendarId empty calendartrash calendars csvdata calendarId
 """
