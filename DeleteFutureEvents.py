@@ -50,7 +50,7 @@ outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator=LINE_
 outputCSV.writeheader()
 
 for row in inputCSV:
-  if (row['organizer.self'] != u'True') or row[u'recurringEventId']:
+  if row['organizer.self'] != u'True':
     continue
   if row['start.date']:
     if row['start.date'] < startDate:
