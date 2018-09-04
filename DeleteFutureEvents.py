@@ -52,10 +52,10 @@ outputCSV.writeheader()
 for row in inputCSV:
   if row['organizer.self'] != u'True':
     continue
-  if row['start.date']:
+  if row.get('start.date'):
     if row['start.date'] < startDate:
       continue
-  elif row['start.dateTime']:
+  elif row.get('start.dateTime'):
     if row['start.dateTime'][:10] < startDate:
       continue
   else:
