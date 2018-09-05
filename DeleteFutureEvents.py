@@ -50,7 +50,7 @@ outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator=LINE_
 outputCSV.writeheader()
 
 for row in inputCSV:
-  if row['organizer.self'] != u'True':
+  if row['primaryEmail'] != row.get('creator.email'):
     continue
   if row.get('start.date'):
     if row['start.date'] < startDate:
