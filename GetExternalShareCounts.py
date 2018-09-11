@@ -34,7 +34,7 @@ outputCSV = csv.DictWriter(outputFile, ['Type', 'ExternalShare', 'Count'], linet
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], '', encoding='utf-8')
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 
