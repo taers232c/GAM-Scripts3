@@ -50,6 +50,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       if row['permissions.{0}.role'.format(permissions_N)] == 'owner':
         continue
+      if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+        continue
       if v == 'anyone':
         if row['permissions.{0}.withLink'.format(permissions_N)] == 'True':
           anyoneWithLinkShareCount += 1
