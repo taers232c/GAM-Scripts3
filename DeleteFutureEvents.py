@@ -3,6 +3,7 @@
 # Purpose: For a Google Drive User(s), output a CSV that shows all user organized events with a start date >= a specified date; they can then be deleted.
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set DELETE_EVENTS_WITH_ATTENDEES = True or False to determine whether events with attendees will be deleted.
 # Usage:
 # 1: Get calendar events for a user
 #  $ Example, user's primary calendar: gam redirect csv ./UserEvents.csv user user@domain.com print events primary singleevents orderby starttime maxattendees 1
@@ -19,6 +20,8 @@
 import csv
 import datetime
 import sys
+
+DELETE_EVENTS_WITH_ATTENDEES = False
 
 YYYYMMDD_FORMAT = u'%Y-%m-%d'
 
@@ -60,6 +63,10 @@ for row in inputCSV:
       continue
   else:
     continue
+  if not DELETE_EVENTS_WITH_ATTENDEES:
+    numAttendees = row.get('attendees', '')
+    if numAttendees and int(numAttendees) > 0:
+      continue
   outputCSV.writerow(row)
 if inputFile != sys.stdin:
   inputFile.close()
