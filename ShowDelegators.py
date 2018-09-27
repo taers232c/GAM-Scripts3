@@ -6,7 +6,8 @@
 #	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get delegates
-#  $ gam all users print delegates > ./AllDelegates.csv
+#  $ Basic: gam all users print delegates > ./AllDelegates.csv
+#  $ Advanced: gam all users print delegates shownames > ./AllDelegates.csv
 # 2: From that list of delegates, output a CSV file with headers "Delegate,Delegate Email,Delegators
 #  $ python ShowDelegators.py ./AllDelegates.csv ./AllDelegators.csv
 """
@@ -32,13 +33,13 @@ else:
   inputFile = sys.stdin
 
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  delegate = row['Delegate']
-  delegates.setdefault(delegate, {'Delegate Email': row['Delegate Email'], 'Delegators': []})
-  delegates[delegate]['Delegators'].append(row['Delegator'])
+  delegate = row['delegateAddress']
+  delegates.setdefault(delegate, {'Delegate': row.get('delegateName', delegate), 'Delegators': []})
+  delegates[delegate]['Delegators'].append(row['User'])
 
 for delegate in sorted(delegates):
-  outputCSV.writerow({'Delegate': delegate,
-                      'Delegate Email': delegates[delegate]['Delegate Email'],
+  outputCSV.writerow({'Delegate': delegates[delegate]['Delegate'],
+                      'Delegate Email': delegate,
                       'Delegators': ' '.join(delegates[delegate]['Delegators'])})
 
 if inputFile != sys.stdin:
