@@ -47,7 +47,7 @@ outputCSV.writeheader()
 
 for row in inputCSV:
   shared = False
-  for k, v in row.iteritems():
+  for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg:
       if v == u'user':
