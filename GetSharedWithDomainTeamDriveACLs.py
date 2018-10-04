@@ -5,18 +5,20 @@
 #	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST and DESIRED_WITHLINK.
 # Usage:
-# 1: List all Team Drives, if you don't want all users, replace all users with your user selection in the command below
-#  $ gam redirect csv ./AllTeamDrives.csv all users print teamdrives role organizer fields id,name
-# 2: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
+# 1: If you want to include all Team Drives, do this step and then skip to step 4, otherwise start at step 2.
+#  $ gam redirect csv ./AllTeamDrives.csv print teamdrives role organizer fields id,name
+# 2: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
+#  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
+# 3: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
 #  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
-# 3: Get ACLs for all team drive files
+# 4: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid id title permissions
-# 4: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,withLink"
+# 5: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,withLink"
 #    that lists the driveFileIds and permissionIds for all ACLs from the specified domains.
 #    (n.b., driveFileTitle, role, domain and withLink are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedWithDomainTeamDriveACLs.py filelistperms.csv deleteperms.csv
-# 5: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 6: Delete the ACLs
+# 6: Inspect deleteperms.csv, verify that it makes sense and then proceed
+# 7: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
