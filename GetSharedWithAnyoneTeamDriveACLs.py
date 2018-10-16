@@ -6,7 +6,7 @@
 # Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST and DESIRED_DISCOVERABLE.
 # Usage:
 # 1: If you want to include all Team Drives, do this step and then skip to step 4, otherwise start at step 2.
-#  $ gam redirect csv ./AllTeamDrives.csv print teamdrives role organizer fields id,name
+#  $ gam redirect csv ./TeamDrives.csv print teamdrives role organizer fields id,name
 # 2: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
 #  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
 # 3: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
