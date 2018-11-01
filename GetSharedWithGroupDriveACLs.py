@@ -54,7 +54,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == u'group':
       permissions_N = mg.group(1)
-      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), u'')
       if emailAddress in GROUP_LIST:
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],

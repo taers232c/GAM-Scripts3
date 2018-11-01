@@ -45,6 +45,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       role = row['permissions.{0}.role'.format(permissions_N)]
       if role != u'writer' or v not in ['user', 'group']:
         continue
+      if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+        continue
       outputCSV.writerow({'teamDriveId': row['id'],
                           'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
                           'type': v,

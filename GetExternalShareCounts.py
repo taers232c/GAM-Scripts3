@@ -68,6 +68,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           domainShareCounts.setdefault(domain, 0)
           domainShareCounts[domain] += 1
       else: # group, user
+        if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+          continue
         emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
         domain = row.get('permissions.{0}.domain'.format(permissions_N), u'')
         if not domain:

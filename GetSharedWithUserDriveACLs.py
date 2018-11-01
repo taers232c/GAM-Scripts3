@@ -58,6 +58,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == u'user':
       permissions_N = mg.group(1)
+      if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+        continue
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
       domain = row['permissions.{0}.domain'.format(permissions_N)]
       if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and (emailAddress in USER_LIST or domain in DOMAIN_LIST):
