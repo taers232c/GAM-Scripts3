@@ -11,7 +11,7 @@
 # 3: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
 #  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 4: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields teamdriveid id title permissions
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id
 # 5: From that list of ACLs, output a CSV file with headers "id,name,organizers"
 #    that shows the organizers for each Team Drive
 #  $ python GetTeamDriveOrganizers.py TeamDrivesACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
