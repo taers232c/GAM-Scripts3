@@ -3,6 +3,7 @@
 # Purpose: Get organizers for Team Drives
 # Note: This script requires Advanced GAM with Team Drive support:
 #	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Customize: ONE_ORGANIZER
 # Usage:
 # 1: If you want to include all Team Drives, do this step and then skip to step 4, otherwise start at step 2.
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives role organizer fields id,name
@@ -23,6 +24,8 @@ import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
+ONE_ORGANIZER = False # False - show all organizers, True - show one organizer
 
 PERMISSIONS_N_ROLE = re.compile(r"permissions.(\d+).role")
 
@@ -51,6 +54,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v == 'organizer':
       permissions_N = mg.group(1)
       organizers .append(row['permissions.{0}.emailAddress'.format(permissions_N)])
+      if ONE_ORGANIZER:
+        break
   outputCSV.writerow({'id': row['id'],
                       'name': teamDriveNames.get(row['id'], row['id']),
                       'organizers': ' '.join(organizers)})
