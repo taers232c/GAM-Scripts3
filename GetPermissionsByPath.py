@@ -1,4 +1,4 @@
-#!/usr/bin/env python2
+#!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User, show all drive file ACLs except those indicating the user as owner, one ACL per row per file path
 # Note: This script requires Advanced GAM:
@@ -42,14 +42,14 @@ def getWithLink(r, n):
   return False
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'wb')
+  outputFile = open(sys.argv[2], 'w')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['path', 'type', 'value', 'role'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], 'rbU')
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 
@@ -61,7 +61,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       pathList.append(row['path.{0}'.format(p)])
   else:
     pathList = [row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown'))]
-  for k, v in row.iteritems():
+  for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
