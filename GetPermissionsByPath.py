@@ -42,7 +42,7 @@ def getWithLink(r, n):
   return False
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w')
+  outputFile = open(sys.argv[2], 'w', encoding='utf-8')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['path', 'type', 'value', 'role'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
@@ -53,6 +53,7 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
+pathPerms = []
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   numPaths = int(row.get('paths', '0'))
   if numPaths > 0:
@@ -80,10 +81,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       role = row['permissions.{0}.role'.format(permissions_N)]
       if v != 'user' or role != 'owner' or value != row['Owner']:
         for path in pathList:
-          outputCSV.writerow({'path': path,
-                              'type': v,
-                              'value': value,
-                              'role': role})
+          pathPerms.append({'path': path, 'type': v, 'value': value, 'role': role})
+outputCSV.writerows(sorted(pathPerms, key=lambda row: row['path']))
 
 if inputFile != sys.stdin:
   inputFile.close()
