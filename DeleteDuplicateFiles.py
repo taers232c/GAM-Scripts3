@@ -6,12 +6,12 @@
 # Customize: Set FILE_NAME and CREATED_DATE based on your environment.
 # Usage:
 # 1: Get information for all files, if you don't want all users, replace all users with your user selection in the command below
-#    These fields are required: fields id,title,createddate,mimetype filepath
+#    These fields are required: fields id,title,createddate,mimetype fullpath
 #    You can add additional fields that will be preserved in the output.
 #    You can add a select option if you want to only process files in a specific folder
 #    If you don't want to delete folders, add showmimetype not gfolder
-#  $ gam redirect csv ./UserFiles.csv multiprocess all users print filelist fields id,title,createddate,mimetype filepath
-#  $ gam redirect csv ./UserFiles.csv user user@domain.com print filelist fields id,title,createddate,mimetype filepath
+#  $ gam redirect csv ./UserFiles.csv multiprocess all users print filelist fields id,title,createddate,mimetype fullpath
+#  $ gam redirect csv ./UserFiles.csv user user@domain.com print filelist fields id,title,createddate,mimetype fullpath
 #                               select drivefilename "Folder Name" showmimetype not gfolder
 # 2: From that list of files, output a CSV file with the same headers as the input CSV file
 #    that lists the drive file Ids that have the same owner, title, mimeType and paths with a createdDate older than the most recent createdDate
