@@ -18,6 +18,9 @@
 #    that lists the driveFileIds and permissions to be added
 #  $ AddPermissions.py filelist.csv addperms.csv '<DriveFilePermissionsList>'
 # 3: Add the ACLs
+#    Parallel, faster:
+#  $ gam csv addperms.csv gam user ~Owner add permissions ~driveFileId ~permissions
+#    Serial, cleaner output:
 #  $ gam csvkmd users addperms.csv keyfield Owner subkeyfield driveFileId datafield permissions delimiter "," add permissions csvsubkey driveFileId csvdata permissions
 """
 

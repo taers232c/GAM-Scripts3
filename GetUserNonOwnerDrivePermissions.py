@@ -16,6 +16,9 @@
 #  $ python GetUserNonOwnerDrivePermissions.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
+#    Parallel, faster:
+#  $ gam csv deleteperms.csv gam user ~Owner delete permissions ~driveFileId ~permissionIds
+#    Serial, cleaner output:
 #  $ gam csvkmd users deleteperms.csv keyfield Owner subkeyfield driveFileId datafield permissionIds delimiter "," delete permissions csvsubkey driveFileId csvdata permissionIds
 """
 

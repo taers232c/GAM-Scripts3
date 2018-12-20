@@ -11,8 +11,10 @@
 # 2: From that list of Events, output a CSV file with only the rows with an event start date >= a specified date
 #  $ python DeleteFutureEvents.py yyyy-mm-dd UserEvents.csv UserFutureEvents.csv
 # 3: Delete the events
-#  $ Parallel, faster: gam csv UserFutureEvents.csv gam user ~primaryEmail delete event calendars ~calendarId events ~id doit
-#  $ Serial, cleaner output: gam csvkmd users UserFutureEvents.csv keyfield primaryEmail subkeyfield calendarId datafield id delete event calendars csvsubkey calendarId events csvdata id doit
+#    Parallel, faster:
+#  $ gam csv UserFutureEvents.csv gam user ~primaryEmail delete event calendars ~calendarId events ~id doit
+#    Serial, cleaner output:
+#  $ gam csvkmd users UserFutureEvents.csv keyfield primaryEmail subkeyfield calendarId datafield id delete event calendars csvsubkey calendarId events csvdata id doit
 # 4: Empty the calendars trash
 #  $ gam csvkmd users UserFutureEvents.csv keyfield primaryEmail datafield calendarId empty calendartrash calendars csvdata calendarId
 """
