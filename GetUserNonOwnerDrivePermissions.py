@@ -9,7 +9,7 @@
 #    Syntax: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
 #			[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users-Drive-Files
-#    Example: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions
+#    Example: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions owners.emailaddress
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionIds"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
 #    (n.b., driveFileTitle is not used in the next step, it is included for documentation purposes)
@@ -56,10 +56,10 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or row.get('permissions.{0}.emailAddress'.format(permissions_N), '') != row['Owner']:
+      if v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or row.get('permissions.{0}.emailAddress'.format(permissions_N), '') != row['owners.0.emailAddress']:
         permissionIds.append(row['permissions.{0}.id'.format(permissions_N)])
   if permissionIds:
-    outputCSV.writerow({'Owner': row['Owner'],
+    outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                         'driveFileId': row['id'],
                         'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                         'permissionIds': ','.join(permissionIds)})

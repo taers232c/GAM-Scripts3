@@ -8,11 +8,11 @@
 # Usage:
 # 1: Use print filelist to get selected ACLs
 #    Suntax, Basic GAM: gam <UserTypeEntity> print filelist [anyowner] [query <QueryDriveFile>] [fullquery <QueryDriveFile>]
-#    Example, Basic GAM: gam user testuser@domain.com print filelist id title permissions > filelistperms.csv
+#    Example, Basic GAM: gam user testuser@domain.com print filelist id title permissions owners > filelistperms.csv
 #    Syntax, Advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
 #				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users-Drive-Files
-#    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions
+#    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions owners.emailaddress
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
 #    (n.b., driveFileTitle, role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
@@ -65,8 +65,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         domain = emailAddress[emailAddress.find(u'@')+1:]
       else:
         domain = emailAddress = ''
-      if v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or emailAddress != row['Owner']:
-        outputCSV.writerow({'Owner': row['Owner'],
+      if v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or emailAddress != row['owners.0.emailAddress']:
+        outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
