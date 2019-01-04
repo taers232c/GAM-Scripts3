@@ -3,7 +3,7 @@
 # Purpose: Get organizers for Team Drives
 # Note: This script requires Advanced GAM with Team Drive support:
 #	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: ONE_ORGANIZER
+# Customize: DOMAIN_LIST, ONE_ORGANIZER, SHOW_GROUP_ORGANIZERS, SHOW_USER_ORGANIZERS
 # Usage:
 # 1: If you want to include all Team Drives, do this step and then skip to step 4, otherwise start at step 2.
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives role organizer fields id,name
@@ -22,10 +22,16 @@ import csv
 import re
 import sys
 
-QUOTE_CHAR = '"' # Adjust as needed
-LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+# If you want to limit organizers to a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+DOMAIN_LIST = []
 
 ONE_ORGANIZER = False # False - show all organizers, True - show one organizer
+
+SHOW_GROUP_ORGANIZERS = True # False - don't show group organizers, True - show group organizers
+SHOW_USER_ORGANIZERS = True # False - don't show user organizers, True - show user organizers
+
+QUOTE_CHAR = '"' # Adjust as needed
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 PERMISSIONS_N_ROLE = re.compile(r"permissions.(\d+).role")
 
@@ -53,7 +59,15 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_ROLE.match(k)
     if mg and v == 'organizer':
       permissions_N = mg.group(1)
-      organizers .append(row['permissions.{0}.emailAddress'.format(permissions_N)])
+      orgtype = row['permissions.{0}.type'.format(permissions_N)]
+      if (orgtype == u'user' and not SHOW_USER_ORGANIZERS) or (orgtype == u'group' and not SHOW_GROUP_ORGANIZERS):
+        continue
+      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      if DOMAIN_LIST:
+        domain = emailAddress[emailAddress.find(u'@')+1:]
+        if domain not in DOMAIN_LIST:
+          continue
+      organizers.append(emailAddress)
       if ONE_ORGANIZER:
         break
   outputCSV.writerow({'id': row['id'],
