@@ -18,7 +18,7 @@ import csv
 import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
-LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+LINE_TERMINATOR = '\n'
 
 # Leave SelectedUsers empty to show groups owned by any user
 # Set to a specific set of users, e.g., SelectedUsers = set('user1@domain.com', 'user2@domain.com')
@@ -52,7 +52,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       for owner in row['Owners'].lower().split(' '):
         if (not SelectedUsers) or (owner in SelectedUsers):
           GroupsOwnedByUser.setdefault(owner, [])
-          GroupsOwnedByUser[owner].append(row['Email'])
+          GroupsOwnedByUser[owner].append(row.get('email', row.get('Email', 'Unknown')))
 for user, groups in sorted(iter(GroupsOwnedByUser.items())):
   outputCSV.writerow({'User': user,
                       'GroupsOwnedByUser': ' '.join(groups)})
