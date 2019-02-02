@@ -31,7 +31,6 @@ SHOW_LABELS = True # Should field labels be displayed
 SELECTED_FIELDS = [] # Only display selected fields ['primaryEmail',] ['deviceId', 'notes']
 FIELD_DELIMITER = ', '# Delimiter between fields
 INDENT_SPACES = '  ' # How much to indent data
-LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 orgUnits = ['/',]
 orgUnitsTree = {'/': []}

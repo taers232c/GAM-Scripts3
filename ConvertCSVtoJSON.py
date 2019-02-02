@@ -27,7 +27,7 @@ MAKE_LIST = True
 #   {"key": "value"}
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w')
+  outputFile = open(sys.argv[2], 'w', newline='')
 else:
   outputFile = sys.stdout
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):

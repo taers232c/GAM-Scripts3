@@ -58,7 +58,7 @@ if errors:
   sys.exit(1)
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w')
+  outputFile = open(sys.argv[2], 'w', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'permissions'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

@@ -36,7 +36,7 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 PERMISSIONS_N_ROLE = re.compile(r"permissions.(\d+).role")
 
 if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
-  outputFile = open(sys.argv[3], 'w')
+  outputFile = open(sys.argv[3], 'w', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['id', 'name', u'organizers'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

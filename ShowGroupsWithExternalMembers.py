@@ -18,7 +18,7 @@ import sys
 
 DELIMITER = ' ' # Character to separate domains in output CSV
 QUOTE_CHAR = '"' # Adjust as needed
-LINE_TERMINATOR = '\n'
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n' 
 
 # Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
@@ -28,7 +28,7 @@ DOMAIN_LIST = ['domain.com',]
 AGGREGATE_DOMAINS = True
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w')
+  outputFile = open(sys.argv[2], 'w', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['group', 'domain', 'count'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

@@ -42,7 +42,7 @@ def getWithLink(r, n):
   return False
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w', encoding='utf-8')
+  outputFile = open(sys.argv[2], 'w', newline='', encoding='utf-8')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['path', 'type', 'value', 'role'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

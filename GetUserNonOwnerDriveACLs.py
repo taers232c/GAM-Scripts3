@@ -39,7 +39,7 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w')
+  outputFile = open(sys.argv[2], 'w', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

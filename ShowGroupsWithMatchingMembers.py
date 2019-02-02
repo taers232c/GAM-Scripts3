@@ -18,7 +18,7 @@ import re
 import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
-LINE_TERMINATOR = '\n'
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n' 
 
 # Python regular expressions
 USER_MATCH_PATTERN = r'^.*$'
@@ -52,7 +52,7 @@ else:
   groupMatchPattern = None
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w')
+  outputFile = open(sys.argv[2], 'w', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['group', 'groupMatches', 'groupTotal', 'userMatches', 'userTotal'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

@@ -64,7 +64,7 @@ else:
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 
 if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
-  outputFile = open(sys.argv[3], 'w')
+  outputFile = open(sys.argv[3], 'w', newline='')
 else:
   outputFile = sys.stdout
 outputFieldnames = inputCSV.fieldnames[:]
