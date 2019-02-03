@@ -19,10 +19,10 @@ import csv
 import re
 import sys
 
-# For GAM, GAMADV-X or GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = false
+# For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
 FILE_NAME = 'title'
 ALT_FILE_NAME = 'name'
-# For GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = true
+# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 #FILE_NAME = 'name'
 #ALT_FILE_NAME = 'title'
 

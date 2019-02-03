@@ -24,10 +24,10 @@
 import csv
 import sys
 
-# For GAMADV-X or GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = false
+# For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
 FILE_NAME = 'title'
 CREATED_DATE = 'createdDate'
-# For GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = true
+# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 #FILE_NAME = 'name'
 #CREATED_DATE = 'createdTime'
 

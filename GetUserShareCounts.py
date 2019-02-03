@@ -35,10 +35,10 @@ import sys
 # Substitute your internal domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
 
-# For GAMADV-X or GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = false
+# For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
 LINK_FIELD = u'withLink'
 LINK_VALUE = u'True'
-# For GAMADVX-TD/GAMADVX-TD3 with drive_v3_native_names = true
+# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 #LINK_FIELD = u'allowFileDiscovery'
 #LINK_VALUE = u'False'
 
