@@ -10,7 +10,7 @@
 #  $ Basic: gam print group-members fields email,type > GroupMembers.csv
 #  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: From that list of group members, output a CSV file with headers group,domain,count
-#  $ python ShowGroupsWithExternalMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv
+#  $ python GetGroupsWithExternalMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv
 """
 
 import csv
