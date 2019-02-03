@@ -11,6 +11,12 @@
 #  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: From that list of group members, output a CSV file with headers group,domain,count
 #  $ python GetGroupsWithExternalMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv
+# 3: If you want a list of the external members, add another filename to the command, the external members will be output to that file
+#  $ python GetGroupsWithExternalMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv ./ExternalMembers.csv
+# 4: If you want to delete the external members from their groups, you can do the following which uses one API call per member
+#  $ gam csv ./ExternalMembers.csv gam update group ~group delete member ~email
+# 5: With Advanced GAM, you can delete the members in batches
+#  $ gam update group csvkmd ./ExternalMembers.csv keyfield group datafield email delete member csvdata email
 """
 
 import csv
@@ -18,7 +24,7 @@ import sys
 
 DELIMITER = ' ' # Character to separate domains in output CSV
 QUOTE_CHAR = '"' # Adjust as needed
-LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n' 
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 # Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
@@ -38,9 +44,17 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+
+if len(sys.argv) > 3:
+  matchFile = open(sys.argv[3], 'w', newline='')
+  matchCSV = csv.DictWriter(matchFile, inputCSV.fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+  matchCSV.writeheader()
+else:
+  matchFile = None
 
 Groups = {}
-for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
+for row in inputCSV:
   if row['type'] in ['USER', 'GROUP']:
     group = row['group']
     emailAddress = row['email']
@@ -53,6 +67,11 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       Groups.setdefault(group, {})
       Groups[group].setdefault(domain, 0)
       Groups[group][domain] += 1
+      if matchFile:
+        matchCSV.writerow(row)
+
+if matchFile:
+  matchFile.close()
 
 for group, domains in sorted(iter(Groups.items())):
   if not AGGREGATE_DOMAINS:

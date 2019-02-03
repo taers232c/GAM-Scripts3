@@ -10,7 +10,13 @@
 #  $ Basic: gam print group-members fields email,type > GroupMembers.csv
 #  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: From that list of group members, output a CSV file with headers group,groupMatches,groupTotal,userMatches,userTotal
-#  $ python GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv
+#  $ python GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithMatchingMembers.csv
+# 3: If you want a list of the matching members, add another filename to the command, the matching members will be output to that file
+#  $ python GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithMatchingMembers.csv ./MatchingMembers.csv
+# 4: If you want to delete the matching members from their groups, you can do the following which uses one API call per member
+#  $ gam csv ./MatchingMembers.csv gam update group ~group delete member ~email
+# 5: With Advanced GAM, you can delete the members in batches
+#  $ gam update group csvkmd ./MatchingMembers.csv keyfield group datafield email delete member csvdata email
 """
 
 import csv
@@ -18,11 +24,11 @@ import re
 import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
-LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n' 
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
-# Python regular expressions
-USER_MATCH_PATTERN = r'^.*$'
-GROUP_MATCH_PATTERN = r'^.*$'
+# Python regular expressions; r'' indicates no matching
+USER_MATCH_PATTERN = r''
+GROUP_MATCH_PATTERN = r''
 
 # Should groups with no matches be shown
 SHOW_GROUPS_WITH_NO_MATCHES = False
@@ -62,9 +68,17 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+
+if len(sys.argv) > 3:
+  matchFile = open(sys.argv[3], 'w', newline='')
+  matchCSV = csv.DictWriter(matchFile, inputCSV.fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+  matchCSV.writeheader()
+else:
+  matchFile = None
 
 Groups = {}
-for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
+for row in inputCSV:
   if row['type'] in ['USER', 'GROUP']:
     group = row['group']
     Groups.setdefault(group, [0, 0, 0, 0])
@@ -73,10 +87,17 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       Groups[group][USER_TOTAL] += 1
       if userMatchPattern and userMatchPattern.match(emailAddress):
         Groups[group][USER_MATCHES] += 1
+        if matchFile:
+          matchCSV.writerow(row)
     elif row['type'] == u'GROUP':
       Groups[group][GROUP_TOTAL] += 1
       if groupMatchPattern and groupMatchPattern.match(emailAddress):
         Groups[group][GROUP_MATCHES] += 1
+        if matchFile:
+          matchCSV.writerow(row)
+
+if matchFile:
+  matchFile.close()
 
 for group, counts in sorted(iter(Groups.items())):
   if SHOW_GROUPS_WITH_NO_MATCHES or counts[GROUP_MATCHES] or counts[USER_MATCHES]:
