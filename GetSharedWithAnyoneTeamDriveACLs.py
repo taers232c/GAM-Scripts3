@@ -13,9 +13,9 @@
 #  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 4: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid id title permissions
-# 5: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,withLink"
+# 5: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,discoverable"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
-#    (n.b., driveFileTitle, role and discoverable  are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, role and discoverable are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedWithAnyoneTeamDriveACLs.py filelistperms.csv deleteperms.csv
 # 6: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 7: Delete the ACLs
@@ -49,7 +49,7 @@ outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle'
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
-  inputFile = open(sys.argv[1], 'r, encoding='utf-8'')
+  inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
 

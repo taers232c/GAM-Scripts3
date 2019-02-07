@@ -10,7 +10,7 @@
 #  $ Example, Basic GAM: gam all users print filelist id title permissions > filelistperms.csv
 #  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,withLink"
-#    that lists the driveFileIds and permissionIds for all ACLs shared with the desired domains.
+#    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
 #    (n.b., driveFileTitle, role, domain and withLink are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedWithDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
