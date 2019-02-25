@@ -3,22 +3,41 @@
 # Purpose: For a Google Drive User(s), delete all drive file ACLs for Team Drive files shared with anyone
 # Note: This script requires Advanced GAM with Team Drive support:
 #	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST and DESIRED_DISCOVERABLE.
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST and DESIRED_ALLOWFILEDISCOVERY
 # Usage:
-# 1: If you want to include all Team Drives, do this step and then skip to step 4, otherwise start at step 2.
-#  $ gam redirect csv ./TeamDrives.csv print teamdrives role organizer fields id,name
-# 2: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
-#  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
-# 3: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
-#  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
+# For all Team Drives, start at step 1; For Team Drives selected by user/group/OU, start at step 6
+# All Team Drives
+# 1: Get all Team Drives.
+#  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
+# 2: Get ACLs for all Team Drives
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id
+# 3: Customize GetTeamDriveOrganizers.py for this task:
+#    Set DOMAIN_LIST as required
+#    Set ONE_ORGANIZER = True
+#    Set SHOW_GROUP_ORGANIZERS = False
+#    Set SHOW_USER_ORGANIZERS = True
+# 4: From that list of ACLs, output a CSV file with headers "id,name,organizers"
+#    that shows the organizers for each Team Drive
+#  $ python GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 4: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid id title permissions
-# 5: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,discoverable"
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
+# 5: Go to step 10
+# Selected Team Drives
+# 6: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
+#  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
+# 7: Customize DeleteDuplicateRows.py for this task:
+#    Set ID_FIELD = 'id'
+# 8: Delete duplicate Team Drives (some may have multiple organizers).
+#  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
+# 9: Get ACLs for all team drive files
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
+# Common code
+# 10: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
-#    (n.b., driveFileTitle, role and discoverable are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedWithAnyoneTeamDriveACLs.py filelistperms.csv deleteperms.csv
-# 6: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 7: Delete the ACLs
+# 11: Inspect deleteperms.csv, verify that it makes sense and then proceed
+# 12: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
@@ -45,7 +64,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'discoverable'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'allowFileDiscovery'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -65,7 +84,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
                             'role': row['permissions.{0}.role'.format(permissions_N)],
-                            'discoverable': allowFileDiscovery})
+                            'allowFileDiscovery': allowFileDiscovery})
 
 if inputFile != sys.stdin:
   inputFile.close()
