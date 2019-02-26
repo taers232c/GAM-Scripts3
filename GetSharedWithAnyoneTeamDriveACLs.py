@@ -19,7 +19,10 @@
 # 4: From that list of ACLs, output a CSV file with headers "id,name,organizers"
 #    that shows the organizers for each Team Drive
 #  $ python GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
-# 4: Get ACLs for all team drive files
+# 4: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type anyone em
+#    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type anyone allowfilediscovery true em
+#    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type anyone allowfilediscovery false em
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
 # 5: Go to step 10
 # Selected Team Drives
@@ -29,7 +32,10 @@
 #    Set ID_FIELD = 'id'
 # 8: Delete duplicate Team Drives (some may have multiple organizers).
 #  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
-# 9: Get ACLs for all team drive files
+# 9: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type anyone em
+#    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type anyone allowfilediscovery true em
+#    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type anyone allowfilediscovery false em
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
 # Common code
 # 10: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
@@ -78,7 +84,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v == 'anyone':
       permissions_N = mg.group(1)
       allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
-      if DESIRED_ALLOWFILEDISCOVERY == 'Any' or DESIRED_ALLOWFILEDISCOVERY == allowFileDiscovery:
+      if DESIRED_ALLOWFILEDISCOVERY in ('Any', allowFileDiscovery):
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),

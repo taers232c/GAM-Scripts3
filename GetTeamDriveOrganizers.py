@@ -43,7 +43,7 @@ outputCSV = csv.DictWriter(outputFile, ['id', 'name', u'organizers'], linetermin
 outputCSV.writeheader()
 
 teamDriveNames = {}
-inputFile = open(sys.argv[2], 'r', encoding='utf-8'))
+inputFile = open(sys.argv[2], 'r', encoding='utf-8')
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   teamDriveNames[row['id']] = row['name']
 inputFile.close()

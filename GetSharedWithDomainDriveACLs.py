@@ -4,14 +4,14 @@
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST and DESIRED_WITHLINK.
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST and DESIRED_ALLOWFILEDISCOVERY.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Example, Basic GAM: gam all users print filelist id title permissions > filelistperms.csv
 #  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,withLink"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
-#    (n.b., driveFileTitle, role, domain and withLink are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, role, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedWithDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
@@ -29,10 +29,10 @@ ALT_FILE_NAME = 'name'
 #FILE_NAME = 'name'
 #ALT_FILE_NAME = 'title'
 
-# Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-DOMAIN_LIST = ['domain.com',]
-# Specify desired value of withLink field: True, False, Any (matches True and False)
-DESIRED_WITHLINK = 'Any'
+# If you want to limit finding ACLS for a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+DOMAIN_LIST = []
+# Specify desired value of allowFileDiscovery field: True, False, Any (matches True and False)
+DESIRED_ALLOWFILEDISCOVERY = 'Any'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -43,7 +43,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'domain', 'withLink'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'domain', 'allowFileDiscovery'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -57,15 +57,15 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v == 'domain':
       permissions_N = mg.group(1)
       domain = row['permissions.{0}.domain'.format(permissions_N)]
-      withLink = row.get('permissions.{0}.withLink'.format(permissions_N), str(row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N)) == 'False'))
-      if domain in DOMAIN_LIST and (DESIRED_WITHLINK == 'Any' or DESIRED_WITHLINK == withLink):
+      allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
+      if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (DESIRED_ALLOWFILEDISCOVERY in ('Any', allowFileDiscovery)):
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
                             'role': row['permissions.{0}.role'.format(permissions_N)],
                             'domain': domain,
-                            'withLink': withLink})
+                            'allowFileDiscovery': allowFileDiscovery})
 
 if inputFile != sys.stdin:
   inputFile.close()
