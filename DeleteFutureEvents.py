@@ -31,7 +31,7 @@ QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
-  outputFile = open(sys.argv[3], 'w', newline='')
+  outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 

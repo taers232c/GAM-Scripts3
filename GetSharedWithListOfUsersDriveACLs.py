@@ -53,7 +53,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
 inputFile.close()
 
 if sys.argv[2] != '-':
-  outputFile = open(sys.argv[2], 'w', newline='')
+  outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'emailAddress'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

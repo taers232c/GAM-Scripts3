@@ -17,7 +17,7 @@ QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 if sys.argv[1] != '-':
-  outputFile = open(sys.argv[1], 'w', newline='')
+  outputFile = open(sys.argv[1], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['email',], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

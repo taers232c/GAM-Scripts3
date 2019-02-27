@@ -29,7 +29,7 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 FORWARD_DOMAIN = re.compile(r"^forward .*@(.*)$")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w', newline='')
+  outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):

@@ -34,7 +34,7 @@ DOMAIN_LIST = ['domain.com',]
 AGGREGATE_DOMAINS = True
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w', newline='')
+  outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['group', 'domain', 'count'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
@@ -47,7 +47,7 @@ else:
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 
 if len(sys.argv) > 3:
-  matchFile = open(sys.argv[3], 'w', newline='')
+  matchFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
   matchCSV = csv.DictWriter(matchFile, inputCSV.fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
   matchCSV.writeheader()
 else:

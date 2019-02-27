@@ -80,7 +80,7 @@ COUNT_CATEGORIES = {
 PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w', newline='')
+  outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, HEADERS, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
