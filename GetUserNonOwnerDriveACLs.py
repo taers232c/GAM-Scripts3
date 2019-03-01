@@ -13,9 +13,9 @@
 #				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users-Drive-Files
 #    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist id title permissions owners.emailaddress
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,emailAddress"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,emailAddress,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
-#    (n.b., driveFileTitle, role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python GetUserNonOwnerDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
@@ -42,7 +42,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain', u'allowFileDiscovery'],
+                           lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -58,13 +59,16 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       if v == u'domain':
         domain = row['permissions.{0}.domain'.format(permissions_N)]
         emailAddress = ''
+        allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
       elif v in ['user', 'group']:
         if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
           continue
         emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
         domain = emailAddress[emailAddress.find(u'@')+1:]
+        allowFileDiscovery = u''
       else:
         domain = emailAddress = ''
+        allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
       if v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or emailAddress != row['owners.0.emailAddress']:
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
@@ -73,7 +77,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'role': row['permissions.{0}.role'.format(permissions_N)],
                             'type': v,
                             'emailAddress': emailAddress,
-                            'domain': domain})
+                            'allowFileDiscovery': allowFileDiscovery})
 
 if inputFile != sys.stdin:
   inputFile.close()
