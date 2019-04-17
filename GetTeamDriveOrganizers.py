@@ -59,6 +59,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_ROLE.match(k)
     if mg and v == 'organizer':
       permissions_N = mg.group(1)
+      if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
+        continue
       orgtype = row['permissions.{0}.type'.format(permissions_N)]
       if (orgtype == u'user' and not SHOW_USER_ORGANIZERS) or (orgtype == u'group' and not SHOW_GROUP_ORGANIZERS):
         continue
