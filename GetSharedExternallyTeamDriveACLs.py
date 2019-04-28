@@ -86,16 +86,17 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v:
       permissions_N = mg.group(1)
       if v == u'domain':
-        domain = row['permissions.{0}.domain'.format(permissions_N)]
         emailAddress = ''
+        domain = row['permissions.{0}.domain'.format(permissions_N)]
       elif v in ['user', 'group']:
         if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
           continue
         emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
         domain = emailAddress[emailAddress.find(u'@')+1:]
-      else:
-        continue
-      if domain not in DOMAIN_LIST:
+      else: #anyone
+        emailAddress = ''
+        domain = ''
+      if v == 'anyone' or domain not in DOMAIN_LIST:
         outputCSV.writerow({'Owner': row['Owner'],
                             'teamDriveId': row['teamDriveId'],
                             'teamDriveName': teamDriveNames.get(row['teamDriveId'], row['teamDriveId']),
