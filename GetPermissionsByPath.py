@@ -59,7 +59,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   if numPaths > 0:
     pathList = []
     for p in range(0, numPaths):
-      pathList.append(row['path.{0}'.format(p)])
+      pathList.append(row['paths.{0}'.format(p)])
   else:
     pathList = [row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown'))]
   for k, v in iter(row.items()):
