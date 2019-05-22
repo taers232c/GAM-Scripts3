@@ -4,7 +4,7 @@
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set GROUP_LIST.
+# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set GROUP_LIST and DOMAIN_LIST.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
@@ -23,14 +23,18 @@ import re
 import sys
 
 # For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-FILE_NAME = 'title'
-ALT_FILE_NAME = 'name'
+#FILE_NAME = 'title'
+#ALT_FILE_NAME = 'name'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#FILE_NAME = 'name'
-#ALT_FILE_NAME = 'title'
+FILE_NAME = 'name'
+ALT_FILE_NAME = 'title'
 
 # Substitute your group(s) in the list below, e.g., GROUP_LIST = ['group1@domain.com',] GROUP_LIST = ['group1@domain.com', 'group2@domain.com',]
+# The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, GROUP_LIST = []
 GROUP_LIST = ['group@domain.com',]
+# Substitute your domain(s) in the list below if you want all groups in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+# The list should be empty if you're only specifiying grpups in GROUP_LIST, e,g, DOMAIN__LIST = []
+DOMAIN_LIST = ['domain.com',]
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -55,7 +59,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v == u'group':
       permissions_N = mg.group(1)
       emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), u'')
-      if emailAddress in GROUP_LIST:
+      domain = row['permissions.{0}.domain'.format(permissions_N)]
+      if emailAddress in GROUP_LIST or domain in DOMAIN_LIST:
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
