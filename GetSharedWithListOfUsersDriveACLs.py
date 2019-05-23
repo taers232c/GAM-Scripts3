@@ -16,8 +16,8 @@
 #  ...
 # 2: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #    If you don't want all files, use query/fullquery
-#  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
+#  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress
 # 3: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired users
 #    (n.b., driveFileTitle, role, and emailAddress are not used in the next step, they are included for documentation purposes)
@@ -32,11 +32,11 @@ import re
 import sys
 
 # For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-FILE_NAME = 'title'
-ALT_FILE_NAME = 'name'
+#FILE_NAME = 'title'
+#ALT_FILE_NAME = 'name'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#FILE_NAME = 'name'
-#ALT_FILE_NAME = 'title'
+FILE_NAME = 'name'
+ALT_FILE_NAME = 'title'
 
 # The header in the CSV file that contains the user email addresses
 USER_HEADER = u'email'
@@ -73,7 +73,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         continue
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)].lower()
       if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and emailAddress in userSet:
-        outputCSV.writerow({'Owner': row['Owner'],
+        outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),

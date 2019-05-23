@@ -46,11 +46,11 @@ import re
 import sys
 
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-FILE_NAME = 'title'
-ALT_FILE_NAME = 'name'
+#FILE_NAME = 'title'
+#ALT_FILE_NAME = 'name'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#FILE_NAME = 'name'
-#ALT_FILE_NAME = 'title'
+FILE_NAME = 'name'
+ALT_FILE_NAME = 'title'
 
 # Substitute your specific user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
 # The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, USER_LIST = []

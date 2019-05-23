@@ -52,11 +52,11 @@ import re
 import sys
 
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-FILE_NAME = 'title'
-ALT_FILE_NAME = 'name'
+#FILE_NAME = 'title'
+#ALT_FILE_NAME = 'name'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#FILE_NAME = 'name'
-#ALT_FILE_NAME = 'title'
+FILE_NAME = 'name'
+ALT_FILE_NAME = 'title'
 
 # Specify desired value of allowFileDiscovery field: True, False, Any (matches True and False)
 DESIRED_ALLOWFILEDISCOVERY = 'Any'

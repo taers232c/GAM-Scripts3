@@ -7,8 +7,8 @@
 # Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set USER_LIST and DOMAIN_LIST.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
+#  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired users
 #    (n.b., driveFileTitle, role, and emailAddress are not used in the next step, they are included for documentation purposes)
@@ -63,7 +63,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
       domain = row['permissions.{0}.domain'.format(permissions_N)]
       if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and (emailAddress in USER_LIST or domain in DOMAIN_LIST):
-        outputCSV.writerow({'Owner': row['Owner'],
+        outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),

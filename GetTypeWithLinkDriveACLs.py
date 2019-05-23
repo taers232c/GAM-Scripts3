@@ -7,8 +7,8 @@
 # Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set LINK_FIELD, DESIRED_TYPE and LINK_VALUE.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
+#  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired type and withLink values
 #  $ python GetTypeWithLinkDriveACLs.py filelistperms.csv deleteperms.csv
@@ -22,13 +22,13 @@ import re
 import sys
 
 # For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-FILE_NAME = 'title'
-ALT_FILE_NAME = 'name'
-LINK_FIELD = u'withLink'
+#FILE_NAME = 'title'
+#ALT_FILE_NAME = 'name'
+#LINK_FIELD = u'withLink'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#FILE_NAME = 'name'
-#ALT_FILE_NAME = 'title'
-#LINK_FIELD = u'allowFileDiscovery'
+FILE_NAME = 'name'
+ALT_FILE_NAME = 'title'
+LINK_FIELD = u'allowFileDiscovery'
 
 DESIRED_TYPE = 'anyone' # anyone or domain
 # Remember: withLink True = allowFileDiscovery False
@@ -57,7 +57,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v:
       permissions_N = mg.group(1)
       if v == DESIRED_TYPE and row['permissions.{0}.{1}'.format(permissions_N, LINK_FIELD)] == LINK_VALUE:
-        outputCSV.writerow({'Owner': row['Owner'],
+        outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),

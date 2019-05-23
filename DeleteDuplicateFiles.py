@@ -10,8 +10,8 @@
 #    You can add additional fields that will be preserved in the output.
 #    You can add a select option if you want to only process files in a specific folder
 #    If you don't want to delete folders, add showmimetype not gfolder
-#  $ gam redirect csv ./UserFiles.csv multiprocess all users print filelist fields id,title,createddate,mimetype fullpath
-#  $ gam redirect csv ./UserFiles.csv user user@domain.com print filelist fields id,title,createddate,mimetype fullpath
+#  $ gam redirect csv ./UserFiles.csv multiprocess all users print filelist fields id,title,createddate,mimetype,owners.emailaddress fullpath
+#  $ gam redirect csv ./UserFiles.csv user user@domain.com print filelist fields id,title,createddate,mimetype,owners.emailaddress fullpath
 #                               select drivefilename "Folder Name" showmimetype not gfolder
 # 2: From that list of files, output a CSV file with the same headers as the input CSV file
 #    that lists the drive file Ids that have the same owner, title, mimeType and paths with a createdDate older than the most recent createdDate
@@ -25,11 +25,11 @@ import csv
 import sys
 
 # For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-FILE_NAME = 'title'
-CREATED_DATE = 'createdDate'
+#FILE_NAME = 'title'
+#CREATED_DATE = 'createdDate'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#FILE_NAME = 'name'
-#CREATED_DATE = 'createdTime'
+FILE_NAME = 'name'
+CREATED_DATE = 'createdTime'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -60,15 +60,15 @@ outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator=LINE_
 outputCSV.writeheader()
 
 rows = sorted(inputCSV, key=lambda k: k[CREATED_DATE], reverse=True)
-for row in sorted(rows, key=lambda k: (k['Owner'], k[FILE_NAME], k['mimeType'], k['paths'])):
-  if ((row['Owner'] == prevOwner)
+for row in sorted(rows, key=lambda k: (k['owners.0.emailAddress'], k[FILE_NAME], k['mimeType'], k['paths'])):
+  if ((row['owners.0.emailAddress'] == prevOwner)
       and (row[FILE_NAME] == prevTitle)
       and (row['mimeType'] == prevMimeType)
       and (row[CREATED_DATE] < prevCreatedDate)
       and (rowPaths(row) == prevPaths)):
     outputCSV.writerow(row)
   else:
-    prevOwner = row['Owner']
+    prevOwner = row['owners.0.emailAddress']
     prevTitle = row[FILE_NAME]
     prevMimeType = row['mimeType']
     prevCreatedDate = row[CREATED_DATE]

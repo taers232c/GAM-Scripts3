@@ -6,7 +6,7 @@
 # Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment
 # Usage:
 # 1: Get all of the files for testuser@domain.com
-#  $ gam redirect csv ./userfiles.csv user testuser@domain.com print filelist id title parents
+#  $ gam redirect csv ./userfiles.csv user testuser@domain.com print filelist fields id,title,parents,owners.emailaddress
 # 2: From that list of files, output a CSV file with headers "Owner,driveFileId,driveFileTitle"
 #    that lists the driveFileIds for all files that have root as a parent and other parents
 #  $ python GetMultipleParentsRoot.py ./userfiles.csv ./rootparents.csv
@@ -20,11 +20,11 @@ import re
 import sys
 
 # For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-FILE_NAME = 'title'
-ALT_FILE_NAME = 'name'
+#FILE_NAME = 'title'
+#ALT_FILE_NAME = 'name'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#FILE_NAME = 'name'
-#ALT_FILE_NAME = 'title'
+FILE_NAME = 'name'
+ALT_FILE_NAME = 'title'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -51,7 +51,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v:
       parents_N = mg.group(1)
       if row['parents.{0}.isRoot'.format(parents_N)] == 'True':
-        outputCSV.writerow({'Owner': row['Owner'],
+        outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown'))})
         continue
