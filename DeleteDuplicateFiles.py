@@ -37,7 +37,7 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 def rowPaths(crow):
   paths = set()
   for i in range(0, int(crow['paths'])):
-    paths.add(crow['paths.{0}'.format(i)])
+    paths.add(crow['path.{0}'.format(i)])
   return paths
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
