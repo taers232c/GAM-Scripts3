@@ -38,7 +38,7 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['id', 'name', u'organizer'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['id', 'name', 'organizer'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 teamDriveNames = {}
@@ -58,11 +58,11 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_ROLE.match(k)
     if mg and v in ['organizer', 'fileOrganizer']:
       permissions_N = mg.group(1)
-      if row['permissions.{0}.type'.format(permissions_N)] != u'user':
+      if row['permissions.{0}.type'.format(permissions_N)] != 'user':
         continue
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
       if DOMAIN_LIST:
-        domain = emailAddress[emailAddress.find(u'@')+1:]
+        domain = emailAddress[emailAddress.find('@')+1:]
         if domain not in DOMAIN_LIST:
           continue
       organizer = emailAddress

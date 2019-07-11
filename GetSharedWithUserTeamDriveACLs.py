@@ -79,9 +79,9 @@ else:
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
-    if mg and v == u'user':
+    if mg and v == 'user':
       permissions_N = mg.group(1)
-      if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+      if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
         continue
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
       domain = row['permissions.{0}.domain'.format(permissions_N)]

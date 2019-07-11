@@ -24,11 +24,11 @@ import sys
 # For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
 #FILE_NAME = 'title'
 #ALT_FILE_NAME = 'name'
-#LINK_FIELD = u'withLink'
+#LINK_FIELD = 'withLink'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
-LINK_FIELD = u'allowFileDiscovery'
+LINK_FIELD = 'allowFileDiscovery'
 
 DESIRED_TYPE = 'anyone' # anyone or domain
 # Remember: withLink True = allowFileDiscovery False

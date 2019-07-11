@@ -36,11 +36,11 @@ import sys
 DOMAIN_LIST = ['domain.com',]
 
 # For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-LINK_FIELD = u'withLink'
-LINK_VALUE = u'True'
+LINK_FIELD = 'withLink'
+LINK_VALUE = 'True'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#LINK_FIELD = u'allowFileDiscovery'
-#LINK_VALUE = u'False'
+#LINK_FIELD = 'allowFileDiscovery'
+#LINK_VALUE = 'False'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -110,13 +110,13 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         else:
           domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
           if not domain and v in ['user', 'group']:
-            if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+            if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
               continue
             emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
-            domain = emailAddress[emailAddress.find(u'@')+1:]
+            domain = emailAddress[emailAddress.find('@')+1:]
           internal = domain in DOMAIN_LIST
           incrementCounter([SHARED_EXTERNAL_COUNTER, SHARED_INTERNAL_COUNTER][internal])
-          if v == u'domain':
+          if v == 'domain':
             userShareCounts[owner][COUNT_CATEGORIES[v][internal][row['permissions.{0}.{1}'.format(permissions_N, LINK_FIELD)] == LINK_VALUE]] += 1
           else: # group, user
             userShareCounts[owner][COUNT_CATEGORIES[v][internal]] += 1

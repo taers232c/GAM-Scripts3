@@ -35,10 +35,10 @@ PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 def getWithLink(r, n):
   withLink = r.get('permissions.{0}.withLink'.format(n))
   if withLink is not None:
-    return withLink == u'True'
+    return withLink == 'True'
   withLink = r.get('permissions.{0}.allowFileDiscovery'.format(n))
   if withLink is not None:
-    return withLink == u'False'
+    return withLink == 'False'
   return False
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
@@ -66,12 +66,12 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if v == u'domain':
+      if v == 'domain':
         value = row['permissions.{0}.domain'.format(permissions_N)]
         if getWithLink(row, permissions_N):
           v += 'WithLink'
       elif v in ['user', 'group']:
-        if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+        if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
           continue
         value = row['permissions.{0}.emailAddress'.format(permissions_N)]
       else:

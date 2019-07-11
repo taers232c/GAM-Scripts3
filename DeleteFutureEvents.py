@@ -25,7 +25,7 @@ import sys
 
 DELETE_EVENTS_WITH_ATTENDEES = False
 
-YYYYMMDD_FORMAT = u'%Y-%m-%d'
+YYYYMMDD_FORMAT = '%Y-%m-%d'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'

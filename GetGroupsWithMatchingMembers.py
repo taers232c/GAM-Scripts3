@@ -83,13 +83,13 @@ for row in inputCSV:
     group = row['group']
     Groups.setdefault(group, [0, 0, 0, 0])
     emailAddress = row['email']
-    if row['type'] == u'USER':
+    if row['type'] == 'USER':
       Groups[group][USER_TOTAL] += 1
       if userMatchPattern and userMatchPattern.match(emailAddress):
         Groups[group][USER_MATCHES] += 1
         if matchFile:
           matchCSV.writerow(row)
-    elif row['type'] == u'GROUP':
+    elif row['type'] == 'GROUP':
       Groups[group][GROUP_TOTAL] += 1
       if groupMatchPattern and groupMatchPattern.match(emailAddress):
         Groups[group][GROUP_MATCHES] += 1

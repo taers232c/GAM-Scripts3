@@ -42,7 +42,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain', u'allowFileDiscovery'],
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain', 'allowFileDiscovery'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -56,16 +56,16 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if v == u'domain':
+      if v == 'domain':
         domain = row['permissions.{0}.domain'.format(permissions_N)]
         emailAddress = ''
         allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
       elif v in ['user', 'group']:
-        if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+        if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
           continue
         emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
-        domain = emailAddress[emailAddress.find(u'@')+1:]
-        allowFileDiscovery = u''
+        domain = emailAddress[emailAddress.find('@')+1:]
+        allowFileDiscovery = ''
       else:
         domain = emailAddress = ''
         allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))

@@ -22,11 +22,11 @@ import sys
 DOMAIN_LIST = ['domain.com',]
 
 # For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-LINK_FIELD = u'withLink'
-LINK_VALUE = u'True'
+LINK_FIELD = 'withLink'
+LINK_VALUE = 'True'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#LINK_FIELD = u'allowFileDiscovery'
-#LINK_VALUE = u'False'
+#LINK_FIELD = 'allowFileDiscovery'
+#LINK_VALUE = 'False'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -75,12 +75,12 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           domainShareCounts.setdefault(domain, 0)
           domainShareCounts[domain] += 1
       else: # group, user
-        if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+        if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
           continue
         emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
-        domain = row.get('permissions.{0}.domain'.format(permissions_N), u'')
+        domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
         if not domain:
-          domain = emailAddress[emailAddress.find(u'@')+1:]
+          domain = emailAddress[emailAddress.find('@')+1:]
         if domain in DOMAIN_LIST:
           continue
         if v == 'group':

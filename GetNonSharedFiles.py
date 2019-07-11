@@ -50,11 +50,11 @@ for row in inputCSV:
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg:
-      if v == u'user':
+      if v == 'user':
         permissions_N = mg.group(1)
         role = row['permissions.{0}.role'.format(permissions_N)]
-        emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), u'')
-        if (role and role != 'owner') or (emailAddress and emailAddress != row[u'Owner']):
+        emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), '')
+        if (role and role != 'owner') or (emailAddress and emailAddress != row['Owner']):
           shared = True
       elif v:
         shared = True

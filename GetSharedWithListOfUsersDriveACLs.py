@@ -39,7 +39,7 @@ FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
 # The header in the CSV file that contains the user email addresses
-USER_HEADER = u'email'
+USER_HEADER = 'email'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -67,9 +67,9 @@ else:
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
-    if mg and v == u'user':
+    if mg and v == 'user':
       permissions_N = mg.group(1)
-      if row['permissions.{0}.deleted'.format(permissions_N)] == u'True':
+      if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
         continue
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)].lower()
       if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and emailAddress in userSet:

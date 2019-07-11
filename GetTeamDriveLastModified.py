@@ -39,7 +39,7 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['id', 'name', 'driveFileId', 'driveFileName', u'modifiedTime'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['id', 'name', 'driveFileId', 'driveFileName', 'modifiedTime'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 teamDriveNames = {}
