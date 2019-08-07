@@ -10,7 +10,7 @@
 #  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
 #  $ Basic: gam user user@domain.com print filelist id title permissions > filelistperms.csv
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
-#  $ Advanced: gam redirect csv ./filelistperms.csv multiprocess user user@domain.com print filelist id title permissions
+#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file that lists only the non-shared files.
 #  $ python GetNonSharedFiles.py filelistperms.csv nonsharedfiles.csv
 """
