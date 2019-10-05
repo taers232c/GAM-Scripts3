@@ -21,7 +21,7 @@
 #  $ python GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
-# 6: Go to step 10
+# 6: Go to step 11
 # Selected Team Drives
 # 7: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
 #  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
