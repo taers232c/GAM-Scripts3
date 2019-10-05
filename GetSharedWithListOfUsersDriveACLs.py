@@ -69,7 +69,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'user':
       permissions_N = mg.group(1)
-      if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
+      if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
         continue
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)].lower()
       if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and emailAddress in userSet:

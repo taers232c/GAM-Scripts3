@@ -110,7 +110,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         else:
           domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
           if not domain and v in ['user', 'group']:
-            if row['permissions.{0}.deleted'.format(permissions_N)] == 'True':
+            if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
               continue
             emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
             domain = emailAddress[emailAddress.find('@')+1:]
