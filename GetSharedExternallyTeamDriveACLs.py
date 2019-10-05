@@ -5,7 +5,7 @@
 #	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set DOMAIN_LIST.
 # Usage:
-# For all Team Drives, start at step 1; For Team Drives selected by user/group/OU, start at step 6
+# For all Team Drives, start at step 1; For Team Drives selected by user/group/OU, start at step 7
 # All Team Drives
 # 1: Get all Team Drives.
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
@@ -19,25 +19,25 @@
 # 4: From that list of ACLs, output a CSV file with headers "id,name,organizers"
 #    that shows the organizers for each Team Drive
 #  $ python GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
-# 4: Get ACLs for all team drive files
+# 5: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
-# 5: Go to step 10
+# 6: Go to step 10
 # Selected Team Drives
-# 6: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
+# 7: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
 #  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
-# 7: Customize DeleteDuplicateRows.py for this task:
+# 8: Customize DeleteDuplicateRows.py for this task:
 #    Set ID_FIELD = 'id'
-# 8: Delete duplicate Team Drives (some may have multiple organizers).
+# 9: Delete duplicate Team Drives (some may have multiple organizers).
 #  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
-# 9: Get ACLs for all team drive files
+# 10: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
 # Common code
-# 10: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
+# 11: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs except those from the specified domains.
 #    (n.b., teamDriveId, teamDriveName, driveFileTitle, role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
 #  $ python GetSharedExternallyTeamDriveACLs.py filelistperms.csv TeamDrives.csv  deleteperms.csv
-# 11: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 12: Delete the ACLs
+# 12: Inspect deleteperms.csv, verify that it makes sense and then proceed
+# 13: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
@@ -98,8 +98,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         domain = ''
       if v == 'anyone' or domain not in DOMAIN_LIST:
         outputCSV.writerow({'Owner': row['Owner'],
-                            'teamDriveId': row['teamDriveId'],
-                            'teamDriveName': teamDriveNames.get(row['teamDriveId'], row['teamDriveId']),
+                            'teamDriveId': row['driveId'],
+                            'teamDriveName': teamDriveNames.get(row['driveId'], row['driveId']),
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
