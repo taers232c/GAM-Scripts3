@@ -3,8 +3,8 @@
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with a list of users from a CSV file
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set USER_HEADER
+#	https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set USER_HEADER
 # Usage:
 # 1: Prepare a CSV file with a list of user email addresses; set USER_HEADER to identify the column containing the email addresses
 #  $ more Users.csv
@@ -31,10 +31,6 @@ import csv
 import re
 import sys
 
-# For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-#FILE_NAME = 'title'
-#ALT_FILE_NAME = 'name'
-# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 

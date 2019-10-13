@@ -3,8 +3,8 @@
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with selected users or all users in selected domains.
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set USER_LIST and DOMAIN_LIST.
+#	https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set USER_LIST and DOMAIN_LIST.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv
@@ -22,10 +22,6 @@ import csv
 import re
 import sys
 
-# For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-#FILE_NAME = 'title'
-#ALT_FILE_NAME = 'name'
-# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 

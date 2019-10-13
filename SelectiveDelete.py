@@ -21,8 +21,6 @@
 import csv
 import sys
 
-FILE_NAME = 'name'
-
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 

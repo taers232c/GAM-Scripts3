@@ -2,7 +2,7 @@
 """
 # Purpose: For a Google Drive User(s), output a CSV that shows all user organized events with a start date >= a specified date; they can then be deleted.
 # Note: This script requires Advanced GAM:
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELETE_EVENTS_WITH_ATTENDEES = True or False to determine whether events with attendees will be deleted.
 # Usage:
 # 1: Get calendar events for a user

@@ -6,7 +6,7 @@
 # threshold N - output all users belonging to more than N groups
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get primaryEmail, groups for all users
 #  $ Basic: gam print users fields primaryEmail,name groups > UsersGroups.csv

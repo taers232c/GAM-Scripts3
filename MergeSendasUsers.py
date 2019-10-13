@@ -3,7 +3,7 @@
 # Purpose: Make a CSV file that merges sendas addresses with user data
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set INCLUDE_PRIMARY = True/False, OPTIONAL_MERGE_FIELDS
 # Usage:
 # 1: Get Users
@@ -37,6 +37,7 @@ import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
 # Should primary email address be include?
 INCLUDE_PRIMARY = True
 # Select optional fields from Sendas.csv to merge with Users.csv

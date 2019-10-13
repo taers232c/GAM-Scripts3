@@ -3,7 +3,7 @@
 # Purpose: Produce a CSV file showing groups with members that match regular expressions
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: USER_MATCH_PATTERN, GROUP_MATCH_PATTERN, SHOW_GROUPS_WITH_NO_MATCHES
 # Usage:
 # 1: Get group members

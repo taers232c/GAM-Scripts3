@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Delete all drive file ACLs for Team Drives shared outside of a list of specified domains
-# Note: This script requires Advanced GAM with Team Drive support:
-#	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Note: This script requires Advanced GAM:
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST.
 # Usage:
 # 1: Get all Team Drives

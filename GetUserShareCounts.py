@@ -3,7 +3,7 @@
 # Purpose: For a Google Drive User(s), output a CSV file showing the share type counts for files shared by the user(s)
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST to the list of domains you consider internal Set LINK_FIELD and LINK_VALUE.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
@@ -35,12 +35,12 @@ import sys
 # Substitute your internal domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
 
-# For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-LINK_FIELD = 'withLink'
-LINK_VALUE = 'True'
+# For GAMADV-XTD3 with drive_v3_native_names = false
+#LINK_FIELD = 'withLink'
+#LINK_VALUE = 'True'
 # For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
-#LINK_FIELD = 'allowFileDiscovery'
-#LINK_VALUE = 'False'
+LINK_FIELD = 'allowFileDiscovery'
+LINK_VALUE = 'False'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'

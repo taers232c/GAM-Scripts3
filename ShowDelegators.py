@@ -3,7 +3,7 @@
 # Purpose: Make a CSV file showing delegators for delegates
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get delegates
 #  $ Basic: gam all users print delegates > ./AllDelegates.csv

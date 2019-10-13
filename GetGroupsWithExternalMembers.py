@@ -3,7 +3,7 @@
 # Purpose: Produce a CSV file showing groups with external members, i.e, those in domains other than ones you specify.
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DELIMITER, DOMAIN_LIST, AGGREGATE_DOMAINS
 # Usage:
 # 1: Get group members

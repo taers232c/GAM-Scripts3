@@ -3,8 +3,8 @@
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with selected groups.
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment. Set GROUP_LIST and DOMAIN_LIST.
+#	https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set GROUP_LIST and DOMAIN_LIST.
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv
@@ -22,10 +22,6 @@ import csv
 import re
 import sys
 
-# For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-#FILE_NAME = 'title'
-#ALT_FILE_NAME = 'name'
-# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
@@ -33,7 +29,7 @@ ALT_FILE_NAME = 'title'
 # The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, GROUP_LIST = []
 GROUP_LIST = ['group@domain.com',]
 # Substitute your domain(s) in the list below if you want all groups in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-# The list should be empty if you're only specifiying grpups in GROUP_LIST, e,g, DOMAIN__LIST = []
+# The list should be empty if you're only specifiying groups in GROUP_LIST, e,g, DOMAIN__LIST = []
 DOMAIN_LIST = ['domain.com',]
 
 QUOTE_CHAR = '"' # Adjust as needed

@@ -2,7 +2,7 @@
 """
 # Purpose: Delete attendees from calendar events
 # Note: This script requires Advanced GAM version 4.89.02 or later:
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELETE_ATTENDEES_SET, DELETE_ATTENDEES_PATTERN
 # Usage:
 # 1: Produce a CSV file CalendarEvents.csv of calendar events

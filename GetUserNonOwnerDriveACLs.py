@@ -3,8 +3,7 @@
 # Purpose: For a Google Drive User, delete all drive file ACLs except those indicating the user as owner
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment.
+#	https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Use print filelist to get selected ACLs
 #    Syntax, Basic GAM: gam <UserTypeEntity> print filelist [anyowner] [query <QueryDriveFile>] [fullquery <QueryDriveFile>]
@@ -26,10 +25,6 @@ import csv
 import re
 import sys
 
-# For GAM, GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-#FILE_NAME = 'title'
-#ALT_FILE_NAME = 'name'
-# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 

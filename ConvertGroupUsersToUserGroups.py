@@ -3,7 +3,7 @@
 # Purpose: Convert a CSV file showing group members to one showing groups for each user
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELIMITER to the single character that will separate groups
 # Usage:
 # 1: Get group members

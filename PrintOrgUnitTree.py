@@ -3,7 +3,7 @@
 # Purpose: Print an Org Unit tree with Users/CrOS devices fields
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Change QUOTE_CHAR, SHOW_EMPTY_OUS, SHOW_LABELS, FIELD_DELIMITER, INDENT_SPACES, LINE_TERMINATOR as required/desired
 # Usage:
 # 1: Get Org Units
@@ -31,6 +31,7 @@ SHOW_LABELS = True # Should field labels be displayed
 SELECTED_FIELDS = [] # Only display selected fields ['primaryEmail',] ['deviceId', 'notes']
 FIELD_DELIMITER = ', '# Delimiter between fields
 INDENT_SPACES = '  ' # How much to indent data
+LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 orgUnits = ['/',]
 orgUnitsTree = {'/': []}

@@ -3,7 +3,7 @@
 # Purpose: For Gmail User(s), list/delete all filters that forward email outside of a list of specified domains
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST.
 # Usage:
 # 1: Get filters, if you don't want all users, replace all users with your user selection in the command below

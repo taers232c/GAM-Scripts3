@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Get file counts for Team Drives
-# Note: This script requires Advanced GAM with Team Drive support:
-#	https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+# Note: This script requires Advanced GAM:
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DOMAIN_LIST
 # Usage:
 # 1: If you want to include all Team Drives, do this step and then skip to step 4, otherwise start at step 2.

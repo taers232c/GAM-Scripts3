@@ -3,7 +3,7 @@
 # Purpose: Make a CSV file showing groups owned by users
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set SelectedUsers or pass a CSV file:field reference on the command line
 # Usage:
 # 1: Get group owners

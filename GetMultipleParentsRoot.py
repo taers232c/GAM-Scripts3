@@ -2,8 +2,7 @@
 """
 # Purpose: For a Google Drive User, delete root as a parent of files that have root as a parent and other parents
 # Note: This script requires Advanced GAM:
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and ALT_FILE_NAME based on your environment
+#	https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get all of the files for testuser@domain.com
 #  $ gam redirect csv ./userfiles.csv user testuser@domain.com print filelist fields id,title,parents,owners.emailaddress
@@ -19,10 +18,6 @@ import csv
 import re
 import sys
 
-# For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-#FILE_NAME = 'title'
-#ALT_FILE_NAME = 'name'
-# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 

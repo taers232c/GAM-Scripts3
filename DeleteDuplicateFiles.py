@@ -2,8 +2,7 @@
 """
 # Purpose: For a Google Drive User(s), delete all duplicate drive files
 # Note: This script requires Advanced GAM:
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set FILE_NAME and CREATED_DATE based on your environment.
+#	https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get information for all files, if you don't want all users, replace all users with your user selection in the command below
 #    These fields are required: fields id,title,createddate,mimetype fullpath
@@ -24,12 +23,10 @@
 import csv
 import sys
 
-# For GAMADV-X or GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = false
-#FILE_NAME = 'title'
-#CREATED_DATE = 'createdDate'
-# For GAMADV-XTD/GAMADV-XTD3 with drive_v3_native_names = true
 FILE_NAME = 'name'
+ALT_FILE_NAME = 'title'
 CREATED_DATE = 'createdTime'
+ALT_CREATED_DATE = 'createdDate'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -59,19 +56,19 @@ inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
-rows = sorted(inputCSV, key=lambda k: k[CREATED_DATE], reverse=True)
-for row in sorted(rows, key=lambda k: (k['owners.0.emailAddress'], k[FILE_NAME], k['mimeType'], k['paths'])):
+rows = sorted(inputCSV, key=lambda k: k.get(CREATED_DATE, k.get(ALT_CREATED_DATE)), reverse=True)
+for row in sorted(rows, key=lambda k: (k['owners.0.emailAddress'], k.get(FILE_NAME, k.get(ALT_FILE_NAME)), k['mimeType'], k['paths'])):
   if ((row['owners.0.emailAddress'] == prevOwner)
-      and (row[FILE_NAME] == prevTitle)
+      and (row.get(FILE_NAME, row.get(ALT_FILE_NAME)) == prevTitle)
       and (row['mimeType'] == prevMimeType)
-      and (row[CREATED_DATE] < prevCreatedDate)
+      and (row.get(CREATED_DATE, row.get(ALT_CREATED_DATE)) < prevCreatedDate)
       and (rowPaths(row) == prevPaths)):
     outputCSV.writerow(row)
   else:
     prevOwner = row['owners.0.emailAddress']
-    prevTitle = row[FILE_NAME]
+    prevTitle = row.get(FILE_NAME, row.get(ALT_FILE_NAME))
     prevMimeType = row['mimeType']
-    prevCreatedDate = row[CREATED_DATE]
+    prevCreatedDate = row.get(CREATED_DATE, row.get(ALT_CREATED_DATE))
     prevPaths = rowPaths(row)
 if inputFile != sys.stdin:
   inputFile.close()

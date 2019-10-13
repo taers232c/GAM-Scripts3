@@ -2,7 +2,7 @@
 """
 # Purpose: Move root users to an Org Unit based on their work address countryCode
 # Note: This script requires Advanced GAM:
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set ORG_UNIT_MAP
 # Usage:
 # 1: Get primaryEmail, orgUnitPath, addresses for all root users

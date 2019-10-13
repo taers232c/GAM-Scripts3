@@ -2,7 +2,7 @@
 """
 # Purpose: Add <DriveFilePermissionList> to a list of files/folders
 # Note: This script requires Advanced GAM:
-#	https://github.com/taers232c/GAMADV-X, https://github.com/taers232c/GAMADV-XTD, https://github.com/taers232c/GAMADV-XTD3
+#	https://github.com/taers232c/GAMADV-XTD3
 # Definitions:
 # <DriveFileACLRole> :: =commenter|editor|organizer|owner|reader|writer
 # <DriveFilePermissionScope> ::= anyone|anyonewithlink|user:<EmailAddress>|group:<EmailAddress>|domain:<DomainName>|domainwithlink:<DomainName>
