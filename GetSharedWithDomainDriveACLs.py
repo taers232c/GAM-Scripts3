@@ -8,7 +8,7 @@
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic GAM: gam all users print filelist id title permissions owners > filelistperms.csv
-#  $ Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress
+#  $ Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress pm type domain em
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
 #    (n.b., driveFileTitle, role, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)

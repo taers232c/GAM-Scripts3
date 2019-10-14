@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 # Purpose: Upgrade users with writer access on Team Drives to fileOrganizer access (aka content manager)
-# Note: This script requires Advanced GAM with Team Drive support:
+# Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get all Team Drives

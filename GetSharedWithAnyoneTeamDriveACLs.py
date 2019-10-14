@@ -23,7 +23,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type anyone em
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type anyone allowfilediscovery true em
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type anyone allowfilediscovery false em
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions pm type anyone em
 # 5: Go to step 10
 # Selected Team Drives
 # 6: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -36,7 +36,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type anyone em
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type anyone allowfilediscovery true em
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type anyone allowfilediscovery false em
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions pm type anyone em
 # Common code
 # 10: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone

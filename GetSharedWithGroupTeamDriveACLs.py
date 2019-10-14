@@ -20,7 +20,7 @@
 #    that shows the organizers for each Team Drive
 #  $ python GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 4: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions pm type group em
 # 5: Go to step 10
 # Selected Team Drives
 # 6: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -30,7 +30,7 @@
 # 8: Delete duplicate Team Drives (some may have multiple organizers).
 #  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 9: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions pm type group em
 # Common code
 # 10: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired groups
