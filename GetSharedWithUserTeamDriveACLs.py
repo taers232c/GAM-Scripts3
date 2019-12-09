@@ -54,7 +54,7 @@ ALT_FILE_NAME = 'title'
 # Substitute your specific user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
 # The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, USER_LIST = []
 USER_LIST = ['user1@domain.com',]
-# Substitute your domain(s) in the list below if you want all users in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+# Substitute your specific domain(s) in the list below if you want all users in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 # The list should be empty if you're only specifiying users in USER_LIST, e,g, DOMAIN__LIST = []
 DOMAIN_LIST = ['domain.com',]
 
