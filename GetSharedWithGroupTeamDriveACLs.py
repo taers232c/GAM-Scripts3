@@ -3,7 +3,7 @@
 # Purpose: For a Google Drive User(s), show all drive file ACLs for Team Drive files shared with selected groups.
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set GROUP_LIST.
+# Customize: Set GROUP_LIST and DOMAIN_LIST.
 # Usage:
 # For all Team Drives, start at step 1; For Team Drives selected by user/group/OU, start at step 7
 # All Team Drives
@@ -48,8 +48,15 @@ import sys
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
+# You can ooperate on specific groups or specific domains or operate on all groups in all domains.
+# For all groups in all domains, set GROUP_LIST = [] and DOMAIN_LIST = []
+
 # Substitute your group(s) in the list below, e.g., GROUP_LIST = ['group1@domain.com',] GROUP_LIST = ['group1@domain.com', 'group2@domain.com',]
+# The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, GROUP_LIST = []
 GROUP_LIST = ['group@domain.com',]
+# Substitute your domain(s) in the list below if you want all groups in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+# The list should be empty if you're only specifiying groups in GROUP_LIST, e,g, DOMAIN__LIST = []
+DOMAIN_LIST = ['domain.com',]
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -74,7 +81,10 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v == 'group':
       permissions_N = mg.group(1)
       emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), '')
-      if emailAddress in GROUP_LIST:
+      domain = row['permissions.{0}.domain'.format(permissions_N)]
+      if ((not GROUP_LIST and not DOMAIN_LIST) or
+          (GROUP_LIST and emailAddress in GROUP_LIST) or
+          (DOMAIN_LIST and domain in DOMAIN_LIST)):
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),

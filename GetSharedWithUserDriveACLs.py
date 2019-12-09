@@ -25,10 +25,13 @@ import sys
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
+# You can ooperate on specific users or specific domains or operate on all users in all domains.
+# For all users in all domains, set USER_LIST = [] and DOMAIN_LIST = []
+
 # Substitute your specific user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
 # The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, USER_LIST = []
 USER_LIST = ['user1@domain.com',]
-# Substitute your domain(s) in the list below if you want all users in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+# Substitute your specific domain(s) in the list below if you want all users in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 # The list should be empty if you're only specifiying users in USER_LIST, e,g, DOMAIN__LIST = []
 DOMAIN_LIST = ['domain.com',]
 
@@ -58,7 +61,10 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         continue
       emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
       domain = row['permissions.{0}.domain'.format(permissions_N)]
-      if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and (emailAddress in USER_LIST or domain in DOMAIN_LIST):
+      if ((row['permissions.{0}.role'.format(permissions_N)] != 'owner') and
+          ((not USER_LIST and not DOMAIN_LIST) or
+           (USER_LIST and emailAddress in USER_LIST) or
+           (DOMAIN_LIST and domain in DOMAIN_LIST))):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),

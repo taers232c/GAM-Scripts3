@@ -25,6 +25,9 @@ import sys
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
+# You can ooperate on specific groups or specific domains or operate on all groups in all domains.
+# For all groups in all domains, set GROUP_LIST = [] and DOMAIN_LIST = []
+
 # Substitute your group(s) in the list below, e.g., GROUP_LIST = ['group1@domain.com',] GROUP_LIST = ['group1@domain.com', 'group2@domain.com',]
 # The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, GROUP_LIST = []
 GROUP_LIST = ['group@domain.com',]
@@ -56,7 +59,9 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), '')
       domain = row['permissions.{0}.domain'.format(permissions_N)]
-      if emailAddress in GROUP_LIST or domain in DOMAIN_LIST:
+      if ((not GROUP_LIST and not DOMAIN_LIST) or
+          (GROUP_LIST and emailAddress in GROUP_LIST) or
+          (DOMAIN_LIST and domain in DOMAIN_LIST)):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
