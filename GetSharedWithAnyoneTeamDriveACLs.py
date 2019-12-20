@@ -55,6 +55,8 @@ FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
 # Specify desired value of allowFileDiscovery field: True, False, Any (matches True and False)
+# allowFileDiscovery False = withLink True
+# allowFileDiscovery True = withLink False
 DESIRED_ALLOWFILEDISCOVERY = 'Any'
 
 QUOTE_CHAR = '"' # Adjust as needed
