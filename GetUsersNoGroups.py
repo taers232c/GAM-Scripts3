@@ -8,7 +8,7 @@
 # 1: Get list of users, group members
 #  $ gam print users > Users.csv
 #  $ gam print group-members > GroupMembers.csv
-# 2: From that list of users, output a CSV file with header primaryEmail
+# 2: From that list of users, output a CSV file with the same headers as Users.csv plus GroupsCount
 #    that shows users that don't belong to any groups
 #  $ python GetUsersNoGroups.py ./Users.csv ./GroupMembers.csv ./UsersNoGroups.csv
 """
@@ -22,26 +22,30 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 Users = {}
 
 inputFile = open(sys.argv[1], 'r', encoding='utf-8')
-for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  Users[row['primaryEmail']] = 0
+inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+fieldnames = inputCSV.fieldnames[:]
+fieldnames.insert(1, 'GroupsCount')
+for row in inputCSV:
+  row['GroupsCount'] = 0
+  Users[row['primaryEmail']] = row
 inputFile.close()
 
 inputFile = open(sys.argv[2], 'r', encoding='utf-8')
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   if row['email'] in Users:
-    Users[row['email']] += 1
+    Users[row['email']]['GroupsCount'] += 1
 inputFile.close()
 
 if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['primaryEmail'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
-for k, v in sorted(Users.items()):
-  if not v:
-    outputCSV.writerow({'primaryEmail': k})
+for _, v in sorted(Users.items()):
+  if v['GroupsCount'] == 0:
+    outputCSV.writerow(v)
 
 if outputFile != sys.stdout:
   outputFile.close()
