@@ -33,11 +33,13 @@ else:
   inputFile = sys.stdin
 
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+permissionFields = set()
 inputFieldnames = []
 for fieldname in inputCSV.fieldnames:
   mg = PERMISSIONS_N_FIELD.match(fieldname)
   if mg:
-    if mg.group(1) == '0':
+    if mg.group(2) not in permissionFields:
+      permissionFields.add(mg.group(2))
       inputFieldnames.append(f'permission.{mg.group(2)}')
   else:
     inputFieldnames.append(fieldname)
