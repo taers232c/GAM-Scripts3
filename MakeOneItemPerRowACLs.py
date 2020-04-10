@@ -77,7 +77,7 @@ for fieldname in inputCSV.fieldnames:
     if (not DROP_PERMISSION_COLUMNS or field not in DROP_PERMISSION_COLUMNS) and field not in permissionFields:
       permissionFields.add(field)
       inputFieldnames.append(f'permission.{field}')
-  else:
+  elif not DROP_GENERAL_COLUMNS or fieldname not in DROP_GENERAL_COLUMNS:
     inputFieldnames.append(fieldname)
 
 outputCSV = csv.DictWriter(outputFile, inputFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
@@ -92,7 +92,7 @@ for row in inputCSV:
       permissions_N = mg.group(1)
       permissions.setdefault(permissions_N, {})
       permissions[permissions_N][mg.group(2)] = v
-    else:
+    elif not DROP_GENERAL_COLUMNS or k not in DROP_GENERAL_COLUMNS:
       baseRow[k] = v
   for k, v in iter(permissions.items()):
     newRow = baseRow.copy()
