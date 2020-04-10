@@ -29,10 +29,10 @@ ALT_FILE_NAME = 'title'
 # For all users in all domains, set USER_LIST = [] and DOMAIN_LIST = []
 
 # Substitute your specific user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
-# The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, USER_LIST = []
+# The list should be empty if you're only specifiying domains in DOMAIN_LIST, e.g. USER_LIST = []
 USER_LIST = ['user1@domain.com',]
 # Substitute your specific domain(s) in the list below if you want all users in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-# The list should be empty if you're only specifiying users in USER_LIST, e,g, DOMAIN__LIST = []
+# The list should be empty if you're only specifiying users in USER_LIST, e.g. DOMAIN__LIST = []
 DOMAIN_LIST = ['domain.com',]
 
 QUOTE_CHAR = '"' # Adjust as needed

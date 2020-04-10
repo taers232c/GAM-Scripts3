@@ -52,10 +52,10 @@ ALT_FILE_NAME = 'title'
 # For all groups in all domains, set GROUP_LIST = [] and DOMAIN_LIST = []
 
 # Substitute your specific group(s) in the list below, e.g., GROUP_LIST = ['group1@domain.com',] GROUP_LIST = ['group1@domain.com', 'group2@domain.com',]
-# The list should be empty if you're only specifiying domains in DOMAIN_LIST, e,g, GROUP_LIST = []
+# The list should be empty if you're only specifiying domains in DOMAIN_LIST, e.g. GROUP_LIST = []
 GROUP_LIST = ['group@domain.com',]
 # Substitute your specific domain(s) in the list below if you want all groups in the domain, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-# The list should be empty if you're only specifiying groups in GROUP_LIST, e,g, DOMAIN__LIST = []
+# The list should be empty if you're only specifiying groups in GROUP_LIST, e.g. DOMAIN__LIST = []
 DOMAIN_LIST = ['domain.com',]
 
 QUOTE_CHAR = '"' # Adjust as needed
