@@ -4,7 +4,7 @@
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set SHOW_SUSPENDED an SHOW_SUSPENSION_REASON
+# Customize: Set SHOW_SUSPENDED, SHOW_SUSPENSION_REASON and SHOW_TOTALS
 # Usage:
 # 1: Get users; omit suspended if you don't want suspension info
 #  $ gam print users ou suspended > users.csv
@@ -18,6 +18,7 @@ import sys
 
 SHOW_SUSPENDED = True # False if you don't want suspension info
 SHOW_SUSPENSION_REASON = True # False if you don't want suspensionReason info
+SHOW_TOTALS = True # False if you don't want totals
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -43,6 +44,7 @@ checkSuspensionReason = SHOW_SUSPENSION_REASON and 'suspensionReason' in inputCS
 suspensionReasons = set()
 
 orgUnits = {}
+totals = {'total' : 0, 'suspended': 0, 'suspensionReason': {}}
 for row in inputCSV:
   orgUnitPath = row['orgUnitPath']
   if orgUnitPath not in orgUnits:
@@ -60,14 +62,26 @@ for row in inputCSV:
 if checkSuspensionReason:
   for suspensionReason in sorted(suspensionReasons):
     fieldnames.append(f'suspensionReason.{suspensionReason}')
+    totals['suspensionReason'][suspensionReason] = 0
 outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 for orgUnit, counts in sorted(iter(orgUnits.items())):
   row = {'orgUnitPath': orgUnit, 'total': counts['total']}
+  totals['total'] += counts['total']
   if checkSuspended:
     row['suspended'] = counts['suspended']
+    totals['suspended'] += counts['suspended']
     if checkSuspensionReason:
       for suspensionReason, count in iter(counts['suspensionReason'].items()):
+        row[f'suspensionReason.{suspensionReason}'] = count
+        totals['suspensionReason'][suspensionReason] += count
+  outputCSV.writerow(row)
+if SHOW_TOTALS:
+  row = {'orgUnitPath': 'Totals', 'total': totals['total']}
+  if checkSuspended:
+    row['suspended'] = totals['suspended']
+    if checkSuspensionReason:
+      for suspensionReason, count in iter(totals['suspensionReason'].items()):
         row[f'suspensionReason.{suspensionReason}'] = count
   outputCSV.writerow(row)
 
