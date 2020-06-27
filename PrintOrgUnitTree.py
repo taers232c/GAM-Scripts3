@@ -59,7 +59,7 @@ else:
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 inputFieldNames = inputCSV.fieldnames
 if inputFieldNames is None:
-  sys.stderr.write('Error: no headers in Org Units file {0}\n'.format(sys.argv[2]))
+  sys.stderr.write('Error: no headers in Data file {0}\n'.format(sys.argv[2]))
   sys.exit(2)
 if SELECTED_FIELDS:
   fieldNames = []
