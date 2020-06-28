@@ -32,7 +32,7 @@ if 'orgUnitPath' not in inputFieldNames:
   sys.stderr.write('Error: no header orgUnitPath in Org Units file {0} field names: {1}\n'.format(sys.argv[1], ','.join(inputFieldNames)))
   sys.exit(1)
 for row in inputCSV:
-  orgUnits[row['orgUnitPath']] = {'total' : 0, 'suspended': 0, 'suspensionReason': {}}
+  orgUnits[row['orgUnitPath']] = {'total' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
 inputFile.close()
 
 if sys.argv[2] != '-':
@@ -47,23 +47,26 @@ if 'orgUnitPath' not in inputFieldNames:
 fieldnames = ['orgUnitPath', 'total']
 checkSuspended = SHOW_SUSPENDED and 'suspended' in inputFieldNames
 if checkSuspended:
-  fieldnames.append('suspended')
+  fieldnames.extend(['active', 'suspended'])
 checkSuspensionReason = SHOW_SUSPENSION_REASON and 'suspensionReason' in inputFieldNames
 suspensionReasons = set()
 
-if (len(sys.argv) > 3) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
+if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
+  outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 
-totals = {'total' : 0, 'suspended': 0, 'suspensionReason': {}}
+totals = {'total' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
+
 for row in inputCSV:
   orgUnitPath = row['orgUnitPath']
   if orgUnitPath not in orgUnits:
-    orgUnits[orgUnitPath] = {'total' : 0, 'suspended': 0, 'suspensionReason': {}}
+    orgUnits[orgUnitPath] = {'total' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
   orgUnits[orgUnitPath]['total'] += 1
   if checkSuspended:
-    if row['suspended'] == 'True':
+    if row['suspended'] != 'True':
+      orgUnits[orgUnitPath]['active'] += 1
+    else:
       orgUnits[orgUnitPath]['suspended'] += 1
       if checkSuspensionReason:
         suspensionReason = row['suspensionReason']
@@ -75,22 +78,27 @@ if checkSuspensionReason:
   for suspensionReason in sorted(suspensionReasons):
     fieldnames.append(f'suspensionReason.{suspensionReason}')
     totals['suspensionReason'][suspensionReason] = 0
+
 outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 for orgUnit, counts in sorted(iter(orgUnits.items())):
   row = {'orgUnitPath': orgUnit, 'total': counts['total']}
   totals['total'] += counts['total']
   if checkSuspended:
+    row['active'] = counts['active']
+    totals['active'] += counts['active']
     row['suspended'] = counts['suspended']
     totals['suspended'] += counts['suspended']
     if checkSuspensionReason:
-      for suspensionReason, count in iter(counts['suspensionReason'].items()):
+      for suspensionReason in suspensionReasons:
+        count = counts['suspensionReason'].get(suspensionReason, 0)
         row[f'suspensionReason.{suspensionReason}'] = count
         totals['suspensionReason'][suspensionReason] += count
   outputCSV.writerow(row)
 if SHOW_TOTALS:
   row = {'orgUnitPath': 'Totals', 'total': totals['total']}
   if checkSuspended:
+    row['active'] = totals['active']
     row['suspended'] = totals['suspended']
     if checkSuspensionReason:
       for suspensionReason, count in iter(totals['suspensionReason'].items()):
