@@ -47,8 +47,8 @@ fieldnames = ['orgUnitPath', 'total']
 checkStatus = SHOW_STATUS and 'status' in inputFieldNames
 statusValues = set()
 
-if (len(sys.argv) > 3) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
+if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
+  outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 
@@ -68,13 +68,15 @@ if checkStatus:
   for statusValue in sorted(statusValues):
     fieldnames.append(f'status.{statusValue}')
     totals['statusValues'][statusValue] = 0
+
 outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 for orgUnit, counts in sorted(iter(orgUnits.items())):
   row = {'orgUnitPath': orgUnit, 'total': counts['total']}
   totals['total'] += counts['total']
   if checkStatus:
-    for statusValue, count in iter(counts['statusValues'].items()):
+    for statusValue in statusValues:
+      count = counts['statusValues'].get(statusValue, 0)
       row[f'status.{statusValue}'] = count
       totals['statusValues'][statusValue] += count
   outputCSV.writerow(row)
