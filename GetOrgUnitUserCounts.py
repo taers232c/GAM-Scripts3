@@ -32,7 +32,7 @@ if 'orgUnitPath' not in inputFieldNames:
   sys.stderr.write('Error: no header orgUnitPath in Org Units file {0} field names: {1}\n'.format(sys.argv[1], ','.join(inputFieldNames)))
   sys.exit(1)
 for row in inputCSV:
-  orgUnits[row['orgUnitPath']] = {'total' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
+  orgUnits[row['orgUnitPath']] = {'users' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
 inputFile.close()
 
 if sys.argv[2] != '-':
@@ -44,7 +44,7 @@ inputFieldNames = inputCSV.fieldnames
 if 'orgUnitPath' not in inputFieldNames:
   sys.stderr.write('Error: no header orgUnitPath in Users file {0} field names: {1}\n'.format(sys.argv[2], ','.join(inputFieldNames)))
   sys.exit(1)
-fieldnames = ['orgUnitPath', 'total']
+fieldnames = ['orgUnitPath', 'users']
 checkSuspended = SHOW_SUSPENDED and 'suspended' in inputFieldNames
 if checkSuspended:
   fieldnames.extend(['active', 'suspended'])
@@ -56,13 +56,13 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
 else:
   outputFile = sys.stdout
 
-totals = {'total' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
+totals = {'users' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
 
 for row in inputCSV:
   orgUnitPath = row['orgUnitPath']
   if orgUnitPath not in orgUnits:
-    orgUnits[orgUnitPath] = {'total' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
-  orgUnits[orgUnitPath]['total'] += 1
+    orgUnits[orgUnitPath] = {'users' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
+  orgUnits[orgUnitPath]['users'] += 1
   if checkSuspended:
     if row['suspended'] != 'True':
       orgUnits[orgUnitPath]['active'] += 1
@@ -82,8 +82,8 @@ if checkSuspensionReason:
 outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 for orgUnit, counts in sorted(iter(orgUnits.items())):
-  row = {'orgUnitPath': orgUnit, 'total': counts['total']}
-  totals['total'] += counts['total']
+  row = {'orgUnitPath': orgUnit, 'users': counts['users']}
+  totals['users'] += counts['users']
   if checkSuspended:
     row['active'] = counts['active']
     totals['active'] += counts['active']
@@ -96,7 +96,7 @@ for orgUnit, counts in sorted(iter(orgUnits.items())):
         totals['suspensionReason'][suspensionReason] += count
   outputCSV.writerow(row)
 if SHOW_TOTALS:
-  row = {'orgUnitPath': 'Totals', 'total': totals['total']}
+  row = {'orgUnitPath': 'Totals', 'users': totals['users']}
   if checkSuspended:
     row['active'] = totals['active']
     row['suspended'] = totals['suspended']

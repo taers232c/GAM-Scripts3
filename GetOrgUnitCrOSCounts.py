@@ -31,7 +31,7 @@ if 'orgUnitPath' not in inputFieldNames:
   sys.stderr.write('Error: no header orgUnitPath in Org Units file {0} field names: {1}\n'.format(sys.argv[1], ','.join(inputFieldNames)))
   sys.exit(1)
 for row in inputCSV:
-  orgUnits[row['orgUnitPath']] = {'total' : 0, 'statusValues': {}}
+  orgUnits[row['orgUnitPath']] = {'devices' : 0, 'statusValues': {}}
 inputFile.close()
 
 if sys.argv[2] != '-':
@@ -43,7 +43,7 @@ inputFieldNames = inputCSV.fieldnames
 if 'orgUnitPath' not in inputFieldNames:
   sys.stderr.write('Error: no header orgUnitPath in CrOS file {0} field names: {1}\n'.format(sys.argv[2], ','.join(inputFieldNames)))
   sys.exit(1)
-fieldnames = ['orgUnitPath', 'total']
+fieldnames = ['orgUnitPath', 'devices']
 checkStatus = SHOW_STATUS and 'status' in inputFieldNames
 statusValues = set()
 
@@ -52,12 +52,12 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
 else:
   outputFile = sys.stdout
 
-totals = {'total' : 0, 'statusValues': {}}
+totals = {'devices' : 0, 'statusValues': {}}
 for row in inputCSV:
   orgUnitPath = row['orgUnitPath']
   if orgUnitPath not in orgUnits:
-    orgUnits[orgUnitPath] = {'total' : 0, 'statusValues': {}}
-  orgUnits[orgUnitPath]['total'] += 1
+    orgUnits[orgUnitPath] = {'devices' : 0, 'statusValues': {}}
+  orgUnits[orgUnitPath]['devices'] += 1
   if checkStatus:
     statusValue = row['status']
     if statusValue not in statusValues:
@@ -72,8 +72,8 @@ if checkStatus:
 outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 for orgUnit, counts in sorted(iter(orgUnits.items())):
-  row = {'orgUnitPath': orgUnit, 'total': counts['total']}
-  totals['total'] += counts['total']
+  row = {'orgUnitPath': orgUnit, 'devices': counts['devices']}
+  totals['devices'] += counts['devices']
   if checkStatus:
     for statusValue in statusValues:
       count = counts['statusValues'].get(statusValue, 0)
@@ -81,7 +81,7 @@ for orgUnit, counts in sorted(iter(orgUnits.items())):
       totals['statusValues'][statusValue] += count
   outputCSV.writerow(row)
 if SHOW_TOTALS:
-  row = {'orgUnitPath': 'Totals', 'total': totals['total']}
+  row = {'orgUnitPath': 'Totals', 'devices': totals['devices']}
   if checkStatus:
     for statusValue, count in iter(totals['statusValues'].items()):
       row[f'status.{statusValue}'] = count
