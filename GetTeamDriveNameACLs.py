@@ -3,6 +3,7 @@
 # Purpose: Get ACLs for Team Drives, add Team Drive name to row
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set ONE_ACL_PER_ROW as desired
 # Usage:
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
@@ -13,10 +14,15 @@
 """
 
 import csv
+import re
 import sys
+
+ONE_ACL_PER_ROW = False # Set True for one ACL per row
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+
+PERMISSIONS_N_FIELD = re.compile(r"permissions.\d+.(.*)")
 
 if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
@@ -34,15 +40,34 @@ if sys.argv[1] != '-':
 else:
   inputFile = sys.stdin
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
-fieldnames = inputCSV.fieldnames[:]
-fieldnames.insert(2, 'name')
+if not ONE_ACL_PER_ROW:
+  fieldnames = inputCSV.fieldnames[:]
+  fieldnames.insert(2, 'name')
+else:
+  fieldnames = inputCSV.fieldnames[0:2]
+  fieldnames.append('name')
+  permFieldNames = set()
+  for k in inputCSV.fieldnames[3:]:
+    mg = PERMISSIONS_N_FIELD.match(k)
+    if mg:
+      permFieldNames.add(mg.group(1))
+  fieldnames.extend(sorted(permFieldNames))
 
 outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
-for row in inputCSV:
-  row['name'] = teamDriveNames.get(row['id'], row['id'])
-  outputCSV.writerow(row)
+if not ONE_ACL_PER_ROW:
+  for row in inputCSV:
+    row['name'] = teamDriveNames.get(row['id'], row['id'])
+    outputCSV.writerow(row)
+else:
+  for row in inputCSV:
+    for permissions_N in range(0, int(row['permissions'])):
+      orow = {'Owner': row['Owner'], 'id': row['id'], 'name': teamDriveNames.get(row['id'], row['id'])}
+      for k in permFieldNames:
+        if row.get(f'permissions.{permissions_N}.{k}'):
+          orow[k] = row[f'permissions.{permissions_N}.{k}']
+      outputCSV.writerow(orow)
 
 if inputFile != sys.stdin:
   inputFile.close()
