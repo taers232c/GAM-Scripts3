@@ -10,7 +10,7 @@
 # 1: Get all Team Drives.
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
 # 2: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields emailaddress,role,type
 # 3: Customize GetTeamDriveOrganizers.py for this task:
 #    Set DOMAIN_LIST as required
 #    Set ONE_ORGANIZER = True
