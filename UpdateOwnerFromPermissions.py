@@ -32,7 +32,7 @@ for row in inputCSV:
     mg = PERMISSIONS_N_ROLE.match(k)
     if mg and v == 'owner':
       permissions_N = mg.group(1)
-      row['Owner'] = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      row['Owner'] = row[f'permissions.{permissions_N}.emailAddress']
       break
   outputCSV.writerow(row)
 

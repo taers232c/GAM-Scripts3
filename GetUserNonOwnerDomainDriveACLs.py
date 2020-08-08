@@ -52,24 +52,24 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v:
       permissions_N = mg.group(1)
       if v == 'domain':
-        allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
+        allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
         if DESIRED_ALLOWFILEDISCOVERY not in ('Any', allowFileDiscovery):
           continue
-        domain = row['permissions.{0}.domain'.format(permissions_N)]
+        domain = row[f'permissions.{permissions_N}.domain']
         emailAddress = ''
       elif v in ['user', 'group']:
-        if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+        if row.get(f'permissions.{permissions_N}.deleted') == 'True':
           continue
-        emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+        emailAddress = row[f'permissions.{permissions_N}.emailAddress']
         domain = emailAddress[emailAddress.find('@')+1:]
       else:
         continue
-      if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (v != 'user' or row['permissions.{0}.role'.format(permissions_N)] != 'owner' or emailAddress != row['owners.0.emailAddress']):
+      if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (v != 'user' or row[f'permissions.{permissions_N}.role'] != 'owner' or emailAddress != row['owners.0.emailAddress']):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(v),
-                            'role': row['permissions.{0}.role'.format(permissions_N)],
+                            'permissionId': f'id:{v}',
+                            'role': row[f'permissions.{permissions_N}.role'],
                             'type': v,
                             'emailAddress': emailAddress,
                             'domain': domain})

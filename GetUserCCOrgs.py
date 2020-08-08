@@ -45,7 +45,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       mg = ADDRESSES_N_TYPE.match(k)
       if mg and v == 'work':
         addresses_N = mg.group(1)
-        org = ORG_UNIT_MAP.format(row['addresses.{0}.countryCode'.format(addresses_N)])
+        org = ORG_UNIT_MAP.format(row[f'addresses.{addresses_N}.countryCode'])
         if org:
           outputCSV.writerow({'Org': org,
                               'primaryEmail': row['primaryEmail']})

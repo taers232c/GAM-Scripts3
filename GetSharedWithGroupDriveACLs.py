@@ -57,16 +57,16 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'group':
       permissions_N = mg.group(1)
-      emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), '')
-      domain = row['permissions.{0}.domain'.format(permissions_N)]
+      emailAddress = row.get(f'permissions.{permissions_N}.emailAddress', '')
+      domain = row[f'permissions.{permissions_N}.domain']
       if ((not GROUP_LIST and not DOMAIN_LIST) or
           (GROUP_LIST and emailAddress in GROUP_LIST) or
           (DOMAIN_LIST and domain in DOMAIN_LIST)):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                            'role': row['permissions.{0}.role'.format(permissions_N)],
+                            'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
+                            'role': row[f'permissions.{permissions_N}.role'],
                             'emailAddress': emailAddress})
 
 if inputFile != sys.stdin:

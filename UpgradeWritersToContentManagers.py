@@ -42,15 +42,15 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      role = row['permissions.{0}.role'.format(permissions_N)]
+      role = row[f'permissions.permissions_N{}.role']
       if role != 'writer' or v not in ['user', 'group']:
         continue
-      if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+      if row.get(f'permissions.{permissions_N}.deleted')) == 'True':
         continue
       outputCSV.writerow({'teamDriveId': row['id'],
-                          'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
+                          'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                           'type': v,
-                          'emailAddress': row['permissions.{0}.emailAddress'.format(permissions_N)]})
+                          'emailAddress': row[f'permissions.{permissions_N}.emailAddress']})
 
 if inputFile != sys.stdin:
   inputFile.close()

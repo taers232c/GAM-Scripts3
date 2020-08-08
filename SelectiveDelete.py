@@ -29,7 +29,7 @@ PATHS_TO_SAVE = []
 
 def pathToSave(crow):
   for i in range(0, int(crow['paths'])):
-    path = crow['path.{0}'.format(i)]
+    path = crow[f'path.{i}']
     for p in PATHS_TO_SAVE:
       if path.startswith(p):
         return True

@@ -59,12 +59,12 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_ROLE.match(k)
     if mg and v == 'organizer':
       permissions_N = mg.group(1)
-      if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+      if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
-      orgtype = row['permissions.{0}.type'.format(permissions_N)]
+      orgtype = row[f'permissions.{permissions_N}.type']
       if (orgtype == 'user' and not SHOW_USER_ORGANIZERS) or (orgtype == 'group' and not SHOW_GROUP_ORGANIZERS):
         continue
-      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      emailAddress = row[f'permissions.{permissions_N}.emailAddress']
       if DOMAIN_LIST:
         domain = emailAddress[emailAddress.find('@')+1:]
         if domain not in DOMAIN_LIST:

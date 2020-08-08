@@ -45,7 +45,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PARENTS_N_ID.match(k)
     if mg and v:
       parents_N = mg.group(1)
-      if row['parents.{0}.isRoot'.format(parents_N)] == 'True':
+      if row[f'parents.{parents_N}.isRoot'] == 'True':
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown'))})

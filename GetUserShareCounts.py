@@ -100,24 +100,24 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if row['permissions.{0}.role'.format(permissions_N)] == 'owner':
+      if row[f'permissions.{permissions_N}.role'] == 'owner':
         incrementCounter(TOTAL_COUNTER)
       else:
         incrementCounter(SHARED_COUNTER)
         if v == 'anyone':
           incrementCounter(SHARED_EXTERNAL_COUNTER)
-          userShareCounts[owner][COUNT_CATEGORIES[v][row['permissions.{0}.{1}'.format(permissions_N, LINK_FIELD)] == LINK_VALUE]] += 1
+          userShareCounts[owner][COUNT_CATEGORIES[v][row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE]] += 1
         else:
-          domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
+          domain = row.get(f'permissions.{permissions_N}.domain', '')
           if not domain and v in ['user', 'group']:
-            if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+            if row.get(f'permissions.{permissions_N}.deleted') == 'True':
               continue
-            emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+            emailAddress = row[f'permissions.{permissions_N}.emailAddress']
             domain = emailAddress[emailAddress.find('@')+1:]
           internal = domain in DOMAIN_LIST
           incrementCounter([SHARED_EXTERNAL_COUNTER, SHARED_INTERNAL_COUNTER][internal])
           if v == 'domain':
-            userShareCounts[owner][COUNT_CATEGORIES[v][internal][row['permissions.{0}.{1}'.format(permissions_N, LINK_FIELD)] == LINK_VALUE]] += 1
+            userShareCounts[owner][COUNT_CATEGORIES[v][internal][row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE]] += 1
           else: # group, user
             userShareCounts[owner][COUNT_CATEGORIES[v][internal]] += 1
 for owner, counts in sorted(iter(userShareCounts.items())):

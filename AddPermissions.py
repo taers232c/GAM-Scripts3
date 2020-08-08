@@ -46,13 +46,13 @@ for permission in permissions.replace(',', ' ').split():
     else:
       permType = scope
     if permType not in DRIVEFILE_ACL_PERMISSION_TYPES:
-      sys.stderr.write('ERROR: Type ({0}) must be in list ({1}), permission ({2})\n'.format(permType, ','.join(DRIVEFILE_ACL_PERMISSION_TYPES), permission))
+      sys.stderr.write(f'ERROR: Type ({permType}) must be in list ({",".join(DRIVEFILE_ACL_PERMISSION_TYPES)}), permission ({permission})\n')
       errors += 1
     if role not in DRIVEFILE_ACL_ROLES:
-      sys.stderr.write('ERROR: Role ({0}) must be in list ({1}), permission ({2})\n'.format(role, ','.join(DRIVEFILE_ACL_ROLES), permission))
+      sys.stderr.write(f'ERROR: Role ({role}) must be in list ({",".join(DRIVEFILE_ACL_ROLES)}), permission ({permission})\n')
       errors += 1
   except ValueError:
-    sys.stderr.write('ERROR: Permisson must be (scope;role), permission ({0})\n'.format(permission))
+    sys.stderr.write(f'ERROR: Permisson must be (scope;role), permission ({permission})\n')
     errors += 1
 if errors:
   sys.exit(1)

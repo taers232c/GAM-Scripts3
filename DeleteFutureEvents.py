@@ -45,7 +45,7 @@ if len(sys.argv) > 1:
   try:
     datetime.datetime.strptime(startDate, YYYYMMDD_FORMAT)
   except ValueError:
-    sys.stderr.write('ERROR: date ({0}) is not valid, it must be (yyyy-mm-dd)\n'.format(startDate))
+    sys.stderr.write(f'ERROR: date ({startDate}) is not valid, it must be (yyyy-mm-dd)\n')
     sys.exit(1)
 else:
   startDate = datetime.datetime.now().strftime(YYYYMMDD_FORMAT)

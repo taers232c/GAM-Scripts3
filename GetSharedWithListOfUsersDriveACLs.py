@@ -65,15 +65,15 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'user':
       permissions_N = mg.group(1)
-      if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+      if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
-      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)].lower()
-      if row['permissions.{0}.role'.format(permissions_N)] != 'owner' and emailAddress in userSet:
+      emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
+      if row[f'permissions.{permissions_N}.role'] != 'owner' and emailAddress in userSet:
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                            'role': row['permissions.{0}.role'.format(permissions_N)],
+                            'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
+                            'role': row[f'permissions.{permissions_N}.role'],
                             'emailAddress': emailAddress})
 
 if inputFile != sys.stdin:

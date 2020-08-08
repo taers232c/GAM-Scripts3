@@ -28,10 +28,10 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
 def getWithLink(r, n):
-  withLink = r.get('permissions.{0}.withLink'.format(n))
+  withLink = r.get(f'permissions.{n}.withLink')
   if withLink is not None:
     return withLink == 'True'
-  withLink = r.get('permissions.{0}.allowFileDiscovery'.format(n))
+  withLink = r.get(f'permissions.{n}.allowFileDiscovery')
   if withLink is not None:
     return withLink == 'False'
   return False
@@ -54,7 +54,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   if numPaths > 0:
     pathList = []
     for p in range(0, numPaths):
-      pathList.append(row['path.{0}'.format(p)])
+      pathList.append(row[f'path.{p}'])
   else:
     pathList = [row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown'))]
   for k, v in iter(row.items()):
@@ -62,18 +62,18 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v:
       permissions_N = mg.group(1)
       if v == 'domain':
-        value = row['permissions.{0}.domain'.format(permissions_N)]
+        value = row[f'permissions.{permissions_N}.domain']
         if getWithLink(row, permissions_N):
           v += 'WithLink'
       elif v in ['user', 'group']:
-        if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+        if row.get(f'permissions.{permissions_N}.deleted') == 'True':
           continue
-        value = row['permissions.{0}.emailAddress'.format(permissions_N)]
+        value = row[f'permissions.{permissions_N}.emailAddress']
       else:
         value = ''
         if getWithLink(row, permissions_N):
           v += 'WithLink'
-      role = row['permissions.{0}.role'.format(permissions_N)]
+      role = row[f'permissions.{permissions_N}.role']
       if v != 'user' or role != 'owner' or value != row['Owner']:
         for path in pathList:
           pathPerms.append({'path': path, 'type': v, 'value': value, 'role': role})

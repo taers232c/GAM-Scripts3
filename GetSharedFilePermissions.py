@@ -48,27 +48,27 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if row['permissions.{0}.role'.format(permissions_N)] == 'owner':
+      if row[f'permissions.{permissions_N}.role'] == 'owner':
         continue
       if v in ['user', 'group']:
         allowFileDiscovery = ''
-        emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)].lower()
+        emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
         domain = emailAddress[emailAddress.find('@')+1:]
       elif v == 'domain':
-        allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N),
-                                     str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
+        allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery',
+                                     str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
         emailAddress = ''
-        domain = row['permissions.{0}.domain'.format(permissions_N)]
+        domain = row[f'permissions.{permissions_N}.domain']
       else: #anyone
-        allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N),
-                                     str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
+        allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery',
+                                     str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
         emailAddress = ''
         domain = ''
       outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                           'driveFileId': row['id'],
                           'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                          'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                          'role': row['permissions.{0}.role'.format(permissions_N)],
+                          'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
+                          'role': row[f'permissions.{permissions_N}.role'],
                           'type': v,
                           'emailAddress': emailAddress,
                           'domain': domain,

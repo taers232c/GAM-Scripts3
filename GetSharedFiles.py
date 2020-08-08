@@ -47,8 +47,8 @@ for row in inputCSV:
     if mg:
       if v == 'user':
         permissions_N = mg.group(1)
-        role = row['permissions.{0}.role'.format(permissions_N)]
-        emailAddress = row.get('permissions.{0}.emailAddress'.format(permissions_N), '')
+        role = row[f'permissions.{permissions_N}.role']
+        emailAddress = row.get(f'permissions.{permissions_N}.emailAddress', '')
         if (role and role != 'owner') or (emailAddress and emailAddress != row['Owner']):
           shared = True
       elif v:

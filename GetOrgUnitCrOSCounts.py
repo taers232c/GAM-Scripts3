@@ -28,7 +28,7 @@ inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 inputFieldNames = inputCSV.fieldnames
 if 'orgUnitPath' not in inputFieldNames:
-  sys.stderr.write('Error: no header orgUnitPath in Org Units file {0} field names: {1}\n'.format(sys.argv[1], ','.join(inputFieldNames)))
+  sys.stderr.write(f'Error: no header orgUnitPath in Org Units file {sys.argv[1]} field names: {",".join(inputFieldNames)}\n')
   sys.exit(1)
 for row in inputCSV:
   orgUnits[row['orgUnitPath']] = {'devices' : 0, 'statusValues': {}}
@@ -41,7 +41,7 @@ else:
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 inputFieldNames = inputCSV.fieldnames
 if 'orgUnitPath' not in inputFieldNames:
-  sys.stderr.write('Error: no header orgUnitPath in CrOS file {0} field names: {1}\n'.format(sys.argv[2], ','.join(inputFieldNames)))
+  sys.stderr.write(f'Error: no header orgUnitPath in CrOS file {sys.argv[2]} field names: {",".join(inputFieldNames)}\n')
   sys.exit(1)
 fieldnames = ['orgUnitPath', 'devices']
 checkStatus = SHOW_STATUS and 'status' in inputFieldNames

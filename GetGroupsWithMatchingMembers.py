@@ -43,7 +43,7 @@ if USER_MATCH_PATTERN:
   try:
     userMatchPattern = re.compile(USER_MATCH_PATTERN)
   except re.error as e:
-    print('Error: invalid USER_MATCH_PATTERN: "{0}", {1}'.format(USER_MATCH_PATTERN, e))
+    print(f'Error: invalid USER_MATCH_PATTERN: "{USER_MATCH_PATTERN}", {e}')
     sys.exit(1)
 else:
   userMatchPattern = None
@@ -52,7 +52,7 @@ if GROUP_MATCH_PATTERN:
   try:
     groupMatchPattern = re.compile(GROUP_MATCH_PATTERN)
   except re.error as e:
-    print('Error: invalid GROUP_MATCH_PATTERN: "{0}", {1}'.format(GROUP_MATCH_PATTERN, e))
+    print(f'Error: invalid GROUP_MATCH_PATTERN: "{GROUP_MATCH_PATTERN}", {e}')
     sys.exit(1)
 else:
   groupMatchPattern = None

@@ -29,7 +29,7 @@ inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 inputFieldNames = inputCSV.fieldnames
 if 'orgUnitPath' not in inputFieldNames:
-  sys.stderr.write('Error: no header orgUnitPath in Org Units file {0} field names: {1}\n'.format(sys.argv[1], ','.join(inputFieldNames)))
+  sys.stderr.write(f'Error: no header orgUnitPath in Org Units file {sys.argv[1]} field names: {",".join(inputFieldNames)}\n')
   sys.exit(1)
 for row in inputCSV:
   orgUnits[row['orgUnitPath']] = {'users' : 0, 'active': 0, 'suspended': 0, 'suspensionReason': {}}
@@ -42,7 +42,7 @@ else:
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 inputFieldNames = inputCSV.fieldnames
 if 'orgUnitPath' not in inputFieldNames:
-  sys.stderr.write('Error: no header orgUnitPath in Users file {0} field names: {1}\n'.format(sys.argv[2], ','.join(inputFieldNames)))
+  sys.stderr.write(f'Error: no header orgUnitPath in Users file {sys.argv[2]} field names: {",".join(inputFieldNames)}\n')
   sys.exit(1)
 fieldnames = ['orgUnitPath', 'users']
 checkSuspended = SHOW_SUSPENDED and 'suspended' in inputFieldNames

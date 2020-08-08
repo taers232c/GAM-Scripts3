@@ -45,7 +45,7 @@ inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 inputFieldNames = inputCSV.fieldnames
 if 'orgUnitPath' not in inputFieldNames:
-  sys.stderr.write('Error: no header orgUnitPath in Org Units file {0} field names: {1}\n'.format(sys.argv[1], ','.join(inputFieldNames)))
+  sys.stderr.write(f'Error: no header orgUnitPath in Org Units file {sys.argv[1]} field names: {",".join(inputFieldNames)}\n')
   sys.exit(1)
 for row in inputCSV:
   orgUnits.append(row['orgUnitPath'])
@@ -59,20 +59,20 @@ else:
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 inputFieldNames = inputCSV.fieldnames
 if inputFieldNames is None:
-  sys.stderr.write('Error: no headers in Data file {0}\n'.format(sys.argv[2]))
+  sys.stderr.write(f'Error: no headers in Data file {sys.argv[2]}\n')
   sys.exit(2)
 if SELECTED_FIELDS:
   fieldNames = []
   for field in SELECTED_FIELDS:
     if field not in inputFieldNames:
-      sys.stderr.write('Error: selected field {0} is not in Data file {1} field names: {2}\n'.format(field, sys.argv[2], ','.join(inputFieldNames)))
+      sys.stderr.write(f'Error: selected field {field} is not in Data file {sys.argv[2]} field names: {",".join(inputFieldNames)}\n')
       sys.exit(3)
     fieldNames.append(field)
 else:
   fieldNames = inputFieldNames[:]
   fieldNames.remove('orgUnitPath')
 if 'orgUnitPath' not in inputFieldNames:
-  sys.stderr.write('Error: no header orgUnitPath in Data file {0} field names: {1}\n'.format(sys.argv[2], ','.join(inputFieldNames)))
+  sys.stderr.write(f'Error: no header orgUnitPath in Data file {sys.argv[2]} field names: {",".join(inputFieldNames)}\n')
   sys.exit(4)
 for row in inputCSV:
   if row['orgUnitPath'] is not None:
@@ -83,11 +83,11 @@ if inputFile != sys.stdin:
 for orgUnitPath in orgUnits:
   count = len(orgUnitsTree[orgUnitPath])
   if SHOW_EMPTY_OUS or count > 0:
-    outputFile.write('{0}: {1}\n'.format(orgUnitPath, count))
+    outputFile.write(f'{orgUnitPath}: {count}\n')
     if count > 0:
       for child in orgUnitsTree[orgUnitPath]:
         if SHOW_LABELS:
-          outputFile.write(INDENT_SPACES+FIELD_DELIMITER.join(['{0}: {1}'.format(field, child[field]) for field in fieldNames])+LINE_TERMINATOR)
+          outputFile.write(INDENT_SPACES+FIELD_DELIMITER.join([f'{field}: {child[field]}' for field in fieldNames])+LINE_TERMINATOR)
         else:
           outputFile.write(INDENT_SPACES+FIELD_DELIMITER.join([child[field] for field in fieldNames])+LINE_TERMINATOR)
 if outputFile != sys.stdout:

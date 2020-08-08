@@ -52,14 +52,14 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'domain':
       permissions_N = mg.group(1)
-      domain = row['permissions.{0}.domain'.format(permissions_N)]
-      allowFileDiscovery = row.get('permissions.{0}.allowFileDiscovery'.format(permissions_N), str(row.get('permissions.{0}.withLink'.format(permissions_N)) == 'False'))
+      domain = row[f'permissions.{permissions_N}.domain']
+      allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (DESIRED_ALLOWFILEDISCOVERY in ('Any', allowFileDiscovery)):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                            'role': row['permissions.{0}.role'.format(permissions_N)],
+                            'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
+                            'role': row[f'permissions.{permissions_N}.role'],
                             'domain': domain,
                             'allowFileDiscovery': allowFileDiscovery})
 

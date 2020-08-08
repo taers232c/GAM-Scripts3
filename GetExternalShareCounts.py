@@ -55,30 +55,30 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if row['permissions.{0}.role'.format(permissions_N)] == 'owner':
+      if row[f'permissions.{permissions_N}.role'] == 'owner':
         continue
-      if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+      if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
       if v == 'anyone':
-        if row['permissions.{0}.{1}'.format(permissions_N, LINK_FIELD)] == LINK_VALUE:
+        if row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE:
           anyoneWithLinkShareCount += 1
         else:
           anyoneShareCount += 1
       elif v == 'domain':
-        domain = row['permissions.{0}.domain'.format(permissions_N)]
+        domain = row[f'permissions.{permissions_N}.domain']
         if domain in DOMAIN_LIST:
           continue
-        if row['permissions.{0}.{1}'.format(permissions_N, LINK_FIELD)] == LINK_VALUE:
+        if row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE:
           domainWithLinkShareCounts.setdefault(domain, 0)
           domainWithLinkShareCounts[domain] += 1
         else:
           domainShareCounts.setdefault(domain, 0)
           domainShareCounts[domain] += 1
       else: # group, user
-        if row.get('permissions.{0}.deleted'.format(permissions_N)) == 'True':
+        if row.get(f'permissions.{permissions_N}.deleted') == 'True':
           continue
-        emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
-        domain = row.get('permissions.{0}.domain'.format(permissions_N), '')
+        emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+        domain = row.get(f'permissions.{permissions_N}.domain', '')
         if not domain:
           domain = emailAddress[emailAddress.find('@')+1:]
         if domain in DOMAIN_LIST:

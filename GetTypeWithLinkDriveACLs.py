@@ -54,12 +54,12 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
       permissions_N = mg.group(1)
-      if v == DESIRED_TYPE and row['permissions.{0}.{1}'.format(permissions_N, LINK_FIELD)] == LINK_VALUE:
+      if v == DESIRED_TYPE and row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE:
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
-                            'permissionId': 'id:{0}'.format(row['permissions.{0}.id'.format(permissions_N)]),
-                            'role': row['permissions.{0}.role'.format(permissions_N)]})
+                            'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
+                            'role': row[f'permissions.{permissions_N}.role']})
 
 if inputFile != sys.stdin:
   inputFile.close()

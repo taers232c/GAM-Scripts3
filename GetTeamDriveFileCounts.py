@@ -58,9 +58,9 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_ROLE.match(k)
     if mg and v in ['organizer', 'fileOrganizer']:
       permissions_N = mg.group(1)
-      if row['permissions.{0}.type'.format(permissions_N)] != 'user':
+      if row[f'permissions.{permissions_N}.type'] != 'user':
         continue
-      emailAddress = row['permissions.{0}.emailAddress'.format(permissions_N)]
+      emailAddress = row[f'permissions.{permissions_N}.emailAddress']
       if DOMAIN_LIST:
         domain = emailAddress[emailAddress.find('@')+1:]
         if domain not in DOMAIN_LIST:
