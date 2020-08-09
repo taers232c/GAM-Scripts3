@@ -5,15 +5,15 @@
 #	https://github.com/taers232c/GAMADV-XTD3
 # Usage:
 # 1: Get all Team Drives
-#  $ gam redirect csv ./teamdrives.csv print teamdrives
+#  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id
 # 2: Get ACLs for all Team Drives
-#  $ gam redirect csv ./teamdriveacls.csv multiprocess csv ./teamdrives.csv gam print drivefileacls teamdriveid ~id
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls ~id fields id,emailaddress,role,type,deleted
 # 3: From that list of ACLs, output a CSV file with headers "teamDriveId,permissionId,type,emailAddress"
 #    that lists the teamDriveIds and permissionIds for all ACLs with role writer.
-#  $ python UpgradeWritersToContentManagers.py ./teamdriveacls.csv upgradetdacls.csv
-# 4: Inspect upgradetdacls.csv, verify that it makes sense and then proceed
+#  $ python UpgradeWritersToContentManagers.py ./TeamDriveACLs.csv UpgradetdACLs.csv
+# 4: Inspect UpgradetdACLs.csv, verify that it makes sense and then proceed
 # 5: Upgrade the ACLs
-#  $ gam redirect stdout ./upgradetdacls.out multiprocess redirect stderr stdout multiprocess csv upgradetdacls.csv gam update drivefileacl teamdriveid "~teamDriveId" "~permissionId" role fileOrganizer
+#  $ gam redirect stdout ./UpgradetdACLs.log multiprocess redirect stderr stdout multiprocess csv UpgradetdACLs.csv gam update drivefileacl teamdriveid "~teamDriveId" "~permissionId" role fileOrganizer
 """
 
 import csv
