@@ -8,7 +8,7 @@
 # 1: Get group member counts
 #  $ gam print groups memberscount managerscount ownerscount > ./GroupCounts.csv
 # 2: From that list of groups, output a CSV file with headers "group" for those groups with no members
-#  $ python GetEmptyGroups.py ./GroupCounts.csv ./EmptyGroups.csv
+#  $ python3 GetEmptyGroups.py ./GroupCounts.csv ./EmptyGroups.csv
 """
 
 import csv

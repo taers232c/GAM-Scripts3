@@ -29,7 +29,7 @@
 # 2: Get Sendas addresses
 #  $ gam <UserTypeEntity> print sendas > ./Sendas.csv
 # 3: Output an updated version of Users.csv with one row for each address in Sendas.csv
-#  $ python MergeSendasUsers.py ./Sendas.csv ./Users.csv ./UpdatedUsers.csv
+#  $ python3 MergeSendasUsers.py ./Sendas.csv ./Users.csv ./UpdatedUsers.csv
 """
 
 import csv

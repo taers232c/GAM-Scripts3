@@ -13,7 +13,7 @@
 # 3: Get CrOS devices; omit status if you don't want status info
 #  $ gam print cros ou status > CrOS.csv
 # 4: From those lists of Users and Org Units, output a CSV file with user counts for each Org Unit
-#  $ python GetOrgUnitUserCrOSCounts.py ./OrgUnits.csv ./Users.csv ./CrOS.csv ./OrgUnitUserCounts.csv
+#  $ python3 GetOrgUnitUserCrOSCounts.py ./OrgUnits.csv ./Users.csv ./CrOS.csv ./OrgUnitUserCounts.csv
 """
 
 import csv

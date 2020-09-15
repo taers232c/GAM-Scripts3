@@ -18,7 +18,7 @@
 #    Set SHOW_USER_ORGANIZERS = True
 # 4: From that list of ACLs, output a CSV file with headers "id,name,organizers"
 #    that shows the organizers for each Team Drive
-#  $ python GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
+#  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions pm type group em
 # 6: Go to step 11
@@ -28,14 +28,14 @@
 # 8: Customize DeleteDuplicateRows.py for this task:
 #    Set ID_FIELD = 'id'
 # 9: Delete duplicate Team Drives (some may have multiple organizers).
-#  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
+#  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions pm type group em
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired groups
 #    (n.b., driveFileTitle, role, and emailAddress are not used in the next step, they are included for documentation purposes)
-#  $ python GetSharedWithGroupTeamDriveACLs.py filelistperms.csv deleteperms.csv
+#  $ python3 GetSharedWithGroupTeamDriveACLs.py filelistperms.csv deleteperms.csv
 # 12: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 13: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"

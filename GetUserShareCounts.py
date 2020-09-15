@@ -25,7 +25,7 @@
 #      internalGroup - number of shares to an internal group
 #      externalUser - number of shares to an internal user
 #      internalUser - number of shares to an internal user
-#  $ python GetUserShareCounts.py filelistperms.csv usersharecounts.csv
+#  $ python3 GetUserShareCounts.py filelistperms.csv usersharecounts.csv
 """
 
 import csv

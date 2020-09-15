@@ -5,7 +5,7 @@
 # Usage:
 # 1: Produce a CSV file Input.csv
 # 2: Produce a JSON file Output.json
-#  $ python ./ConvertCSVtoJSON.py Input.csv Output.json
+#  $ python3 ./ConvertCSVtoJSON.py Input.csv Output.json
 """
 
 import csv

@@ -12,7 +12,7 @@
 # 2: From that list of ACLs, output a CSV file with headers "path,type,value,role"
 #    that lists the file path and ACL for all ACLs except those indicating the user as owner.
 #    There is one row per ACL per file path
-#  $ python GetPermissionsByPath.py filelistperms.csv pathperms.csv
+#  $ python3 GetPermissionsByPath.py filelistperms.csv pathperms.csv
 """
 
 import csv

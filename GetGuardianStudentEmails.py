@@ -27,7 +27,7 @@
 #                [fields <FieldNameList>] (matchfield <FieldName> <RegularExpression>)* [delimiter <Character>])
 #  $ gam <UserTypeEntity> print users fields primaryemail,id > ./Students.csv
 # 3: Output an updated version of Guardians.csv with student emails obtained from Students.csv
-#  $ python GetGuardianStudentEmails.py ./Students.csv ./Guardians.csv ./UpdatedGuardians.csv
+#  $ python3 GetGuardianStudentEmails.py ./Students.csv ./Guardians.csv ./UpdatedGuardians.csv
 """
 
 import csv

@@ -9,9 +9,9 @@
 # 1: Get group owners
 #  $ gam print groups owners delimiter " " > ./GroupOwners.csv
 # 2: From that list of groups, output a CSV file with headers "User,GroupsOwnedByUser
-#  $ python GetGroupsOwnedByUser.py ./GroupOwners.csv ./GroupsOwnedByUser.csv
+#  $ python3 GetGroupsOwnedByUser.py ./GroupOwners.csv ./GroupsOwnedByUser.csv
 # 3: If you only want groups owned by a select list of users, specify the CSV file name and field name that lists the users
-#  $ python GetGroupsOwnedByUser.py ./GroupOwners.csv ./GroupsOwnedByUser.csv ./<Filename>:<FieldName>
+#  $ python3 GetGroupsOwnedByUser.py ./GroupOwners.csv ./GroupsOwnedByUser.csv ./<Filename>:<FieldName>
 """
 
 import csv

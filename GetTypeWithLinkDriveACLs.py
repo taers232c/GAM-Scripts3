@@ -11,7 +11,7 @@
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired type and withLink values
-#  $ python GetTypeWithLinkDriveACLs.py filelistperms.csv deleteperms.csv
+#  $ python3 GetTypeWithLinkDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"

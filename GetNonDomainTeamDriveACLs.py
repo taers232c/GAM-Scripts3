@@ -12,7 +12,7 @@
 # 2: From that list of ACLs, output a CSV file with headers "teamDriveId,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs except those from the specified domains.
 #    (n.b., role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
-#  $ python GetNonDomainTeamDriveACLs.py ./TeamDriveACLs.csv DeleteTeamDriveACLs.csv
+#  $ python3 GetNonDomainTeamDriveACLs.py ./TeamDriveACLs.csv DeleteTeamDriveACLs.csv
 # 3: Inspect DeleteTeamDriveACLs.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
 #  $ gam redirect stdout ./deletetdacls.out multiprocess redirect stderr stdout multiprocess csv DeleteTeamDriveACLs.csv gam delete drivefileacl teamdriveid "~teamDriveId" "~permissionId"

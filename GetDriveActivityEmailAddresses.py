@@ -12,7 +12,7 @@
 #  $ Example, Basic GAM: gam <UserTypeEntity> print driveactivity ...  > DriveActivity.csv
 #  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./DriveActivity.csv multiprocess <UserTypeEntity> print driveactivity  ...
 # 3: From DriveSettings.csv and DriveActivity.csv generate DriveActivityEmail.csv with the additional column user.emailAddress
-#  $ python GetDriveActivityEmailAddresses.py DriveSettings.csv DriveActivity.csv DriveActivityEmail.csv
+#  $ python3 GetDriveActivityEmailAddresses.py DriveSettings.csv DriveActivity.csv DriveActivityEmail.csv
 """
 
 import csv

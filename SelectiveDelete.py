@@ -12,7 +12,7 @@
 #  $ gam config auto_batch_min 1 redirect csv ./UserFiles.csv multiprocess all users print filelist fields id,name,owners.emailaddress fullpath
 # 2: From that list of files, output a CSV file with the same headers as the input CSV file
 #    that lists the drive file Ids that are not in the selected top level folders
-#  $ python SelectiveDelete.py ./UserFiles.csv ./DeleteFiles.csv
+#  $ python3 SelectiveDelete.py ./UserFiles.csv ./DeleteFiles.csv
 # 3: Inspect DeleteFiles.csv, verify that it makes sense and then proceed
 # 4: Delete the  files
 #  $ gam redirect stdout ./DeleteFiles.log multiprocess redirect stderr stdout csv ./DetelteFiles.csv gam user "~owners.0.emailAddress" delete drivefile "~id"

@@ -9,7 +9,7 @@
 #  $ gam redirect csv ./UserAddresses.csv org "/" print users fields primaryemail,orgunitpath,addresses
 # 2: From that list of users, output a CSV file with headers "Org,primaryEmail"
 #    that lists the Org Unit derived from the root user's work address and their primaryEmail
-#  $ python GetUserCCOrgs.py ./UserAddresses.csv ./UserCCOrgs.csv
+#  $ python3 GetUserCCOrgs.py ./UserAddresses.csv ./UserCCOrgs.csv
 # 3: Inspect UserCCOrgs.csv, verify that it makes sense and then proceed
 # 4: Move the users
 #  $ gam update orgs csvkmd ./UserCCOrgs.csv keyfield Org datafield primaryEmail add csvdata primaryEmail

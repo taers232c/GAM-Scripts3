@@ -11,7 +11,7 @@
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions pm not role owner em
 #  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,title,permissions pm not role owner em
 # 2: From that list of ACLs, output a CSV file that lists only the shared files.
-#  $ python GetSharedFiles.py filelistperms.csv sharedfiles.csv
+#  $ python3 GetSharedFiles.py filelistperms.csv sharedfiles.csv
 """
 
 import csv

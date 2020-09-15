@@ -21,7 +21,7 @@
 #    Set DELETE_ATTENDEES_PATTERN = re.compile(r'^.*@bar.com$')
 # 4: From that list of events, output a CSV file with headers "primaryEmail,calendarId,id,aummary,emails"
 #    thats lists the attendees to delete from each event
-#  $ python ./DeleteCalendarAttendees.py CalendarEvents.csv DeleteAttendees.csv
+#  $ python3 ./DeleteCalendarAttendees.py CalendarEvents.csv DeleteAttendees.csv
 # 5: Inspect DeleteAttendees.csv, verify that it makes sense and then proceed
 # 6: Delete the attendees
 #  $ gam csv DeleteAttendees.csv gam user "~primaryEmail" update calattendees "~calendarId" id "~id" deleteentity "~emails" doit

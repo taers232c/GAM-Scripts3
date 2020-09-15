@@ -10,12 +10,12 @@
 # 2: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
 #  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
 # 3: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
-#  $ python DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
+#  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 4: Get ACLs for all Team Drives
 #  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields id,emailaddress,role,type,deleted
 # 5: From that list of ACLs, output a CSV file with headers "id,name,organizers"
 #    that shows the organizers for each Team Drive
-#  $ python GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
+#  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 """
 
 import csv

@@ -9,7 +9,7 @@
 #  $ Basic: gam all users print delegates > ./AllDelegates.csv
 #  $ Advanced: gam all users print delegates shownames > ./AllDelegates.csv
 # 2: From that list of delegates, output a CSV file with headers "Delegate,Delegate Email,Delegators
-#  $ python ShowDelegators.py ./AllDelegates.csv ./AllDelegators.csv
+#  $ python3 ShowDelegators.py ./AllDelegates.csv ./AllDelegators.csv
 """
 
 import csv

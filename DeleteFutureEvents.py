@@ -9,7 +9,7 @@
 #  $ Example, user's primary calendar: gam redirect csv ./UserEvents.csv user user@domain.com print events primary singleevents orderby starttime maxattendees 1
 #  $ Example, all calendars a user owns: gam redirect csv ./UserEvents.csv user user@domain.com print events minaccessrole owner singleevents orderby starttime maxattendees 1
 # 2: From that list of Events, output a CSV file with only the rows with an event start date >= a specified date
-#  $ python DeleteFutureEvents.py yyyy-mm-dd UserEvents.csv UserFutureEvents.csv
+#  $ python3 DeleteFutureEvents.py yyyy-mm-dd UserEvents.csv UserFutureEvents.csv
 # 3: Delete the events
 #    Parallel, faster:
 #  $ gam csv UserFutureEvents.csv gam user ~primaryEmail delete event calendars ~calendarId events ~id doit

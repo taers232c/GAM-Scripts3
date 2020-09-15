@@ -11,7 +11,7 @@
 # 2: Get Users; omit suspended if you don't want suspension info
 #  $ gam print users ou suspended > Users.csv
 # 3: From those lists of Users and Org Units, output a CSV file with user counts for each Org Unit
-#  $ python GetOrgUnitUserCounts.py ./OrgUnits.csv ./Users.csv ./OrgUnitUserCounts.csv
+#  $ python3 GetOrgUnitUserCounts.py ./OrgUnits.csv ./Users.csv ./OrgUnitUserCounts.csv
 """
 
 import csv

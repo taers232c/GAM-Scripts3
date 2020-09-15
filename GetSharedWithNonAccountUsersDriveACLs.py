@@ -14,7 +14,7 @@
 # 3: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the non-account users
 #    (n.b., driveFileTitle, role, and emailAddress are not used in the next step, they are included for documentation purposes)
-#  $ python GetSharedWithNonAccountUsersDriveACLs.py accountusers.csv filelistperms.csv deleteperms.csv
+#  $ python3 GetSharedWithNonAccountUsersDriveACLs.py accountusers.csv filelistperms.csv deleteperms.csv
 # 4: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 5: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"

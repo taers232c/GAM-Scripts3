@@ -10,7 +10,7 @@
 #  $ Basic: gam print group-members fields email,type > GroupUsers.csv
 #  $ Advanced: gam redirect csv ./GroupUsers.csv print group-members fields email,type
 # 2: From that list of group members, output a CSV file with headers primaryEmail,GroupsCount,Groups that shows the groups for each user
-#  $ python ConvertGroupUsersToUserGroups.py ./GroupUsers.csv ./UserGroups.csv
+#  $ python3 ConvertGroupUsersToUserGroups.py ./GroupUsers.csv ./UserGroups.csv
 """
 
 import csv

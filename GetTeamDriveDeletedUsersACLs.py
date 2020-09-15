@@ -9,7 +9,7 @@
 # 2: Get ACLs for all Team Drives
 #  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields id,emailaddress,role,type,deleted pm type user em
 # 3: From the list of ACLs, output a CSV file with headers "id,name,permissionId,role,emailAddress"
-#  $ python GetTeamDriveDeletedUsersACLs.py TeamDriveACLs.csv TeamDrives.csv TeamDriveDeletedUsersACLs.csv
+#  $ python3 GetTeamDriveDeletedUsersACLs.py TeamDriveACLs.csv TeamDrives.csv TeamDriveDeletedUsersACLs.csv
 # 4: Inspect TeamDriveSuspendUsersACLs.csv, verify that it makes sense and then proceed if desired
 # 5: Delete the ACLs
 #  $ gam redirect stdout DeleteTeamDriveDeletedUsersACLs.log multiprocess redirect stderr stdout csv TeamDriveDeletedUsersACLs.csv gam delete drivefileacl "~id" "~permissionId"

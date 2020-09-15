@@ -10,9 +10,9 @@
 #  $ Basic: gam print group-members fields email,type > GroupMembers.csv
 #  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: From that list of group members, output a CSV file with headers group,groupMatches,groupTotal,userMatches,userTotal
-#  $ python GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithMatchingMembers.csv
+#  $ python3 GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithMatchingMembers.csv
 # 3: If you want a list of the matching members, add another filename to the command, the matching members will be output to that file
-#  $ python GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithMatchingMembers.csv ./MatchingMembers.csv
+#  $ python3 GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithMatchingMembers.csv ./MatchingMembers.csv
 # 4: If you want to delete the matching members from their groups, you can do the following which uses one API call per member
 #  $ gam csv ./MatchingMembers.csv gam update group ~group delete member ~email
 # 5: With Advanced GAM, you can delete the members in batches

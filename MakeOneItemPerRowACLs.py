@@ -12,7 +12,7 @@
 #  $ Basic: gam user user@domain.com print filelist id title permissions > filelistperms.csv
 #  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,name,permissions
 # 2: From that list of files, output a CSV file that lists one ACL per row
-#  $ python MakeOneItemPerRowACLs.py filelistperms.csv filelistpermsoipr.csv
+#  $ python3 MakeOneItemPerRowACLs.py filelistperms.csv filelistpermsoipr.csv
 """
 
 import csv

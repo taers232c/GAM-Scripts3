@@ -13,7 +13,7 @@
 #  $ gam print group-members > GroupMembers.csv
 # 2: From that list of users, output a CSV file with headers with the same headers as Users.csv plus GroupsCount
 #    that shows the number of groups
-#  $ python GetUsersGroupCounts.py ./Users.csv ./GroupMembers.csv ./UsersGroupsCounts.csv <threshold>
+#  $ python3 GetUsersGroupCounts.py ./Users.csv ./GroupMembers.csv ./UsersGroupsCounts.csv <threshold>
 """
 
 import csv

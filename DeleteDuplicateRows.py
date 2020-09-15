@@ -5,7 +5,7 @@
 # Usage:
 # 1: Produce a CSV file Input.csv
 # 2: Delete the duplicate rows
-#  $ python ./DeleteDuplicateRows.py Input.csv Output.csv
+#  $ python3 ./DeleteDuplicateRows.py Input.csv Output.csv
 """
 
 import csv

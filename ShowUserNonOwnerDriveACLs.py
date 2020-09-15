@@ -9,7 +9,7 @@
 #    Advanced: gam user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress > filelistperms.csv
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,emailAddress"
 #    that lists the driveFileIds/Titles for all ACLs except those indicating the user as owner
-#  $ python ShowUserNonOwnerDriveACLs.py filelistperms.csv localperms.csv
+#  $ python3 ShowUserNonOwnerDriveACLs.py filelistperms.csv localperms.csv
 """
 
 import csv

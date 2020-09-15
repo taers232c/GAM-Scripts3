@@ -12,7 +12,7 @@
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionIds"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
 #    (n.b., driveFileTitle is not used in the next step, it is included for documentation purposes)
-#  $ python GetUserNonOwnerDrivePermissions.py filelistperms.csv deleteperms.csv
+#  $ python3 GetUserNonOwnerDrivePermissions.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
 #    Parallel, faster:

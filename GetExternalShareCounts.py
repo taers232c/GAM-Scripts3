@@ -11,7 +11,7 @@
 #  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title owners permissions
 # 2: From that list of ACLs, output a CSV file with headers:
 #      Type,ExternalShare,Count
-#  $ python GetExternalShareCounts.py filelistperms.csv externalsharecounts.csv
+#  $ python3 GetExternalShareCounts.py filelistperms.csv externalsharecounts.csv
 """
 
 import csv

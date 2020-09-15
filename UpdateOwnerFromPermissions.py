@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 # Purpose: Update Owner column from permissions.n.emailAddress column where permissions.n.role == owner
-#  $ python UpdateOwnerFromPermissions.py filelist.csv updatedfilelist.csv
+#  $ python3 UpdateOwnerFromPermissions.py filelist.csv updatedfilelist.csv
 """
 
 import csv

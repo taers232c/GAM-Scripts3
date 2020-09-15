@@ -8,7 +8,7 @@
 #  $ gam redirect csv ./userfiles.csv user testuser@domain.com print filelist fields id,title,parents,owners.emailaddress
 # 2: From that list of files, output a CSV file with headers "Owner,driveFileId,driveFileTitle"
 #    that lists the driveFileIds for all files that have root as a parent and other parents
-#  $ python GetMultipleParentsRoot.py ./userfiles.csv ./rootparents.csv
+#  $ python3 GetMultipleParentsRoot.py ./userfiles.csv ./rootparents.csv
 # 3: Inspect rootparents.csv, verify that it makes sense and then proceed
 # 4: Delete root as parent
 #  $ gam redirect stdout ./deleterootparent.out multiprocess csv ./rootparents.csv gam user "~Owner" update drivefile "~driveFileId" removeparents root

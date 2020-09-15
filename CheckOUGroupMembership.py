@@ -11,7 +11,7 @@
 #  $ gam redirect csv ./GroupMembers.csv print group-members select group1@domain.com,group2@domain.com,... recursive noduplicates
 # 3: From those two lists, output one CSV file showing the OU members that are not in the groups and
 #    and another CSV file showing the group members that are not in the OU
-#  $ python CheckOUGroupMembership.py ./OUMembers.csv ./GroupMembers.csv ./OUNotGroupMembers.csv ./GroupNotOU.csv
+#  $ python3 CheckOUGroupMembership.py ./OUMembers.csv ./GroupMembers.csv ./OUNotGroupMembers.csv ./GroupNotOU.csv
 """
 
 import csv

@@ -10,7 +10,7 @@
 # 2: Get users; replace <UserTypeEntity> as desired, e.g. ou /Teachers
 #  $ gam <UserTypeEntity> print > Users.csv
 # 3: Make a CSV file NonMembers.csv that lists the users that are not group members
-#  $ python CheckMembership.py Members.csv Users.csv NonMembers.csv
+#  $ python3 CheckMembership.py Members.csv Users.csv NonMembers.csv
 """
 
 import csv

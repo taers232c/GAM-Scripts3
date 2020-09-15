@@ -14,7 +14,7 @@
 #                               select drivefilename "Folder Name" showmimetype not gfolder
 # 2: From that list of files, output a CSV file with the same headers as the input CSV file
 #    that lists the drive file Ids that have the same owner, title, mimeType and paths with a createdDate older than the most recent createdDate
-#  $ python DeleteDuplicateFiles.py ./UserFiles.csv ./DuplicateFiles.csv
+#  $ python3 DeleteDuplicateFiles.py ./UserFiles.csv ./DuplicateFiles.csv
 # 3: Inspect DuplicateFiles.csv, verify that it makes sense and then proceed
 # 4: Delete the duplicate files
 #  $ gam redirect stdout ./DeleteDuplicateFiles.log multiprocess redirect stderr stdout csv ./DuplicateFiles.csv gam user "~Owner" delete drivefile "~id"

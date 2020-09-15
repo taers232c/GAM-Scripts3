@@ -10,7 +10,7 @@
 #  $ gam print group-members > GroupMembers.csv
 # 2: From that list of users, output a CSV file with the same headers as Users.csv plus GroupsCount
 #    that shows users that don't belong to any groups
-#  $ python GetUsersNoGroups.py ./Users.csv ./GroupMembers.csv ./UsersNoGroups.csv
+#  $ python3 GetUsersNoGroups.py ./Users.csv ./GroupMembers.csv ./UsersNoGroups.csv
 """
 
 import csv

@@ -13,8 +13,8 @@
 #  $ gam print cros fields deviceid,orgunitpath,notes > CrOS.csv
 # 3: From the lists of Org Units and Users/CrOS devices, print a tree
 #    Omit the third parameter or specify - to write to stdout
-#  $ python PrintOrgUnitTree.py ./OrgUnits.csv ./Users.csv ./OrgUnitTree.txt
-#  $ python PrintOrgUnitTree.py ./OrgUnits.csv ./CrOS.csv
+#  $ python3 PrintOrgUnitTree.py ./OrgUnits.csv ./Users.csv ./OrgUnitTree.txt
+#  $ python3 PrintOrgUnitTree.py ./OrgUnits.csv ./CrOS.csv
 # 4: You can pipe data into the script, replace the second parameter with -
 #  $ gam print users fields primaryEmail,orgunitpath,name | python PrintOrgUnitTree.py ./OrgUnits.csv - ./OrgUnitTree.txt
 # 5: With Advanced GAM you can select subsets of Users/CrOS devices; this requires an additional API call per User/CrOS device to get the specified fields

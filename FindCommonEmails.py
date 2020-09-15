@@ -7,7 +7,7 @@
 #  $ gam report users filter "accounts:creation_time<2017-09-01T00:00:00.000Z" parameters accounts:creation_time > creation_time.csv
 #  $ gam report users filter "gmail:last_interaction_time<2016-01-01T00:00:00.000Z" parameters gmail:last_interaction_time > last_interaction_time.csv
 # 2: From that list of files, output a CSV file with the header email that shows the email addresses that appear in all files
-#  $ python FindCommonEmails.py ./CommonEmails.csv ./num_emails_sent.csv ./creation_time.csv ./last_interaction_time.csv
+#  $ python3 FindCommonEmails.py ./CommonEmails.csv ./num_emails_sent.csv ./creation_time.csv ./last_interaction_time.csv
 """
 
 import csv

@@ -12,7 +12,7 @@
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs except those from the specified domains.
 #    (n.b., role, type, emailAddress, domain and driveFileTitle are not used in the next step, they are included for documentation purposes)
-#  $ python GetNonDomainDriveACLs.py filelistperms.csv deleteperms.csv
+#  $ python3 GetNonDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: Delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
