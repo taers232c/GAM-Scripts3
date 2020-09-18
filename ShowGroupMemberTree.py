@@ -35,12 +35,12 @@ for row in inputCSV:
   Groups.setdefault(group, {})
   Groups[group][row['email']] = row['role']
 for group, members in sorted(iter(Groups.items())):
-  print(f'Group: {group}')
+  outputFile.write(f'Group: {group}\n')
   for member, role in sorted(iter(members.items())):
     if SHOW_ROLE:
-      print(f"  {member}:{role}")
+      outputFile.write(f"  {member}:{role}\n")
     else:
-      print(f"  {member}")
+      outputFile.write(f"  {member}\n")
 if inputFile != sys.stdin:
   inputFile.close()
 if outputFile != sys.stdout:
