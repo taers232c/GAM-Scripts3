@@ -11,6 +11,9 @@
 #  $ python3 ./FindUserChanges.py
 # 4: Do the deletes; substitute actual field names from SMS CSV file
 #  $ gam csv DeleteUsers.csv gam delete user "~primaryEmail"
+#    Rather than delete, you could suspend the users; you can optionally move the uses to a suspended OU
+#  $ gam csv DeleteUsers.csv gam update user "~primaryEmail" suspended true
+#  $ gam csv DeleteUsers.csv gam update user "~primaryEmail" suspended true ou /Suspended
 # 5: Do the adds; substitute actual field names from SMS CSV file
 #  $ gam csv AddUsers.csv gam create user "~primaryEmail" firstname "~name.givenName" lastname "~name.familyName" password "~password" ou "~orgUnitPath"
 # 6: Do the changes; substitute actual field names from SMS CSV file
