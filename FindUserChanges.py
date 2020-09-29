@@ -1,33 +1,49 @@
 #!/usr/bin/env python3
 """
-# Purpose: Generate adds/deletes/updates from files exported from SMS
+# Purpose: Generate adds/deletes/updates from files exported from an SMS
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3# Usage:
 # Customize: Set the field and file names as required/desired
+# Methodology:
+# A previous export and a current export from the SMS are compared to find changes.
+# If a user was not the the previous export and is in the current export, it can be added.
+# If a user was in the previous export and is not in the current export, it can be deleted/suspended/ignored.
+# If a user is in both exports but some key fields are different, it can be updated.
+# If your SMS outputs a unique ID for each user, the script can detect email address changes,
+# otherwise an email address change will be processed as an add and a delete/suspend which is probably
+# not what you want.
+#
 # 1: Rename CurrUsers.csv to PrevUsers.csv
 # 2: Export current data from SMS to CurrUsers.csv
 # 3: Find the changes
 #  $ python3 ./FindUserChanges.py
-# 4: Do the deletes; substitute actual field names from SMS CSV file
-#  $ gam csv DeleteUsers.csv gam delete user "~primaryEmail"
+# 4: Do the deletes/suspends; substitute actual field names from SMS CSV file
+#  $ gam csv DeleteUsers.csv gam delete user "~EMAIL_FIELD"
 #    Rather than delete, you could suspend the users; you can optionally move the uses to a suspended OU
-#  $ gam csv DeleteUsers.csv gam update user "~primaryEmail" suspended true
-#  $ gam csv DeleteUsers.csv gam update user "~primaryEmail" suspended true ou /Suspended
+#  $ gam csv DeleteUsers.csv gam update user "~EMAIL_FIELD" suspended true
+#  $ gam csv DeleteUsers.csv gam update user "~EMAIL_FIELD" suspended true ou /Suspended
 # 5: Do the adds; substitute actual field names from SMS CSV file
-#  $ gam csv AddUsers.csv gam create user "~primaryEmail" firstname "~name.givenName" lastname "~name.familyName" password "~password" ou "~orgUnitPath"
+#  $ gam csv AddUsers.csv gam create user "~EMAIL_FIELD" firstname "~FIRSTNAME_FIELD" lastname "~LASTNAME_FIELD" password "~PASSWORD_FIELD" ou "~ORGUNIT_FIELD"
 # 6: Do the changes; substitute actual field names from SMS CSV file
-#  $ gam csv UpdateUsers.csv gam update user "~primaryEmail" firstname "~name.givenName" lastname "~name.familyName" password "~password" ou "~orgUnitPath"
+#    Update users without an email address change
+#  $ gam csv UpdateUsers.csv matchfield new-EMAIL_FIELD "" gam update user "~EMAIL_FIELD" firstname "~FIRSTNAME_FIELD" lastname "~LASTNAME_FIELD" password "~PASSWORD_FIELD" ou "~ORGUNIT_FIELD"
+#    Update users with an email address change; previous email address is updated to new email address
+#  $ gam csv UpdateUsers.csv skipfield new-EMAIL_FIELD "" gam update user "~EMAIL_FIELD" email "new-~~EMAIL_FIELD~~" firstname "~FIRSTNAME_FIELD" lastname "~LASTNAME_FIELD" password "~PASSWORD_FIELD" ou "~ORGUNIT_FIELD"
 """
 
 import csv
 
 # These are the field names in the SMS CSV files; change as required
+# If you don't have a unique ID field, set UID_FIELD to the same value as EMAIL_FIELD
+UID_FIELD = 'id'
 EMAIL_FIELD = 'primaryEmail'
 PASSWORD_FIELD = 'password'
 FIRSTNAME_FIELD = 'name.givenName'
 LASTNAME_FIELD = 'name.familyName'
 ORGUNIT_FIELD = 'orgUnitPath'
+
+NEW_EMAIL_FIELD = f'new-{EMAIL_FIELD}'
 
 # Fields used to compare the previous and current records for a student
 MATCH_FIELDS = [FIRSTNAME_FIELD, LASTNAME_FIELD, PASSWORD_FIELD, ORGUNIT_FIELD]
@@ -48,9 +64,9 @@ prevFile = open(PREVUSERS_FILENAME, 'r', encoding='utf-8')
 prevCSV = csv.DictReader(prevFile, quotechar=QUOTE_CHAR)
 delFieldnames = prevCSV.fieldnames[:]
 for row in prevCSV:
-  email = row[EMAIL_FIELD]
-  prevStudentsSet.add(email)
-  prevStudents[email] = row
+  uid = row[UID_FIELD]
+  prevStudentsSet.add(uid)
+  prevStudents[uid] = row
 prevFile.close()
 
 currStudentsSet = set()
@@ -59,36 +75,44 @@ currFile = open(CURRUSERS_FILENAME, 'r', encoding='utf-8')
 currCSV = csv.DictReader(currFile, quotechar=QUOTE_CHAR)
 addFieldnames = currCSV.fieldnames[:]
 for row in currCSV:
-  email = row[EMAIL_FIELD]
-  currStudentsSet.add(email)
-  currStudents[email] = row
+  uid = row[UID_FIELD]
+  currStudentsSet.add(uid)
+  currStudents[uid] = row
 currFile.close()
 
 addSet = currStudentsSet-prevStudentsSet
 addFile = open(ADDUSERS_FILENAME, 'w', encoding='utf-8', newline='')
 addCSV = csv.DictWriter(addFile, addFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 addCSV.writeheader()
-for email in sorted(addSet):
-  addCSV.writerow(currStudents[email])
+for uid in sorted(addSet):
+  addCSV.writerow(currStudents[uid])
 addFile.close()
 
 delSet = prevStudentsSet-currStudentsSet
 delFile = open(DELETETUSERS_FILENAME, 'w', encoding='utf-8', newline='')
 delCSV = csv.DictWriter(delFile, delFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 delCSV.writeheader()
-for email in sorted(delSet):
-  delCSV.writerow(prevStudents[email])
+for uid in sorted(delSet):
+  delCSV.writerow(prevStudents[uid])
 delFile.close()
 
+updSet = prevStudentsSet & currStudentsSet
+updFieldnames = addFieldnames[:]
+updFieldnames.append(NEW_EMAIL_FIELD)
 updFile = open(UPDATEUSERS_FILENAME, 'w', encoding='utf-8', newline='')
-updCSV = csv.DictWriter(updFile, addFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+updCSV = csv.DictWriter(updFile, updFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 updCSV.writeheader()
-for email in sorted(currStudentsSet):
-  if email not in addSet and email not in delSet:
-    prevStudent = prevStudents[email]
-    currStudent = currStudents[email]
-    for field in MATCH_FIELDS:
-      if prevStudent[field] != currStudent[field]:
-        updCSV.writerow(currStudents[email])
-        break
+for uid in sorted(updSet):
+  prevStudent = prevStudents[uid]
+  currStudent = currStudents[uid]
+  if prevStudent[EMAIL_FIELD] != currStudent[EMAIL_FIELD]:
+    currStudent[NEW_EMAIL_FIELD] = currStudent[EMAIL_FIELD]
+    currStudent[EMAIL_FIELD] = prevStudent[EMAIL_FIELD]
+    updCSV.writerow(currStudent)
+    continue
+  for field in MATCH_FIELDS:
+    if prevStudent[field] != currStudent[field]:
+      currStudent[NEW_EMAIL_FIELD] = ''
+      updCSV.writerow(currStudent)
+      break
 updFile.close()
