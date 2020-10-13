@@ -17,21 +17,21 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 MERGE_NON_JSON_DATA = False # True - Merge data from non-JSON columns; False to omit data from non-JSON columns
 NON_JSON_DATA_SKIP_FIELDS = [] # List of non-JSON columns that should not be merged, e.g, ['a',] ['a', 'b']
-MAKE_LIST = True
+MAKE_LIST = False
 HEADER_ROW = True # True - Header row JSON; False - no header row. Only applies when MAKE_LIST = False
 # When MAKE_LIST = True: output is
 # [
-#   {"key": "value"},
-#   {"key": "value"},
-#   {"key": "value"}
+#   {"key": "value", "key": "value"},
+#   {"key": "value", "key": "value"},
+#   {"key": "value", "key": "value"}
 # ]
 # When MAKE_LIST = False, HEADER_ROW = False: output is
-#   {"key": "value"}
-#   {"key": "value"}
+#   '{"key": "value", "key": "value"}'
+#   '{"key": "value", "key": "value"}'
 # When MAKE_LIST = False, HEADER_ROW = True: output is
 #   JSON
-#   {"key": "value"}
-#   {"key": "value"}
+#   '{"key": "value", "key": "value"}'
+#   '{"key": "value", "key": "value"}'
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
@@ -68,7 +68,7 @@ else:
   if HEADER_ROW:
     outputFile.write('JSON'+LINE_TERMINATOR)
   for jsonRow in jsonRows:
-    outputFile.write(json.dumps(jsonRow, ensure_ascii=False, sort_keys=True)+LINE_TERMINATOR)
+    outputFile.write(QUOTE_CHAR+json.dumps(jsonRow, ensure_ascii=False, sort_keys=True)+QUOTE_CHAR+LINE_TERMINATOR)
 if inputFile != sys.stdin:
   inputFile.close()
 if outputFile != sys.stdout:
