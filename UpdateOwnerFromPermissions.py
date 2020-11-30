@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
 # Purpose: Update Owner column from permissions.n.emailAddress column where permissions.n.role == owner
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
+# Usage:
 #  $ python3 UpdateOwnerFromPermissions.py filelist.csv updatedfilelist.csv
 """
 

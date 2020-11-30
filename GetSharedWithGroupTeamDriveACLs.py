@@ -4,6 +4,9 @@
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set GROUP_LIST and DOMAIN_LIST.
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # For all Team Drives, start at step 1; For Team Drives selected by user/group/OU, start at step 7
 # All Team Drives

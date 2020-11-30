@@ -4,6 +4,9 @@
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set ONE_ACL_PER_ROW as desired
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name

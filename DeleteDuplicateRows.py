@@ -2,6 +2,9 @@
 """
 # Purpose: For a CSV file, delete the duplcate rows based an a field. You can optionally delete unwanted fields.
 # Customize: Set ID_FIELD, DELETE_FIELDS, LINE_TERMINATOR
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Produce a CSV file Input.csv
 # 2: Delete the duplicate rows

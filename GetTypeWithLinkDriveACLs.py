@@ -5,6 +5,9 @@
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set LINK_FIELD, DESIRED_TYPE and LINK_VALUE.
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv

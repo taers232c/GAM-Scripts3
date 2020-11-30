@@ -4,6 +4,9 @@
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: set OU_HEADER if OUMembers.csv has a header row
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get OU members
 #  $ gam redirect csv ./OUMembers.csv ou /Path/To/OU print users

@@ -5,6 +5,9 @@
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: USER_MATCH_PATTERN, GROUP_MATCH_PATTERN, SHOW_GROUPS_WITH_NO_MATCHES
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get group members
 #  $ Basic: gam print group-members fields email,type > GroupMembers.csv

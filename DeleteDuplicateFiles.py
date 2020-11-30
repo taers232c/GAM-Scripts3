@@ -3,6 +3,9 @@
 # Purpose: For a Google Drive User(s), delete all duplicate drive files
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get information for all files, if you don't want all users, replace all users with your user selection in the command below
 #    These fields are required: fields id,title,createddate,mimetype fullpath

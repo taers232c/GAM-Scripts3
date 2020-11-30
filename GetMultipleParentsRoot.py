@@ -3,6 +3,9 @@
 # Purpose: For a Google Drive User, delete root as a parent of files that have root as a parent and other parents
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get all of the files for testuser@domain.com
 #  $ gam redirect csv ./userfiles.csv user testuser@domain.com print filelist fields id,title,parents,owners.emailaddress

@@ -6,6 +6,9 @@
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_LIST, GROUP_LIST. DOMAIN_LIST, ROLE_LIST, TYPE_LIST, DESIRED_ALLOWFILEDISCOVERY,
 #	DROP_GENERAL_COLUMNS, DROP_PERMISSION_COLUMNS.
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, replace user@domain.com with your user selection in the command below
 #    For enhanced file selection in Advanced Gam see: https://github.com/taers232c/GAMADV-XTD3/wiki/Users-Drive-Files#display-file-lists

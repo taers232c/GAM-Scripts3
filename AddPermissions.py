@@ -8,6 +8,9 @@
 # <DriveFilePermissionScope> ::= anyone|anyonewithlink|user:<EmailAddress>|group:<EmailAddress>|domain:<DomainName>|domainwithlink:<DomainName>
 # <DriveFilePermission> ::= <DriveFilePermissionScope>;<DriveFileACLRole>
 # <DriveFilePermissionList> ::= "<DriveFilePermission>(,<DriveFilePermission)*"
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Use print filelist to get selected ACLs
 #    Syntax: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
@@ -16,7 +19,7 @@
 #  $ gam redirect csv ./filelist.csv user testuser@domain.com print filelist id ...
 # 2: From that list of files, output a CSV file with headers "Owner,driveFileId,permissions"
 #    that lists the driveFileIds and permissions to be added
-#  $ AddPermissions.py filelist.csv addperms.csv '<DriveFilePermissionsList>'
+#  $ python3 AddPermissions.py filelist.csv addperms.csv '<DriveFilePermissionsList>'
 # 3: Add the ACLs
 #    Parallel, faster:
 #  $ gam csv addperms.csv gam user ~Owner add permissions ~driveFileId ~permissions

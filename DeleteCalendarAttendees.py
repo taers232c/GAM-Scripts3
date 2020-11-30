@@ -4,6 +4,9 @@
 # Note: This script requires Advanced GAM version 4.89.02 or later:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELETE_ATTENDEES_SET, DELETE_ATTENDEES_PATTERN
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Produce a CSV file CalendarEvents.csv of calendar events
 # 2: You need a list of calendars.

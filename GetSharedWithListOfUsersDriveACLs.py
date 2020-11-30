@@ -5,6 +5,9 @@
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_HEADER
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Prepare a CSV file with a list of user email addresses; set USER_HEADER to identify the column containing the email addresses
 #  $ more Users.csv

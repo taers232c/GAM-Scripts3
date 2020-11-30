@@ -3,6 +3,9 @@
 Purpose: Process a CSV file to combine data fields for unique key fields
 Customize: Change QUOTE_CHAR, DATA_DELIMITER, LINE_TERMINATOR as required/desired
 Define: KEYFIELD, DATAFIELD, SAVEFIELDS, MATCHFIELDS, SKIPFIELDS
+Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+ $ python -V   or   python3 -V
+ Python 3.x.y
 Usage:
  $ python3 CSVKMD.py ./Input.csv ./Output.csv
 Example:

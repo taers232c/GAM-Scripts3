@@ -4,6 +4,9 @@
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DOMAIN_LIST, ONE_ORGANIZER, SHOW_GROUP_ORGANIZERS, SHOW_USER_ORGANIZERS
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: If you want to include all Team Drives, do this step and then skip to step 4, otherwise start at step 2.
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name

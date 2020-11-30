@@ -5,6 +5,9 @@
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Change QUOTE_CHAR, SHOW_EMPTY_OUS, SHOW_LABELS, FIELD_DELIMITER, INDENT_SPACES, LINE_TERMINATOR as required/desired
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get Org Units
 #  $ gam print ous > OrgUnits.csv

@@ -4,6 +4,9 @@
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELETE_EVENTS_WITH_ATTENDEES = True or False to determine whether events with attendees will be deleted.
+# Python: Use python or python3 below as appropriate to your system; verify that you have version 3
+#  $ python -V   or   python3 -V
+#  Python 3.x.y
 # Usage:
 # 1: Get calendar events for a user
 #  $ Example, user's primary calendar: gam redirect csv ./UserEvents.csv user user@domain.com print events primary singleevents orderby starttime maxattendees 1
