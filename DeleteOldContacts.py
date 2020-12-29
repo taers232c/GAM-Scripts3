@@ -7,8 +7,10 @@
 #  $ python -V   or  python3 -V
 #  Python 3.x.y
 # Usage:
-# 1: Generate OldContacts.csv, header row Email, one email address per row
-# 2: Get current contactsfor all users, if you don't want all users, replace all users with your user selection in the command below
+# 1: Generate OldContacts.csv, header row primaryEmail, one email address per row
+#    You can generate this file by hand, or, for example, if you have an OU of users to remove from all other user's contact lists,
+#  $ gam redirect csv ./OldContacts.csv ou "/Path/to/OU" print users primaryemail
+# 2: Get current contacts for all users, if you don't want all users, replace all users with your user selection in the command below
 #  $ gam redirect csv ./CurrentContacts.csv all users print contacts fields email,name
 # 3: From that list of user's contacts, output a CSV file with headers: User,ContactID,Name,Email
 #    that shows user's contacts with an email address from OldContacts.csv
@@ -31,7 +33,7 @@ OldContacts = set()
 
 inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  OldContacts.add(row['Email'].lower())
+  OldContacts.add(row['primaryEmail'].lower())
 inputFile.close()
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
