@@ -10,8 +10,8 @@
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
 # 2: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields id,emailaddress,role,type,deleted pm type user em
-# 3: From the list of ACLs, output a CSV file with headers "id,name,permissionId,role,emailAddress"
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields id,emailaddress,role,type,deleted pm type user deleted true em
+# 3: From the list of ACLs, output a CSV file with headers "id,name,permissionId,role,type"
 #  $ python3 GetTeamDriveDeletedUsersACLs.py TeamDriveACLs.csv TeamDrives.csv TeamDriveDeletedUsersACLs.csv
 # 4: Inspect TeamDriveSuspendUsersACLs.csv, verify that it makes sense and then proceed if desired
 # 5: Delete the ACLs
@@ -43,7 +43,7 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['id', 'name', 'permissionId', 'role', 'emailAddress'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['id', 'name', 'permissionId', 'role', 'type'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
@@ -52,13 +52,11 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v == 'user':
       permissions_N = mg.group(1)
       if row.get(f'permissions.{permissions_N}.deleted') == 'True':
-        emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
-        if emailAddress in userSet:
-          outputCSV.writerow({'id': row['id'],
-                              'name': teamDriveNames.get(row['id'], row['id']),
-                              'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
-                              'role': row[f'permissions.{permissions_N}.role'],
-                              'emailAddress': emailAddress})
+        outputCSV.writerow({'id': row['id'],
+                            'name': teamDriveNames.get(row['id'], row['id']),
+                            'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
+                            'role': row[f'permissions.{permissions_N}.role'],
+                            'type': v})
 
 if inputFile != sys.stdin:
   inputFile.close()
