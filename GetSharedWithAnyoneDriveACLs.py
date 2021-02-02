@@ -10,8 +10,13 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress pm type anyone em
+#    You can minimize the number of files listed by using a query with the visibility keyword.
+#      query "visibility='anyoneCanFind'" - Set DESIRED_ALLOWFILEDISCOVERY = True
+#      query "visibility='anyoneWithLink'" - Set DESIRED_ALLOWFILEDISCOVERY = False
+#      query "visibility='anyoneCanFind' or visibility='anyoneWithLink'" - Set DESIRED_ALLOWFILEDISCOVERY = Any
+#    Change the query as desired.
+#  $ Basic: gam all users print filelist id title permissions owners query "visibility='anyoneCanFind'" > filelistperms.csv
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress query "visibility='anyoneCanFind'"
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
 #    (n.b., driveFileTitle, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
