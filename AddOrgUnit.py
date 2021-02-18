@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a CSV file, look up user email addresses and add Org Unit information
-# Note: This script requires Advanced GAM:
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DATA_EMAIL_HEADER, DATA_ORGUNIT_HEADER, USER_EMAIL_HEADER, USER_ORGUNIT_HEADER, UNKNOWN_ORGUNIT
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -9,26 +10,29 @@
 #  Python 3.x.y
 # Usage:
 # 1: Generate a list of users and their Org Units
-#  $ gam redirect csv ./Users.csv <UserTypeEntity print users fields primaryemail,ou
+#  $ gam print users fields primaryemail,ou > Users.csv
 # 2: Generate some data
+#  $ gam ... > Data.csv
 #  $ gam redirect csv Data.csv ...
 # 3: From those two files, generate an output CSV file with the same headers as Data.csv plus a header for the users's Org Unit
-#  $ python3 AddOrgUnit.py ./Data.csv ./Users.csv ./DataEWithOrgUnit.csv
+#  $ python3 AddOrgUnit.py ./Data.csv ./Users.csv ./DataWithOrgUnit.csv
 """
 
 import csv
 import sys
 
-# Email header in input data CSV file
+# You have to indicate the header in Data.csv that contains the user email addresses
+# and the desired Org Unit header in DataWithOrgUnit.csv
+# Common values are:
+# report login - actor.email, actor.orgUnitPath
+# report user - email, orgUnitPath
 DATA_EMAIL_HEADER = 'email'
-
-# Org Unit header for output data CSV file
 DATA_ORGUNIT_HEADER = 'orgUnitPath'
 
-# Email header in user CSV file
+# Email header in Users.csv CSV file
 USER_EMAIL_HEADER = 'primaryEmail'
 
-# OrgUnit header in user CSV file
+# OrgUnit header in Users.csv CSV file
 USER_ORGUNIT_HEADER = 'orgUnitPath'
 
 # Unkown Org Unit value
