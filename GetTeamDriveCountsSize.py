@@ -64,7 +64,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   if driveId not in teamDriveInfo:
     teamDriveInfo[driveId] = {'name': teamDriveNames[driveId], 'count': 0, 'size': 0}
   teamDriveInfo[driveId]['count'] += 1
-  size = row.get('size', row.get('fileSize', '0')))
+  size = row.get('size', row.get('fileSize', '0'))
   if size:
     teamDriveInfo[driveId]['size'] += int(size)
 
