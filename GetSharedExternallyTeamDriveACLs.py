@@ -59,7 +59,7 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
-if (len(sys.argv) > 3) and (sys.argv[2] != '-'):
+if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
