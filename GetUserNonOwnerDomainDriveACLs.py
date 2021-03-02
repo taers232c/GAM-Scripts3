@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User, delete all drive file ACLs for files shared with a list of specified domains
+# Purpose: For a Google Drive User, get all drive file ACLs for files shared with a list of specified domains
 # except those indicating the user as owner
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
@@ -17,7 +17,7 @@
 #    that lists the driveFileIds and permissionIds for all ACLs from the specified domains except those indicating the user as owner
 #  $ python3 GetUserNonOwnerDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 4: Delete the ACLs
+# 4: If desired, delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 

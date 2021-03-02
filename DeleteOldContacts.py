@@ -16,7 +16,7 @@
 #    that shows user's contacts with an email address from OldContacts.csv
 #  $ python3 DeleteOldContacts.py ./OldContacts.csv ./CurrentContacts.csv ./DeleteContacts.csv
 # 4: Inspect DeleteContacts.csv, verify that it makes sense and then proceed
-# 5: Delete the contacts
+# 5: If desired, delete the contacts
 #  $ gam csv DeleteContacts.csv gam user "~User" delete contact "~ContactID"
 """
 

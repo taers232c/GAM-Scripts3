@@ -13,7 +13,7 @@
 # 2: From that list of ACLs, output a CSV file that lists the shared file permissions
 #  $ python3 GetSharedFileDeletedPermissions.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 4: Delete the ACLs
+# 4: If desired, delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 

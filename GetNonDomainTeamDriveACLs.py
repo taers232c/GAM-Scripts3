@@ -3,7 +3,13 @@
 # Purpose: Delete all drive file ACLs for Team Drives shared outside of a list of specified domains
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set DOMAIN_LIST.
+#          You specify a list of domains, DOMAIN_LIST, and indicate whether this list is exclusive/inclusive
+#          EXCLUSIVE_DOMAINS = True: exclude domains in DOMAIN_LIST from the output
+#          EXCLUSIVE_DOMAINS = False: include domains in DOMAIN_LIST in the output
+#          You can include/exclude shares to anyone in the ouput
+#          INCLUDE_ANYONE = True: include shares to anyone in the output
+#          INCLUDE_ANYONE = False: exclude shares to anyone from the output
+# Customize: Set DOMAIN_LIST, EXCLUSIVE_DOMAINS, INCLUDE_ANYONE
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -17,7 +23,7 @@
 #    (n.b., role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetNonDomainTeamDriveACLs.py ./TeamDriveACLs.csv DeleteTeamDriveACLs.csv
 # 3: Inspect DeleteTeamDriveACLs.csv, verify that it makes sense and then proceed
-# 4: Delete the ACLs
+# 4: If desired, delete the ACLs
 #  $ gam redirect stdout ./deletetdacls.out multiprocess redirect stderr stdout multiprocess csv DeleteTeamDriveACLs.csv gam delete drivefileacl teamdriveid "~teamDriveId" "~permissionId"
 """
 
@@ -27,6 +33,10 @@ import sys
 
 # Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
+# Indicate whether the list is exclusive or inclusive
+EXCLUSIVE_DOMAINS = True
+# Indicate whether shares to anyone should be included
+INCLUDE_ANYONE = True
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -58,9 +68,14 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           continue
         emailAddress = row[f'permissions.{permissions_N}.emailAddress']
         domain = emailAddress[emailAddress.find('@')+1:]
-      else:
-        continue
-      if domain not in DOMAIN_LIST:
+      else: #anyone
+        if not INCLUDE_ANYONE:
+          continue
+        emailAddress = ''
+        domain = ''
+      if ((v == 'anyone') or # Can only be true is INCLUDE_ANYONE = True
+          (EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST) or
+          (not EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST)):
         outputCSV.writerow({'teamDriveId': row['id'],
                             'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                             'role': row[f'permissions.{permissions_N}.role'],

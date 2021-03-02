@@ -26,7 +26,7 @@
 #    (n.b., driveFileTitle, role, and emailAddress are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetSharedWithListOfUsersDriveACLs.py filelistperms.csv deleteperms.csv Users.csv
 # 4: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 5: Delete the ACLs
+# 5: If desired, delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 

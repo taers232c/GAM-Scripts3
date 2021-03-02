@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User, delete all drive file ACLs except those indicating the user as owner
+# Purpose: For a Google Drive User, get all drive file ACLs except those indicating the user as owner
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -17,7 +17,7 @@
 #    (n.b., driveFileTitle is not used in the next step, it is included for documentation purposes)
 #  $ python3 GetUserNonOwnerDrivePermissions.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 4: Delete the ACLs
+# 4: If desired, delete the ACLs
 #    Parallel, faster:
 #  $ gam csv deleteperms.csv gam user ~Owner delete permissions ~driveFileId ~permissionIds
 #    Serial, cleaner output:

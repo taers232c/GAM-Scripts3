@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User(s), delete all drive file ACLs for Team Drive files shared with anyone
+# Purpose: For a Google Drive User(s), get all drive file ACLs for Team Drive files shared with anyone
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST and DESIRED_ALLOWFILEDISCOVERY
@@ -46,7 +46,7 @@
 #    (n.b., driveFileTitle, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetSharedWithAnyoneTeamDriveACLs.py filelistperms.csv deleteperms.csv
 # 12: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 13: Delete the ACLs
+# 13: If desired, delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 

@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for Team Drive files shared outside of a list of specified domains
+#          You specify a list of domains, DOMAIN_LIST, and indicate whether this list is exclusive/inclusive
+#          EXCLUSIVE_DOMAINS = True: exclude domains in DOMAIN_LIST from the output
+#          EXCLUSIVE_DOMAINS = False: include domains in DOMAIN_LIST in the output
+#          You can include/exclude shares to anyone in the ouput
+#          INCLUDE_ANYONE = True: include shares to anyone in the output
+#          INCLUDE_ANYONE = False: exclude shares to anyone from the output
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set DOMAIN_LIST.
+# Customize: Set DOMAIN_LIST, EXCLUSIVE_DOMAINS, INCLUDE_ANYONE
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -23,7 +29,7 @@
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,title,permissions
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid ~id fields teamdriveid,id,name,permissions
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -40,7 +46,7 @@
 #    (n.b., teamDriveId, teamDriveName, driveFileTitle, role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetSharedExternallyTeamDriveACLs.py filelistperms.csv TeamDrives.csv  deleteperms.csv
 # 12: Inspect deleteperms.csv, verify that it makes sense and then proceed
-# 13: Delete the ACLs
+# 13: If desired, delete the ACLs
 #  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
@@ -53,6 +59,10 @@ ALT_FILE_NAME = 'title'
 
 # Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
+# Indicate whether the list is exclusive or inclusive
+EXCLUSIVE_DOMAINS = True
+# Indicate whether shares to anyone should be included
+INCLUDE_ANYONE = True
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -93,9 +103,13 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         emailAddress = row[f'permissions.{permissions_N}.emailAddress']
         domain = emailAddress[emailAddress.find('@')+1:]
       else: #anyone
+        if not INCLUDE_ANYONE:
+          continue
         emailAddress = ''
         domain = ''
-      if v == 'anyone' or domain not in DOMAIN_LIST:
+      if ((v == 'anyone') or # Can only be true is INCLUDE_ANYONE = True
+          (EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST) or
+          (not EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST)):
         outputCSV.writerow({'Owner': row['Owner'],
                             'teamDriveId': row['driveId'],
                             'teamDriveName': teamDriveNames.get(row['driveId'], row['driveId']),
