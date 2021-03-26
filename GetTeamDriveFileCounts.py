@@ -19,17 +19,14 @@
 #    Set ONE_ORGANIZER = True
 #    Set SHOW_GROUP_ORGANIZERS = False
 #    Set SHOW_USER_ORGANIZERS = True
-# 5: From that list of ACLs, output a CSV file with headers "id,name,organizers"
-#    that shows the organizers for each Team Drive
-#  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
-# 6: Get ACLs for all Team Drives
+# 5: Get ACLs for all Team Drives
 #  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields emailaddress,role,type
-# 7: From that list of ACLs, output a CSV file with headers "id,name,organizer"
+# 6: From that list of ACLs, output a CSV file with headers "id,name,organizer"
 #    that shows an organizer/fileOrganizer for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
-# 8: From that list of organizers, get the file counts for all Team Drives that have an organizer (matchfield organizer "^.+$")
+# 7: From that list of organizers, get the file counts for all Team Drives that have an organizer (matchfield organizer "^.+$")
 #  $ gam redirect csv ./TeamDriveFileCounts.csv multiprocess csv TeamDriveOrganizers.csv matchfield organizer "^.+$"  gam user ~organizer print filecounts select teamdriveid ~id
-# 9: You can identify all Team Drives without an organizer
+# 8: You can identify all Team Drives without an organizer
 #  $ gam csv TeamDriveOrganizers.csv skipfield organizer "^.+$" gam info teamdrive teamdriveid ~id
 """
 
