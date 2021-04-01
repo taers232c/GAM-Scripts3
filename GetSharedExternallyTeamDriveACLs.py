@@ -60,6 +60,8 @@ ALT_FILE_NAME = 'title'
 # Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com',]
 # Indicate whether the list is exclusive or inclusive
+# EXCLUSIVE_DOMAINS = True: You're interested only in domains not in DOMAIN_LIST which would typically be your internal domains
+# EXCLUSIVE_DOMAINS = False: You're interested only in domains in DOMAIN_LIST which would typically be external domains
 EXCLUSIVE_DOMAINS = True
 # Indicate whether shares to anyone should be included
 INCLUDE_ANYONE = True

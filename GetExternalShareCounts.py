@@ -10,8 +10,15 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Example, Basic GAM: gam all users print filelist id title owners permissions > filelistperms.csv
-#  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title owners permissions
+#  $ Basic GAM: gam all users print filelist id title permissions > filelistperms.csv
+#  $ Advanced GAM: You can have GAM do some pre-filtering
+#  $ EXCLUSIVE_DOMAINS = True:
+#    Add the following clause to the command for each domain in DOMAIN_LIST: pm not domain domainx.com em
+#  $ EXCLUSIVE_DOMAINS = False:
+#    Add the following clause to the command for each domain in DOMAIN_LIST: pm domain domainx.com em
+#  $ INCLUDE_ANYONE = True
+#    Add the following clause to the command: pm type anyone em
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions <pm clauses>
 # 2: From that list of ACLs, output a CSV file with headers:
 #      Type,ExternalShare,Count
 #  $ python3 GetExternalShareCounts.py filelistperms.csv externalsharecounts.csv
@@ -21,10 +28,16 @@ import csv
 import re
 import sys
 
-# Substitute your internal domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-DOMAIN_LIST = ['domain.com',]
+# Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+DOMAIN_LIST = ['domain.com']
+# Indicate whether the list is exclusive or inclusive
+# EXCLUSIVE_DOMAINS = True: You're interested only in domains not in DOMAIN_LIST which would typically be your internal domains
+# EXCLUSIVE_DOMAINS = False: You're interested only in domains in DOMAIN_LIST which would typically be external domains
+EXCLUSIVE_DOMAINS = True
+# Indicate whether shares to anyone should be included
+INCLUDE_ANYONE = True
 
-# For GAMADV-XTD3 with drive_v3_native_names = false
+# For GAM or GAMADV-XTD3 with drive_v3_native_names = false
 #LINK_FIELD = 'withLink'
 #LINK_VALUE = 'True'
 # For GAMADV-XTD3 with drive_v3_native_names = true
@@ -63,13 +76,16 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
       if v == 'anyone':
+        if not INCLUDE_ANYONE:
+          continue
         if row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE:
           anyoneWithLinkShareCount += 1
         else:
           anyoneShareCount += 1
       elif v == 'domain':
         domain = row[f'permissions.{permissions_N}.domain']
-        if domain in DOMAIN_LIST:
+        if ((EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST) or
+            (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST))
           continue
         if row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE:
           domainWithLinkShareCounts.setdefault(domain, 0)
@@ -84,7 +100,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         domain = row.get(f'permissions.{permissions_N}.domain', '')
         if not domain:
           domain = emailAddress[emailAddress.find('@')+1:]
-        if domain in DOMAIN_LIST:
+        if ((EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST) or
+            (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST))
           continue
         if v == 'group':
           groupShareCounts.setdefault(emailAddress, 0)

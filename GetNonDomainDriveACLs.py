@@ -19,10 +19,10 @@
 #  $ Basic GAM: gam all users print filelist id title permissions owners > filelistperms.csv
 #  $ Advanced GAM: You can have GAM do some pre-filtering
 #  $ EXCLUSIVE_DOMAINS = True:
-#    Add the following clause to the command for each domain in DOMAIN_LIST: pm not domain domain1.com em
+#    Add the following clause to the command for each domain in DOMAIN_LIST: pm not domain domainx.com em
 #  $ EXCLUSIVE_DOMAINS = False:
-#    Add the following clause to the command for each domain in DOMAIN_LIST: pm domain domain1.com em
-#  $ INCLUDE_ANYONE
+#    Add the following clause to the command for each domain in DOMAIN_LIST: pm domain domainx.com em
+#  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
 #  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress <pm clauses>
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
@@ -44,6 +44,8 @@ ALT_FILE_NAME = 'title'
 # Substitute your domain(s) in the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = ['domain.com']
 # Indicate whether the list is exclusive or inclusive
+# EXCLUSIVE_DOMAINS = True: You're interested only in domains not in DOMAIN_LIST which would typically be your internal domains
+# EXCLUSIVE_DOMAINS = False: You're interested only in domains in DOMAIN_LIST which would typically be external domains
 EXCLUSIVE_DOMAINS = True
 # Indicate whether shares to anyone should be included
 INCLUDE_ANYONE = True
