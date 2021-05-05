@@ -85,7 +85,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       elif v == 'domain':
         domain = row[f'permissions.{permissions_N}.domain']
         if ((EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST) or
-            (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST))
+            (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST)):
           continue
         if row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE:
           domainWithLinkShareCounts.setdefault(domain, 0)
@@ -101,7 +101,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         if not domain:
           domain = emailAddress[emailAddress.find('@')+1:]
         if ((EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST) or
-            (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST))
+            (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST)):
           continue
         if v == 'group':
           groupShareCounts.setdefault(emailAddress, 0)
