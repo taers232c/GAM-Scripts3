@@ -30,7 +30,7 @@
 #  $ gam redirect csv ./TeamDriveFileACLs.csv multiprocess csv TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions
 # 6: Go to step 11
 # Selected Team Drives
-# 7: If want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
+# 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
 #  $ gam redirect csv ./AllTeamDrives.csv <UserTypeEntity> print teamdrives role organizer fields id,name
 # 8: Customize DeleteDuplicateRows.py for this task:
 #    Set ID_FIELD = 'id'
