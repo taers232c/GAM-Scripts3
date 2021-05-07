@@ -82,9 +82,9 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v:
       permissions_N = mg.group(1)
       if v == 'domain':
-        teamDrive[v].add(row[f'permissions.{permissions_N}.domain'])
+        teamDrive[v].add(row[f'permissions.{permissions_N}.domain'].lower())
       elif v in ['user', 'group']:
-        teamDrive[v].add(row[f'permissions.{permissions_N}.emailAddress'])
+        teamDrive[v].add(row[f'permissions.{permissions_N}.emailAddress'].lower())
 inputFile.close()
 
 # TeamDriveFileACLs.csv
@@ -99,14 +99,14 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     if mg and v:
       permissions_N = mg.group(1)
       if v == 'domain':
-        domain = row[f'permissions.{permissions_N}.domain']
+        domain = row[f'permissions.{permissions_N}.domain'].lower()
         if domain in teamDrive[v]:
           continue
         emailAddress = ''
       elif v in ['user', 'group']:
         if row.get(f'permissions.{permissions_N}.deleted') == 'True':
           continue
-        emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+        emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
         if emailAddress in teamDrive[v]:
           continue
         domain = emailAddress[emailAddress.find('@')+1:]
