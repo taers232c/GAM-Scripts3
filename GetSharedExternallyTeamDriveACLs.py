@@ -109,9 +109,10 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           continue
         emailAddress = ''
         domain = ''
-      if ((v == 'anyone') or # Can only be true is INCLUDE_ANYONE = True
-          (EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST) or
-          (not EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST)):
+      if ((row[f'permissions.{permissions_N}.role'] != 'organizer') and
+          ((v == 'anyone') or # Can only be true is INCLUDE_ANYONE = True
+           (EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST) or
+           (not EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST))):
         outputCSV.writerow({'Owner': row['Owner'],
                             'teamDriveId': row['driveId'],
                             'teamDriveName': teamDriveNames.get(row['driveId'], row['driveId']),
