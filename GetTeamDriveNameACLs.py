@@ -54,7 +54,7 @@ else:
     mg = PERMISSIONS_N_FIELD.match(k)
     if mg:
       permFieldNames.add(mg.group(1))
-  fieldnames.extend(sorted(permFieldNames))
+  fieldnames.extend([f'permissions.{k}' for k in sorted(permFieldNames)])
 
 outputCSV = csv.DictWriter(outputFile, fieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
@@ -65,12 +65,13 @@ if not ONE_ACL_PER_ROW:
     outputCSV.writerow(row)
 else:
   for row in inputCSV:
+    orow = {'Owner': row['Owner'], 'id': row['id'], 'name': teamDriveNames.get(row['id'], row['id'])}
     for permissions_N in range(0, int(row['permissions'])):
-      orow = {'Owner': row['Owner'], 'id': row['id'], 'name': teamDriveNames.get(row['id'], row['id'])}
+      prow = orow.copy()
       for k in permFieldNames:
         if row.get(f'permissions.{permissions_N}.{k}'):
-          orow[k] = row[f'permissions.{permissions_N}.{k}']
-      outputCSV.writerow(orow)
+          prow[f'permissions.{k}'] = row[f'permissions.{permissions_N}.{k}']
+      outputCSV.writerow(prow)
 
 if inputFile != sys.stdin:
   inputFile.close()
