@@ -108,14 +108,14 @@ for row in inputCSV:
       continue
     if vtype == 'user':
       emailAddress = v['emailAddress']
-      domain = v['domain']
+      domain = emailAddress[emailAddress.find('@')+1:]
       if DOMAIN_LIST and domain not in DOMAIN_LIST:
         continue
       if USER_LIST and emailAddress not in USER_LIST:
         continue
     elif vtype == 'group':
       emailAddress = v['emailAddress']
-      domain = v['domain']
+      domain = emailAddress[emailAddress.find('@')+1:]
       if DOMAIN_LIST and domain not in DOMAIN_LIST:
         continue
       if GROUP_LIST and emailAddress not in GROUP_LIST:
