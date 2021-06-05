@@ -20,7 +20,7 @@
 #  $ python3 GetSharedWithNonAccountUsersDriveACLs.py accountusers.csv filelistperms.csv deleteperms.csv
 # 4: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 5: If desired, delete the ACLs
-#  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
+#  $ gam csv ./deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
 import csv

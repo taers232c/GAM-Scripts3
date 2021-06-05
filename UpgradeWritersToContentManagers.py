@@ -10,13 +10,13 @@
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id
 # 2: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls ~id fields id,emailaddress,role,type,deleted
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields id,emailaddress,role,type,deleted
 # 3: From that list of ACLs, output a CSV file with headers "teamDriveId,permissionId,type,emailAddress"
 #    that lists the teamDriveIds and permissionIds for all ACLs with role writer.
-#  $ python3 UpgradeWritersToContentManagers.py ./TeamDriveACLs.csv UpgradetdACLs.csv
-# 4: Inspect UpgradetdACLs.csv, verify that it makes sense and then proceed
+#  $ python3 UpgradeWritersToContentManagers.py ./TeamDriveACLs.csv UpgradedACLs.csv
+# 4: Inspect UpgradedACLs.csv, verify that it makes sense and then proceed
 # 5: Upgrade the ACLs
-#  $ gam redirect stdout ./UpgradetdACLs.log multiprocess redirect stderr stdout multiprocess csv UpgradetdACLs.csv gam update drivefileacl teamdriveid "~teamDriveId" "~permissionId" role fileOrganizer
+#  $ gam redirect stdout ./UpgradedACLs.log multiprocess redirect stderr stdout multiprocess csv UpgradetdACLs.csv gam update drivefileacl teamdriveid "~teamDriveId" "~permissionId" role fileOrganizer
 """
 
 import csv

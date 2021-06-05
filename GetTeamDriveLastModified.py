@@ -15,7 +15,7 @@
 # 3: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 4: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls "~id" fields emailaddress,role,type
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields emailaddress,role,type
 # 5: From that list of ACLs, output a CSV file with headers "id,name,organizers"
 #    that shows the organizers for each Team Drive.
 #    Set the following items in GetTeamDriveOrganizers.py
@@ -24,7 +24,7 @@
 #    SHOW_USER_ORGANIZERS = True
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 6: Using the list of Team Drives and organizers, get a list of file ids and names sorted by modifiedTime descending
-#  $ gam redirect csv ./TeamDriveFileList.csv multiprocess csv TeamDriveOrganizers.csv gam user ~organizers print filelist select teamdriveid "~id" query "mimeType != 'application/vnd.google-apps.folder'" fields teamDriveId,id,name,modifiedtime orderby modifiedtime descending maxfiles 1
+#  $ gam redirect csv ./TeamDriveFileList.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" query "mimeType != 'application/vnd.google-apps.folder'" fields teamDriveId,id,name,modifiedtime orderby modifiedtime descending maxfiles 1
 # 7: From that list of files, output a CSV file with headers "id,name,driveFileId,driveFileName,modifiedTime'
 #    that show the most recently modified file for each Team Drive
 #  $ python3 GetTeamDriveLastModified.py TeamDriveFileList.csv TeamDrives.csv TeamDriveLastModified.csv

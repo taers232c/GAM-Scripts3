@@ -11,7 +11,7 @@
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
 # 2: Get ACLs for all Team Drives; adjust the fields list as desired
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields emailaddress,role,type
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields emailaddress,role,type
 # 3: From that list of ACLs, output a CSV file with the same headers as TeamDriveACLs.csv with the Team Drive name as the third column
 #  $ python3 GetTeamDriveNameACLs.py TeamDriveACLs.csv TeamDrives.csv TeamDriveNameACLs.csv
 """

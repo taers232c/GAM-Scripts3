@@ -12,13 +12,13 @@
 # Usage:
 # 1: Use print filelist to get selected ACLs
 #    Basic: gam user testuser@domain.com print filelist id title permissions owners > filelistperms.csv
-#    Advanced: gam user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress > filelistperms.csv
+#    Advanced: gam rediret csv ./filelistperms.csvuser testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs from the specified domains except those indicating the user as owner
 #  $ python3 GetUserNonOwnerDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: If desired, delete the ACLs
-#  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
+#  $ gam csv ./deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
 import csv

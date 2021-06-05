@@ -17,7 +17,7 @@
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives
 # 1: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls teamdriveid ~id fields id,domain,emailaddress,role,type,deleted
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls teamdriveid "~id" fields id,domain,emailaddress,role,type,deleted
 # 2: From that list of ACLs, output a CSV file with headers "teamDriveId,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs except those from the specified domains.
 #    (n.b., role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)

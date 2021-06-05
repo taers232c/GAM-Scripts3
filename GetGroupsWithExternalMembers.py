@@ -17,7 +17,7 @@
 # 3: If you want a list of the external members, add another filename to the command, the external members will be output to that file
 #  $ python3 GetGroupsWithExternalMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv ./ExternalMembers.csv
 # 4: If you want to delete the external members from their groups, you can do the following which uses one API call per member
-#  $ gam csv ./ExternalMembers.csv gam update group ~group delete member ~email
+#  $ gam csv ./ExternalMembers.csv gam update group "~group" delete member "~email"
 # 5: With Advanced GAM, you can delete the members in batches
 #  $ gam update group csvkmd ./ExternalMembers.csv keyfield group datafield email delete member csvdata email
 """

@@ -17,7 +17,7 @@
 # 3: If you want a list of the matching members, add another filename to the command, the matching members will be output to that file
 #  $ python3 GetGroupsWithMatchingMembers.py ./GroupMembers.csv ./GroupsWithMatchingMembers.csv ./MatchingMembers.csv
 # 4: If you want to delete the matching members from their groups, you can do the following which uses one API call per member
-#  $ gam csv ./MatchingMembers.csv gam update group ~group delete member ~email
+#  $ gam csv ./MatchingMembers.csv gam update group "~group" delete member "~email"
 # 5: With Advanced GAM, you can delete the members in batches
 #  $ gam update group csvkmd ./MatchingMembers.csv keyfield group datafield email delete member csvdata email
 """

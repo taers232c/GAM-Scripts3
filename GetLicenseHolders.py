@@ -13,13 +13,13 @@
 #  $ gam print licenses sku <SKUIDList> > Licenses.csv
 # 2: Get Users
 #    Basic GAM: gam print users [domain <DomainName>] [(query <QueryUser>)|(queries <QueryUserList>)] > Users.csv
-#    Advanced GAM: gam <UserTypeEntity> print users primaryEmail > Users.csv
+#    Advanced GAM: gam redirect csv ./Users.csv <UserTypeEntity> print users primaryEmail
 # 3: From those lists of Licenses and Users, output a CSV file showing the licenses held by users in Users.csv
 #  $ python3 GetLicenseHolders.py ./Licenses.csv ./Users.csv ./LicenseHolders.csv
 # 4: Inspect LicenseHolders.csv, verify that it makes sense and then proceed if desired
 # 5: Process LicenseHolders.csv
-#    Delete licenses: gam csv LicenseHolders.csv gam user "~userId" delete license "~skuId"
-#    Update licenses: gam csv LicenseHolders.csv gam user "~userId" update license <SKUID> from "~skuId"
+#    Delete licenses: gam csv ./LicenseHolders.csv gam user "~userId" delete license "~skuId"
+#    Update licenses: gam csv ./LicenseHolders.csv gam user "~userId" update license <SKUID> from "~skuId"
 """
 
 import csv

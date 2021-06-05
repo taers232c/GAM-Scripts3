@@ -16,7 +16,7 @@
 #  $ python3 GetFilePermissionsWithPaths.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed if desired
 # 4: If desired, delete the ACLs
-#  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
+#  $ gam csv ./deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
 import csv

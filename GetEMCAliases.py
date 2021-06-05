@@ -10,7 +10,7 @@
 # 2: python3 GetEMCAliases.py EMCData.csv EMCAliases.csv
 # 3: Inspect EMCAliases.csv to make sure that it is reasonable
 # 4: Create the aliases in Gam
-#  $ gam csv EMCAliases.csv gam create alias "~Alias" user "~User"
+#  $ gam csv ./EMCAliases.csv gam create alias "~Alias" user "~User"
 """
 
 import csv

@@ -16,7 +16,7 @@
 #  $ python3 GetNonDomainFilterForwards.py filters.csv outsidefilters.csv
 # 3: Inspect outsidefilters.csv, verify that it makes sense and then proceed
 # 4: If desifred, delete the filters
-#  $ gam csv outsidefilters.csv gam user "~User" delete filter "~id"
+#  $ gam csv ./outsidefilters.csv gam user "~User" delete filter "~id"
 """
 
 import csv

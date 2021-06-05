@@ -10,7 +10,7 @@
 # Usage:
 # 1: Get delegates
 #  $ Basic: gam all users print delegates > ./AllDelegates.csv
-#  $ Advanced: gam all users print delegates shownames > ./AllDelegates.csv
+#  $ Advanced: gam redirect csv ./AllDelegates.csv all users print delegates shownames
 # 2: From that list of delegates, output a CSV file with headers "Delegate,Delegate Email,Delegators
 #  $ python3 ShowDelegators.py ./AllDelegates.csv ./AllDelegators.csv
 """

@@ -16,11 +16,11 @@
 # 3: From that calendar list, you need a list of events that contain the attendees you wish to delete
 #    See: https://github.com/taers232c/GAMADV-XTD3/wiki/Users-Calendars-Events#display-calendar-events
 #    For example, to get events with attendee foo@bar.com
-#  $ gam redirect csv ./AllEvents.csv multiprocess csv ./AllCalendars.csv gam user ~primaryEmail print events ~calendarId starttime now matchfield attendees "foo@bar.com" fields id,summary,attendees.email
+#  $ gam redirect csv ./AllEvents.csv multiprocess csv ./AllCalendars.csv gam user "~primaryEmail" print events "~calendarId" starttime now matchfield attendees "foo@bar.com" fields id,summary,attendees.email
 #    Set DELETE_ATTENDEES_SET = set(['foo@bar.com'])
 #    For example, to get events with any attendees from the domain bar.com
 #    The examples use "starttime now" to select future events only; eliminate it if you want to remove the attendees from past events as well.
-#  $ gam redirect csv ./AllEvents.csv multiprocess csv ./AllCalendars.csv gam user ~primaryEmail print events ~calendarId starttime now matchfield attendeespattern "^.*@bar.com$" fields id,summary,attendees.email
+#  $ gam redirect csv ./AllEvents.csv multiprocess csv ./AllCalendars.csv gam user "~primaryEmail" print events "~calendarId" starttime now matchfield attendeespattern "^.*@bar.com$" fields id,summary,attendees.email
 #    Set DELETE_ATTENDEES_PATTERN = re.compile(r'^.*@bar.com$')
 # 4: From that list of events, output a CSV file with headers "primaryEmail,calendarId,id,aummary,emails"
 #    thats lists the attendees to delete from each event

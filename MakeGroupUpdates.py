@@ -15,9 +15,9 @@
 # 2: From that list of group members, output a CSV file with headers primaryEmail,GroupsCount,Groups that shows the groups for each user
 #  $ python3 MakeGroupUpdates.py ./GroupMemberss.csv ./GroupUpdates.csv
 # 3: Preview the changes if desired
-#  $ gam csv GroupUpdates.csv gam update group ~group sync ~role preview ~members
+#  $ gam csv ./GroupUpdates.csv gam update group "~group" sync "~role" preview "~members"
 # 3: Sync the groups
-#  $ gam csv GroupUpdates.csv gam update group ~group sync ~role ~members
+#  $ gam csv ./GroupUpdates.csv gam update group "~group" sync "~role" "~members"
 """
 
 import csv

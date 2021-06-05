@@ -13,7 +13,7 @@
 # 1: Get all Team Drives.
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
 # 2: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls "~id" fields emailaddress,role,type
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields emailaddress,role,type
 # 3: Customize GetTeamDriveOrganizers.py for this task:
 #    Set DOMAIN_LIST as required
 #    Set ONE_ORGANIZER = True
@@ -26,7 +26,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type domain em
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type domain allowfilediscovery true em
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type domain allowfilediscovery false em
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type domain em
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type domain em
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -39,7 +39,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type domain em
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type domain allowfilediscovery true em
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type domain allowfilediscovery false em
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv TeamDrives.csv gam user ~User print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type domain em
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type domain em
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
@@ -47,7 +47,7 @@
 #  $ python3 GetSharedWithDomainTeamDriveACLs.py filelistperms.csv deleteperms.csv
 # 12: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 13: If desired, delete the ACLs
-#  $ gam csv deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
+#  $ gam csv ./deleteperms.csv gam user "~Owner" delete drivefileacl "~driveFileId" "~permissionId"
 """
 
 import csv

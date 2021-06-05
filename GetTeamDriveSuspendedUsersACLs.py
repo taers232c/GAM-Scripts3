@@ -10,14 +10,14 @@
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
 # 2: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv TeamDrives.csv gam print drivefileacls ~id fields id,emailaddress,role,type,deleted pm type user em
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields id,emailaddress,role,type,deleted pm type user em
 # 3: Get suspended users
-#  $ gam redirect csv SuspendedUsers.csv print users query "isSuspended=True"
+#  $ gam redirect csv ./SuspendedUsers.csv print users query "isSuspended=True"
 # 4: From the list of ACLs, output a CSV file with headers "id,name,permissionId,role,emailAddress"
 #  $ python3 GetTeamDriveSuspendedUsersACLs.py TeamDriveACLs.csv TeamDrives.csv SuspendedUsers.csv TeamDriveSuspendedUsersACLs.csv
 # 5: Inspect TeamDriveSuspendedUsersACLs.csv, verify that it makes sense and then proceed if desired
 # 4: If desired, delete the ACLs
-#  $ gam redirect stdout DeleteTeamDriveSuspendedUsersACLs.log multiprocess redirect stderr stdout csv TeamDriveSuspendedUsersACLs.csv gam delete drivefileacl "~id" "~permissionId"
+#  $ gam redirect stdout ./DeleteTeamDriveSuspendedUsersACLs.log multiprocess redirect stderr stdout csv ./TeamDriveSuspendedUsersACLs.csv gam delete drivefileacl "~id" "~permissionId"
 """
 
 import csv
