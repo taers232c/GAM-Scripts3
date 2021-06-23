@@ -34,6 +34,8 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 DATA_KEY_FIELD = 'primaryEmail'
 # Key field in merge file; common values are primaryEmail, Owner, User
 MERGE_KEY_FIELD = 'User'
+# Should key field in merge file be retained
+RETAIN_MERGE_KEY_FIELD = False
 # Merge fields to retain, leave empty for all fields
 MERGE_RETAIN_FIELDS = []
 
@@ -70,6 +72,9 @@ else:
       sys.stderr.write(f'Merge retain field {fieldName} is not in {mergeFileName} headers: {",".join(mergeFieldNames)}\n')
   if errors:
     sys.exit(1)
+
+if not RETAIN_MERGE_KEY_FIELD and MERGE_KEY_FIELD in mergeRetainFields:
+  mergeRetainFields.remove(MERGE_KEY_FIELD)
 
 outputFieldNames = dataFieldNames[:]
 mergeFieldNameMap = {}
