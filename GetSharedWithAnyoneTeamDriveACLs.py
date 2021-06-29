@@ -3,7 +3,7 @@
 # Purpose: For a Google Drive User(s), get all drive file ACLs for Team Drive files shared with anyone
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set DOMAIN_LIST and DESIRED_ALLOWFILEDISCOVERY
+# Customize: Set DESIRED_ALLOWFILEDISCOVERY
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -15,7 +15,6 @@
 # 2: Get ACLs for all Team Drives
 #  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields emailaddress,role,type
 # 3: Customize GetTeamDriveOrganizers.py for this task:
-#    Set DOMAIN_LIST as required
 #    Set ONE_ORGANIZER = True
 #    Set SHOW_GROUP_ORGANIZERS = False
 #    Set SHOW_USER_ORGANIZERS = True
