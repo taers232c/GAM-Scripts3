@@ -12,7 +12,7 @@
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS
+# Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS, OUTPUT_UNMERGED_DATA
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -38,6 +38,8 @@ MERGE_KEY_FIELD = 'User'
 RETAIN_MERGE_KEY_FIELD = False
 # Merge fields to retain, leave empty for all fields
 MERGE_RETAIN_FIELDS = []
+# Should data rows that have not been merged be output
+OUTPUT_UNMERGED_DATA = False
 
 userData = {}
 dataFileName = sys.argv[1]
@@ -91,16 +93,22 @@ outputFile = open(outputFileName, 'w', encoding='utf-8', newline='')
 outputCSV = csv.DictWriter(outputFile, outputFieldNames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
+outputData = {}
 errors = False
 for row in mergeCSV:
-  if row[MERGE_KEY_FIELD] in userData:
-    orow = userData[row[MERGE_KEY_FIELD]]
+  k = row[MERGE_KEY_FIELD]
+  if k in userData:
+    orow = userData.pop(k)
     for fieldName in mergeFieldNameMap:
       orow[mergeFieldNameMap[fieldName]] = row[fieldName]
-    outputCSV.writerow(orow)
+    outputData[k] = orow
   else:
     errors = 1
     sys.stderr.write(f'Merge key field {row[MERGE_KEY_FIELD]} in {mergeFileName} does not occur in {dataFileName}\n')
+if OUTPUT_UNMERGED_DATA:
+  outputData.update(userData)
+for _, v in sorted(iter(outputData.items())):
+  outputCSV.writerow(v)
 
 mergeFile.close()
 outputFile.close()
