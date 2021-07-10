@@ -9,8 +9,8 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions owners linksharemetadata resourcekey query "visibility='anyoneWithLink' or visibility='domainWithLink'" > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,linksharemetadata,resourcekey query "visibility='anyoneWithLink' or visibility='domainWithLink'"
+#  $ Basic: gam all users print filelist id title permissions owners linksharemetadata resourcekey mimetype webviewlink query "visibility='anyoneWithLink' or visibility='domainWithLink'" > filelistperms.csv
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,linksharemetadata,resourcekey,mimetype,webviewlink  query "visibility='anyoneWithLink' or visibility='domainWithLink'"
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery,resourceKey,linkShareMetadata.securityUpdateEligible,linkShareMetadatasecurityUpdateEnabled"
 #    that lists the driveFileIds, permissionIds and link share details for all ACLs shared with anyone/domain withlink
 #  $ python3 GetLinkSharedDriveACLs.py filelistperms.csv linksharedperms.csv
@@ -33,8 +33,9 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile,
-                           ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'allowFileDiscovery',
-                            'resourceKey', 'linkShareMetadata.securityUpdateEligible', 'linkShareMetadata.securityUpdateEnabled'],
+                           ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'allowFileDiscovery',
+                            'resourceKey', 'linkShareMetadata.securityUpdateEligible', 'linkShareMetadata.securityUpdateEnabled',
+                            'webViewLink'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -53,12 +54,14 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                            'mimeType': row['mimeType'],
                             'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                             'role': row[f'permissions.{permissions_N}.role'],
                             'allowFileDiscovery': allowFileDiscovery,
                             'linkShareMetadata.securityUpdateEligible': row['linkShareMetadata.securityUpdateEligible'],
                             'linkShareMetadata.securityUpdateEnabled': row['linkShareMetadata.securityUpdateEnabled'],
-                            'resourceKey': row['resourceKey']})
+                            'resourceKey': row['resourceKey'],
+                            'webViewLink': row['webViewLink']})
 
 if inputFile != sys.stdin:
   inputFile.close()
