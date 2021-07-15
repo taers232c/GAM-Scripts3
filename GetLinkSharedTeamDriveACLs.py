@@ -33,9 +33,9 @@
 # 10: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,linksharemetadata,resourcekey,mimetype,webviewlink query "visibility='anyoneWithLink' or visibility='domainWithLink'"
 # Common code
-# 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery,resourceKey,linkShareMetadata.securityUpdateEligible,linkShareMetadatasecurityUpdateEnabled"
+# 11: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,mimeType,permissionId,role,allowFileDiscovery,resourceKey,linkShareMetadata.securityUpdateEligible,linkShareMetadata.securityUpdateEnabled,webViewLink"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone/domain withlink
-#  $ python3 GetLinkSharedTeamDriveACLs.py filelistperms.csv linksharedperms.csv
+#  $ python3 GetLinkSharedTeamDriveACLs.py filelistperms.csv ./TeamDrives.csv linksharedperms.csv
 """
 
 import csv
@@ -50,16 +50,22 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
-if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
-  outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
+if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
+  outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile,
-                           ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'allowFileDiscovery',
+                           ['Owner', 'teamDriveId', 'teamDriveName', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'allowFileDiscovery',
                             'resourceKey', 'linkShareMetadata.securityUpdateEligible', 'linkShareMetadata.securityUpdateEnabled',
                             'webViewLink'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
+
+teamDriveNames = {}
+inputFile = open(sys.argv[2], 'r', encoding='utf-8')
+for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
+  teamDriveNames[row['id']] = row['name']
+inputFile.close()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r', encoding='utf-8')
@@ -74,6 +80,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       if allowFileDiscovery == 'False':
         outputCSV.writerow({'Owner': row['Owner'],
+                            'teamDriveId': row['driveId'],
+                            'teamDriveName': teamDriveNames.get(row['driveId'], row['driveId']),
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
                             'mimeType': row['mimeType'],
