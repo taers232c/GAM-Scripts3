@@ -11,7 +11,7 @@
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions owners linksharemetadata resourcekey mimetype webviewlink query "visibility='anyoneWithLink' or visibility='domainWithLink'" > filelistperms.csv
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,linksharemetadata,resourcekey,mimetype,webviewlink  query "visibility='anyoneWithLink' or visibility='domainWithLink'"
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery,resourceKey,linkShareMetadata.securityUpdateEligible,linkShareMetadatasecurityUpdateEnabled"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,allowFileDiscovery,resourceKey,linkShareMetadata.securityUpdateEligible,linkShareMetadata.securityUpdateEnabled,webViewLink"
 #    that lists the driveFileIds, permissionIds and link share details for all ACLs shared with anyone/domain withlink
 #  $ python3 GetLinkSharedDriveACLs.py filelistperms.csv linksharedperms.csv
 """
