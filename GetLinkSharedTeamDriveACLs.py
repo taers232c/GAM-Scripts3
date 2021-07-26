@@ -88,10 +88,10 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                             'role': row[f'permissions.{permissions_N}.role'],
                             'allowFileDiscovery': allowFileDiscovery,
-                            'linkShareMetadata.securityUpdateEligible': row['linkShareMetadata.securityUpdateEligible'],
-                            'linkShareMetadata.securityUpdateEnabled': row['linkShareMetadata.securityUpdateEnabled'],
-                            'resourceKey': row['resourceKey'],
-                            'webViewLink': row['webViewLink']})
+                            'linkShareMetadata.securityUpdateEligible': row.get('linkShareMetadata.securityUpdateEligible', ''),
+                            'linkShareMetadata.securityUpdateEnabled': row.get('linkShareMetadata.securityUpdateEnabled', ''),
+                            'resourceKey': row.get('resourceKey', ''),
+                            'webViewLink': row.get('webViewLink', '')})
 
 if inputFile != sys.stdin:
   inputFile.close()
