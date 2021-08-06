@@ -23,10 +23,14 @@
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type domain em
-#    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type domain allowfilediscovery true em
-#    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type domain allowfilediscovery false em
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type domain em
+#    You can minimize the number of files downloaded by using a query with the visibility keyword.
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='domainCanFind' or visibility='domainWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
+#    Change the query as desired.
+#    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
+#    Add the following clause to the command for each domain: pm type domain domain xyz.com em
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions <PutQueryHere>
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -36,10 +40,14 @@
 # 9: Delete duplicate Team Drives (some may have multiple organizers).
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - pm type domain em
-#    DESIRED_ALLOWFILEDISCOVERY = 'True' - pm type domain allowfilediscovery true em
-#    DESIRED_ALLOWFILEDISCOVERY = 'False' - pm type domain allowfilediscovery false em
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type domain em
+#    You can minimize the number of files downloaded by using a query with the visibility keyword.
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='domainCanFind' or visibility='domainWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
+#    Change the query as desired.
+#    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
+#    Add the following clause to the command for each domain: pm type domain domain xyz.com em
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions <PutQueryHere>
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
@@ -59,7 +67,7 @@ ALT_FILE_NAME = 'title'
 
 # If you want to limit finding ACLS for a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = []
-# Specify desired value of allowFileDiscovery field: True, False, Any (matches True and False)
+# Specify desired value of allowFileDiscovery field: 'True', 'False', 'Any' (matches True and False)
 DESIRED_ALLOWFILEDISCOVERY = 'Any'
 
 QUOTE_CHAR = '"' # Adjust as needed

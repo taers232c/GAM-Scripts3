@@ -30,7 +30,7 @@ ALT_FILE_NAME = 'title'
 
 # If you want to limit finding ACLS for a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = []
-# Specify desired value of allowFileDiscovery field: True, False, Any (matches True and False)
+# Specify desired value of allowFileDiscovery field: 'True', 'False', 'Any' (matches True and False)
 DESIRED_ALLOWFILEDISCOVERY = 'Any'
 
 QUOTE_CHAR = '"' # Adjust as needed

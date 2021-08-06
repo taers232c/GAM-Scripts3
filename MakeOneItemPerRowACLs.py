@@ -42,7 +42,7 @@ ROLE_LIST = []
 # The list should be empty if you want all types, e.g, TYPE_LIST = []
 TYPE_LIST = []
 
-# Specify desired value of allowFileDiscovery field: True, False, Any (matches True and False)
+# Specify desired value of allowFileDiscovery field: 'True', 'False', 'Any' (matches True and False)
 # allowFileDiscovery False = withLink True
 # allowFileDiscovery True = withLink False
 DESIRED_ALLOWFILEDISCOVERY = 'Any'
