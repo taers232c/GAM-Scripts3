@@ -6,12 +6,12 @@
 #  Python 3.x.y
 # Usage:
 # 1: Produce a CSV file Input.json eom the original Google Sheet
-#  $ gam redirect stdout Input.json user user@domain.com show sheet <OldFileId> formatjson fields sheets
+#  $ gam redirect stdout ./Input.json user user@domain.com show sheet <OldFileId> formatjson fields sheets
 # 2: Produce a JSON file Output.json with the protected ranges
 #  $ python3 ./ExtractProtectedRanges.py Input.json Output.json
 # 3: Copy the Google Sheet
 #  $ gam user user@domain.com copy drivefile <OldFileId> newfilename CopiedSheet copyfilepermissions true
-# 3: Update copied Google Sheet with protected ranges from original Google Sheet
+# 4: Update copied Google Sheet with protected ranges from original Google Sheet
 #  $ gam user user@domain.com update sheet <NewFileId> json file Output.json
 
 """
