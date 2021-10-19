@@ -98,7 +98,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       if ((v != 'anyone') and
           ((EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST) or
            (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST))):
-        continue
+        acls = []
+        break
       acls.append({'Owner': row['owners.0.emailAddress'],
                    'driveFileId': row['id'],
                    'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
