@@ -3,7 +3,7 @@
 # Purpose: For a Google Drive User(s), show all drive file ACLs for Team Drive files shared with selected groups.
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set GROUP_LIST and DOMAIN_LIST.
+# Customize: Set GROUP_LIST, DOMAIN_LIST, NON_INHERITED_ACLS_ONLY
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -23,7 +23,7 @@
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type group em
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions pm type group em
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -33,7 +33,7 @@
 # 9: Delete duplicate Team Drives (some may have multiple organizers).
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions pm type group em
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions pm type group em
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired groups
@@ -61,6 +61,9 @@ GROUP_LIST = ['group@domain.com',]
 # The list should be empty if you're only specifiying groups in GROUP_LIST, e.g. DOMAIN__LIST = []
 DOMAIN_LIST = ['domain.com',]
 
+# Specify whether only non-inherited ACLs should be output; inherited ACLs can't be deleted
+NON_INHERITED_ACLS_ONLY = True
+
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
@@ -83,6 +86,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'group':
       permissions_N = mg.group(1)
+      if NON_INHERITED_ACLS_ONLY and str(row.get(f'permissions.{permissions_N}.permissionDetails.0.inherited', False)) == 'True':
+        continue
       emailAddress = row.get(f'permissions.{permissions_N}.emailAddress', '')
       domain = row[f'permissions.{permissions_N}.domain']
       if ((not GROUP_LIST and not DOMAIN_LIST) or

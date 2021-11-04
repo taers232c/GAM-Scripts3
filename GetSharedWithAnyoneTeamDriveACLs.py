@@ -3,7 +3,7 @@
 # Purpose: For a Google Drive User(s), get all drive file ACLs for Team Drive files shared with anyone
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set DESIRED_ALLOWFILEDISCOVERY
+# Customize: Set DESIRED_ALLOWFILEDISCOVERY, NON_INHERITED_ACLS_ONLY
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -27,7 +27,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='anyoneCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='anyoneWithLink'"
 #    Change the query as desired.
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions <PutQueryHere>
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions <PutQueryHere>
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -42,7 +42,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='anyoneCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='anyoneWithLink'"
 #    Change the query as desired.
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions <PutQueryHere>
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions <PutQueryHere>
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
@@ -64,6 +64,9 @@ ALT_FILE_NAME = 'title'
 # allowFileDiscovery False = withLink True
 # allowFileDiscovery True = withLink False
 DESIRED_ALLOWFILEDISCOVERY = 'Any'
+
+# Specify whether only non-inherited ACLs should be output; inherited ACLs can't be deleted
+NON_INHERITED_ACLS_ONLY = True
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -87,6 +90,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'anyone':
       permissions_N = mg.group(1)
+      if NON_INHERITED_ACLS_ONLY and str(row.get(f'permissions.{permissions_N}.permissionDetails.0.inherited', False)) == 'True':
+        continue
       allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       if DESIRED_ALLOWFILEDISCOVERY in ('Any', allowFileDiscovery):
         outputCSV.writerow({'Owner': row['Owner'],
