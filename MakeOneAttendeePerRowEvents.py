@@ -3,7 +3,7 @@
 # Purpose: Convert output from print events to put one attendee per row; you can filter for specific attendees.
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set ATTENDEE_LIST, DROP_GENERAL_COLUMNS, DROP_ATTENDEE_COLUMNS.
+# Customize: Set ATTENDEE_LIST, DOMAIN_LIST, ATTENDEE_PATTERN, DROP_GENERAL_COLUMNS, DROP_ATTENDEE_COLUMNS.
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -28,7 +28,7 @@ import csv
 import re
 import sys
 
-# Specify specific user(s), e.g., ATTENDEE_LIST = ['user1@domain.com'] ATTENDEE_LIST = ['user1@domain.com', 'user2@domain.com']
+# Specify specific attendees(s), e.g., ATTENDEE_LIST = ['user1@domain.com'] ATTENDEE_LIST = ['user1@domain.com', 'user2@domain.com']
 # The list should be empty if you're only specifiying domains in DOMAIN_LIST, e.g. ATTENDEE_LIST = []
 ATTENDEE_LIST = []
 
@@ -36,13 +36,18 @@ ATTENDEE_LIST = []
 # The list should be empty if you're only specifiying attendees in ATTENDEE_LIST, e.g. DOMAIN__LIST = []
 DOMAIN_LIST = []
 
-# Specify general columns you don't want in the output. e.g., photoLink.
-# The list should be empty if you want all general columns, e.g, DROP_GENERAL_COLUMNS = []
+# Specify attendees that match a pattern
+# None: ATTENDEE_PATTERN = None
+# Pattern: ATTENDEE_PATTERN = re.compile(r'^.*@bar.com$')
+ATTENDEE_PATTERN = None
+
+# Specify general columns you don't want in the output. e.g., attendees.
+# The list should be empty if you want all general columns, e.g, DROP_GENERAL_COLUMNS = ['attendees']
 DROP_GENERAL_COLUMNS = ['attendees']
 
-# Specify permission columns you don't want in the output. e.g., photoLink.
-# The list should be empty if you want all permission columns, e.g, DROP_ATTENDEE_COLUMNS = []
-DROP_ATTENDEE_COLUMNS = ['photoLink']
+# Specify attendee columns you don't want in the output. e.g., photoLink.
+# The list should be empty if you want all attendee columns, e.g, DROP_ATTENDEE_COLUMNS = ['self']
+DROP_ATTENDEE_COLUMNS = []
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -89,15 +94,15 @@ for row in inputCSV:
   for k, v in iter(attendees.items()):
     newRow = baseRow.copy()
     emailAddress = v['email']
-    domain = emailAddress[emailAddress.find('@')+1:]
-    if DOMAIN_LIST and domain not in DOMAIN_LIST:
-      continue
-    if ATTENDEE_LIST and emailAddress not in ATTENDEE_LIST:
-      continue
-    for kp, kv in sorted(v.items()):
-      if not DROP_ATTENDEE_COLUMNS or kp not in DROP_ATTENDEE_COLUMNS:
-        newRow[f'attendee.{kp}'] = kv
-    outputCSV.writerow(newRow)
+    if emailAddress:
+      domain = emailAddress[emailAddress.find('@')+1:]
+      if ((not DOMAIN_LIST or domain in DOMAIN_LIST) and
+          (not ATTENDEE_LIST or emailAddress in ATTENDEE_LIST) and
+          (not ATTENDEE_PATTERN or ATTENDEE_PATTERN.match(emailAddress))):
+        for kp, kv in sorted(v.items()):
+          if not DROP_ATTENDEE_COLUMNS or kp not in DROP_ATTENDEE_COLUMNS:
+            newRow[f'attendee.{kp}'] = kv
+        outputCSV.writerow(newRow)
 
 if inputFile != sys.stdin:
   inputFile.close()
