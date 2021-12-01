@@ -47,8 +47,8 @@ TYPE_LIST = []
 # allowFileDiscovery True = withLink False
 DESIRED_ALLOWFILEDISCOVERY = 'Any'
 
-# Specify generalcolumns you don't want in the output. e.g., photoLink.
-# The list should be empty if you want all general columns, e.g, DROP_PERMISSION_COLUMNS = []
+# Specify general columns you don't want in the output. e.g., photoLink.
+# The list should be empty if you want all general columns, e.g, DROP_GENERAL_COLUMNS = []
 DROP_GENERAL_COLUMNS = ['permissions']
 
 # Specify permission columns you don't want in the output. e.g., photoLink.
