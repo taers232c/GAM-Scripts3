@@ -15,6 +15,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
 #    Change the query as desired.
+#    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
 #    For Advanced GAM, add the following clause to the command for each domain: pm type domain domain xyz.com em
 #  $ Basic GAM: gam all users print filelist id title permissions owners <PutQueryHere> > filelistperms.csv

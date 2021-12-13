@@ -28,6 +28,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
 #    Change the query as desired.
+#    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
 #    Add the following clause to the command for each domain: pm type domain domain xyz.com em
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions <PutQueryHere>
@@ -45,6 +46,7 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
 #    Change the query as desired.
+#    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
 #    Add the following clause to the command for each domain: pm type domain domain xyz.com em
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions <PutQueryHere>
