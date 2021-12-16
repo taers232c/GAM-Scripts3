@@ -24,7 +24,7 @@
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
 #    You can minimize the number of files downloaded by using a query with the visibility keyword.
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='domainCanFind' or visibility='domainWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "(visibility='domainCanFind' or visibility='domainWithLink')"
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
 #    Change the query as desired.
@@ -42,7 +42,7 @@
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
 #    You can minimize the number of files downloaded by using a query with the visibility keyword.
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='domainCanFind' or visibility='domainWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "(visibility='domainCanFind' or visibility='domainWithLink')"
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
 #    Change the query as desired.

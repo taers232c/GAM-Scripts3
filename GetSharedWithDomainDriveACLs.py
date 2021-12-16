@@ -11,7 +11,7 @@
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #    You can minimize the number of files downloaded by using a query with the visibility keyword.
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='domainCanFind' or visibility='domainWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "(visibility='domainCanFind' or visibility='domainWithLink')"
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='domainCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='domainWithLink'"
 #    Change the query as desired.

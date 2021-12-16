@@ -23,10 +23,11 @@
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files;
 #    You can minimize the number of files downloaded by using a query with the visibility keyword.
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='anyoneCanFind' or visibility='anyoneWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "(visibility='anyoneCanFind' or visibility='anyoneWithLink')"
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='anyoneCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='anyoneWithLink'"
 #    Change the query as desired.
+#    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions <PutQueryHere>
 # 6: Go to step 11
 # Selected Team Drives
@@ -38,7 +39,7 @@
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files;
 #    You can minimize the number of files downloaded by using a query with the visibility keyword.
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='anyoneCanFind' or visibility='anyoneWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "(visibility='anyoneCanFind' or visibility='anyoneWithLink')"
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='anyoneCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='anyoneWithLink'"
 #    Change the query as desired.

@@ -11,10 +11,11 @@
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #    You can minimize the number of files downloaded by using a query with the visibility keyword.
-#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "visibility='anyoneCanFind' or visibility='anyoneWithLink'"
+#    DESIRED_ALLOWFILEDISCOVERY = 'Any' - query "(visibility='anyoneCanFind' or visibility='anyoneWithLink')"
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='anyoneCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='anyoneWithLink'"
 #    Change the query as desired.
+#    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #  $ Basic: gam all users print filelist id title permissions owners <PutQueryHere> > filelistperms.csv
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress <PutQueryHere>
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"

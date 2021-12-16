@@ -21,7 +21,7 @@
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,linksharemetadata,resourcekey,mimetype,webviewlink query "visibility='anyoneWithLink' or visibility='domainWithLink'"
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,linksharemetadata,resourcekey,mimetype,webviewlink query "(visibility='anyoneWithLink' or visibility='domainWithLink')"
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -31,7 +31,7 @@
 # 9: Delete duplicate Team Drives (some may have multiple organizers).
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files; you can use permission matching to narrow the number of files listed; add to the end of the command line
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,linksharemetadata,resourcekey,mimetype,webviewlink query "visibility='anyoneWithLink' or visibility='domainWithLink'"
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,linksharemetadata,resourcekey,mimetype,webviewlink query "(visibility='anyoneWithLink' or visibility='domainWithLink')"
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,mimeType,permissionId,role,allowFileDiscovery,resourceKey,linkShareMetadata.securityUpdateEligible,linkShareMetadata.securityUpdateEnabled,webViewLink"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone/domain withlink
