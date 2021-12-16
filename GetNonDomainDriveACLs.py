@@ -1,6 +1,10 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared outside of a list of specified domains
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/jay0lee/GAM
+#	https://github.com/taers232c/GAMADV-XTD3
+# Customize: Set DOMAIN_LIST, DOMAIN_EXPRESSIONS, EXCLUSIVE_DOMAINS, INCLUDE_ANYONE
 #          You specify a list of domains, DOMAIN_LIST, or a list of domain expressions, DOMAIN_EXPRESSIONS
 #	   Indicate whether these lists are exclusive/inclusive
 #          EXCLUSIVE_DOMAINS = True: exclude domains in DOMAIN_LIST/DOMAIN_EXPRESSIONS from the output
@@ -8,10 +12,6 @@
 #          You can include/exclude shares to anyone in the ouput
 #          INCLUDE_ANYONE = True: include shares to anyone in the output
 #          INCLUDE_ANYONE = False: exclude shares to anyone from the output
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
-#	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set DOMAIN_LIST, DOMAIN_EXPRESSIONS, EXCLUSIVE_DOMAINS, INCLUDE_ANYONE
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
