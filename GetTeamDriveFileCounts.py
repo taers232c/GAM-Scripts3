@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: Get file counts for Team Drives
+# Purpose: Get file counts/size for Team Drives
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DOMAIN_LIST
@@ -24,8 +24,11 @@
 # 6: From that list of ACLs, output a CSV file with headers "id,name,organizer"
 #    that shows an organizer/fileOrganizer for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
-# 7: From that list of organizers, get the file counts for all Team Drives that have an organizer (matchfield organizer "^.+$")
-#  $ gam redirect csv ./TeamDriveFileCounts.csv multiprocess csv ./TeamDriveOrganizers.csv matchfield organizers "^.+$"  gam user "~organizers" print filecounts select teamdriveid "~id"
+# 7: From that list of organizers, get the file counts/size for all Team Drives that have an organizer (matchfield organizer "^.+$")
+#    If you don't need size informatiom
+#  $ gam redirect csv ./TeamDriveFileCounts.csv multiprocess csv ./TeamDriveOrganizers.csv matchfield organizers "^.+$" gam user "~organizers" print filecounts select teamdriveid "~id"
+#    If you need size information
+#  $ gam redirect csv ./TeamDriveFileCounts.csv multiprocess csv ./TeamDriveOrganizers.csv matchfield organizers "^.+$" gam user "~organizers" print filelist select teamdriveid "~id" countsonly showsize showsource
 # 8: You can identify all Team Drives without an organizer
 #  $ gam csv ./TeamDriveOrganizers.csv skipfield organizers "^.+$" gam info teamdrive teamdriveid "~id"
 """
