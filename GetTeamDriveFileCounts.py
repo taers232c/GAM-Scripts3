@@ -27,7 +27,9 @@
 # 7: From that list of organizers, get the file counts/size for all Team Drives that have an organizer (matchfield organizer "^.+$")
 #    If you don't need size informatiom
 #  $ gam redirect csv ./TeamDriveFileCounts.csv multiprocess csv ./TeamDriveOrganizers.csv matchfield organizers "^.+$" gam user "~organizers" print filecounts select teamdriveid "~id"
-#    If you need size information
+#    If you need size information and have GAM 6.13.04 or later:
+#  $ gam redirect csv ./TeamDriveFileCounts.csv multiprocess csv ./TeamDriveOrganizers.csv matchfield organizers "^.+$" gam user "~organizers" print filecounts select teamdriveid "~id" showsize
+#    If you need size information and have GAM 6.13.03 or earlier
 #  $ gam redirect csv ./TeamDriveFileCounts.csv multiprocess csv ./TeamDriveOrganizers.csv matchfield organizers "^.+$" gam user "~organizers" print filelist select teamdriveid "~id" countsonly showsize showsource
 # 8: You can identify all Team Drives without an organizer
 #  $ gam csv ./TeamDriveOrganizers.csv skipfield organizers "^.+$" gam info teamdrive teamdriveid "~id"
