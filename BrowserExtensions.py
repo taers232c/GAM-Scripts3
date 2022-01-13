@@ -5,7 +5,7 @@
 #
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: MAX_BROWSERS_TO_PROCESS, DESIRED_COLUMN_ORDER, SORT_COLUMN, SEPARATOR
+# Customize: MAX_BROWSERS_TO_PROCESS, MAX_ITEMS_PER_LIST, DESIRED_COLUMN_ORDER, SORT_COLUMN, SEPARATOR
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -25,6 +25,8 @@ OUTPUT_QUOTE_CHAR = '"'
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 MAX_BROWSERS_TO_PROCESS = 0 # 0 = process all browsers, N = limit processing to N browsers
+MAX_ITEMS_PER_LIST = 0 # 0 = Use cell length splitting, N = Use maximum items in a list splitting
+MAX_ITEMS_LISTS = ['installed', 'disabled', 'forced'] # Properties to apply MAX_ITEMS_PER_LIST
 DESIRED_COLUMN_ORDER = [
   'id', 'name', 'num_permissions', 'num_installed', 'num_disabled',
   'num_forced', 'permissions', 'installed', 'disabled', 'forced'
@@ -121,29 +123,44 @@ def Flatten(data):
       num_prop = 'num_' + prop
       added_item[num_prop] = len(value)
 
-      # For long lists, the cell contents may go over MAX_CELL_LENGTH, so
-      # split the list into chunks that will fit into MAX_CELL_LENGTH.
-      flat_list = SEPARATOR.join(sorted(value))
-      overflow_prop_index = 0
-      while True:
+      if MAX_ITEMS_PER_LIST > 0 and prop in MAX_ITEMS_LISTS:
+        # For specified long lists, split the list into chunks of length MAX_ITEMS_PER_LIST
+        flat_list = sorted(value)
+        bcount = 0
+        jcount = added_item[num_prop]
+        overflow_prop_index = 0
         current_column = prop
-        if overflow_prop_index:
-          current_column = prop + '_' + str(overflow_prop_index)
+        added_item[current_column] = ''
+        while bcount < jcount:
+          kcount = min(jcount-bcount, MAX_ITEMS_PER_LIST)
+          added_item[current_column] = SEPARATOR.join(flat_list[bcount:bcount+kcount])
+          bcount += kcount
+          overflow_prop_index += 1
+          current_column = f'{prop}_{overflow_prop_index}'
+      else:
+        # For long lists, the cell contents may go over MAX_CELL_LENGTH, so
+        # split the list into chunks that will fit into MAX_CELL_LENGTH.
+        flat_list = SEPARATOR.join(sorted(value))
+        overflow_prop_index = 0
+        while True:
+          current_column = prop
+          if overflow_prop_index:
+            current_column = prop + '_' + str(overflow_prop_index)
 
-        flat_list_len = len(flat_list)
-        if flat_list_len > MAX_CELL_LENGTH:
-          last_separator = flat_list.rfind(SEPARATOR, 0,
-                                           MAX_CELL_LENGTH - flat_list_len)
-          if last_separator != -1:
-            added_item[current_column] = flat_list[0:last_separator]
-            flat_list = flat_list[last_separator + 2:]
-            overflow_prop_index = overflow_prop_index + 1
-            continue
+          flat_list_len = len(flat_list)
+          if flat_list_len > MAX_CELL_LENGTH:
+            last_separator = flat_list.rfind(SEPARATOR, 0,
+                                             MAX_CELL_LENGTH - flat_list_len)
+            if last_separator != -1:
+              added_item[current_column] = flat_list[0:last_separator]
+              flat_list = flat_list[last_separator + 2:]
+              overflow_prop_index = overflow_prop_index + 1
+              continue
 
-        # Fall-through case where no more splitting is possible, this is the
-        # last cell to add for this list.
-        added_item[current_column] = flat_list
-        break
+          # Fall-through case where no more splitting is possible, this is the
+          # last cell to add for this list.
+          added_item[current_column] = flat_list
+          break
 
       assert isinstance(added_item[prop],
                         (int, bool, str)), (f'unexpected type for item: {type(added_item[prop]).__name__}')
