@@ -23,6 +23,7 @@ import sys
 INPUT_QUOTE_CHAR = "'"
 OUTPUT_QUOTE_CHAR = '"'
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
+FIX_DOUBLE_SLASH_QUOTE = False # Set to true if you get json.decoder.JSONDecodeError: Expecting ',' delimiter:
 
 MAX_BROWSERS_TO_PROCESS = 0 # 0 = process all browsers, N = limit processing to N browsers
 MAX_ITEMS_PER_LIST = 0 # 0 = Use cell length splitting, N = Use maximum items in a list splitting
@@ -174,7 +175,11 @@ with open(sys.argv[1], 'r', encoding='utf-8') as inputFile:
   inputCSV = csv.DictReader(inputFile, quotechar=INPUT_QUOTE_CHAR)
   browsersProcessed = 0
   for r in inputCSV:
-    ComputeExtensionsList(json.loads(r['JSON']))
+    if not FIX_DOUBLE_SLASH_QUOTE:
+      rawData = r['JSON']
+    else:
+      rawData = r['JSON'].replace(r'\\"', r'\"')
+    ComputeExtensionsList(json.loads(rawData))
     browsersProcessed += 1
     if MAX_BROWSERS_TO_PROCESS > 0 and browsersProcessed == MAX_BROWSERS_TO_PROCESS:
       break
