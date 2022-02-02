@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User(s), show all shared drive file permissions
+# Purpose: For a Google Drive User(s), show all shared file permissions
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/jay0lee/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
