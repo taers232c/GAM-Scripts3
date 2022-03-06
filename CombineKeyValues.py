@@ -2,7 +2,7 @@
 """
 # Purpose: Make a CSV file that merges all values for a given key.
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set KEY_FIELD and VALUE_FIELD
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

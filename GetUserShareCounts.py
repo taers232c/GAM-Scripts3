@@ -2,7 +2,7 @@
 """
 # Purpose: For a Google Drive User(s), output a CSV file showing the share type counts for files shared by the user(s)
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST to the list of domains you consider internal Set LINK_FIELD and LINK_VALUE.
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

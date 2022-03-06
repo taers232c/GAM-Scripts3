@@ -2,7 +2,7 @@
 """
 # Purpose: For a print filelist file, write multiple parents into separate rows.
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

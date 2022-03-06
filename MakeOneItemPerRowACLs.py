@@ -2,7 +2,7 @@
 """
 # Purpose: Convert output from print filelist to put one ACL per row; you can filter for specific ACLs.
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_LIST, GROUP_LIST. DOMAIN_LIST, ROLE_LIST, TYPE_LIST, DESIRED_ALLOWFILEDISCOVERY,
 #	DROP_GENERAL_COLUMNS, DROP_PERMISSION_COLUMNS.

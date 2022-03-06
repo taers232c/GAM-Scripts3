@@ -2,7 +2,7 @@
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with a list of users from a CSV file
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_HEADER
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

@@ -2,7 +2,7 @@
 """
 # Purpose: For a Google Drive User(s), get all drive file ACLs for files shared with anyone/domain withlink
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM - Version 6.07+
+#	https://github.com/GAM-team/GAM - Version 6.07+
 #	https://github.com/taers232c/GAMADV-XTD3 - Version 6.04.17+
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

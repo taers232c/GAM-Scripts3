@@ -2,7 +2,7 @@
 """
 # Purpose: For a Google Drive User(s), show user/group file access counts
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: GROUP_ROLES, USER_ROLES
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

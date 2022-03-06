@@ -2,7 +2,7 @@
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared outside of a list of specified domains
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST, DOMAIN_EXPRESSIONS, EXCLUSIVE_DOMAINS, INCLUDE_ANYONE
 #          You specify a list of domains, DOMAIN_LIST, or a list of domain expressions, DOMAIN_EXPRESSIONS

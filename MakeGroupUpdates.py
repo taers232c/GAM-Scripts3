@@ -2,7 +2,7 @@
 """
 # Purpose: Convert a CSV file showing group members to one that can be fed into Gam to sync members
 # Note: This script can use Basic or Advanced GAM:
-#	https://github.com/jay0lee/GAM
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set INPUT and OUTPUT field names
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
