@@ -4,18 +4,22 @@
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set USER_HEADER
+# Customize: Set USER_HEADERS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
-# 1: Prepare a CSV file with a list of user email addresses; set USER_HEADER to identify the column containing the email addresses
+# 1: Prepare a CSV file with a list of user email addresses; set USER_HEADERS to identify the column(s) containing the email addresses
 #  $ more Users.csv
 #  email
 #  testuser1@domain1.com
 #  testuser2@domain1.com
 #  testuser1@domain2.com
 #  testuser2@domain2.com
+#  ...
+#  $ more QuadUsers.csv
+#  email1,email2,email3,email4
+#  testuser1@domain1.com,testuser2@domain1.com,testuser1@domain2.com,testuser2@domain2.com
 #  ...
 # 2: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #    If you don't want all files, use query/fullquery
@@ -37,8 +41,8 @@ import sys
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
-# The header in the CSV file that contains the user email addresses
-USER_HEADER = 'email'
+# The headers in the CSV file that contain the user email addresses
+USER_HEADERS = ['email'] # USER_HEADERS = ['email1', 'email2', 'email3', 'email4']
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -48,7 +52,10 @@ PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 userSet = set()
 inputFile = open(sys.argv[3], 'r', encoding='utf-8')
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  userSet.add(row[USER_HEADER].lower())
+  for header in USER_HEADERS:
+    user = row[header].lower()
+    if user:
+      userSet.add(user)
 inputFile.close()
 
 if sys.argv[2] != '-':
@@ -68,7 +75,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'user':
       permissions_N = mg.group(1)
-      if row.get(f'permissions.{permissions_N}.deleted') == 'True':
+      if row.get(f'permissions.{permissions_N}.deleted', '') == 'True':
         continue
       emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
       if row[f'permissions.{permissions_N}.role'] != 'owner' and emailAddress in userSet:
