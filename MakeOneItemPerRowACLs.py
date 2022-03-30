@@ -34,7 +34,7 @@ GROUP_LIST = []
 # The list should be empty if you're only specifiying groups in GROUP_LIST or users in USER_LIST, e.g. DOMAIN__LIST = []
 DOMAIN_LIST = []
 
-# Specify specific permission role value(s) ('owner', 'organizer', 'fileOrganizer', 'writer', 'commenter', 'reader'), e.g., ROLE_LIST = ['writer', 'commenter']
+# Specify specific permission role value(s) ('owner', 'organizer', 'fileOrganizer', 'writer', 'commenter', 'reader'), e.g., ROLE_LIST = ['writer', 'commenter', 'reader']
 # The list should be empty if you want all roles, e.g, ROLE_LIST = []
 ROLE_LIST = []
 
