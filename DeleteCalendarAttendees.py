@@ -70,7 +70,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   deleteAttendees = []
   for k, v in iter(row.items()):
     mg = ATTENDEES_N_EMAIL.match(k)
-    if mg and (v in DELETE_ATTENDEES_SET) or (DELETE_ATTENDEES_PATTERN and DELETE_ATTENDEES_PATTERN.match(v)):
+    if mg and ((v in DELETE_ATTENDEES_SET) or (DELETE_ATTENDEES_PATTERN and DELETE_ATTENDEES_PATTERN.match(v))):
       deleteAttendees.append(v)
   if deleteAttendees:
     if ALL_ATTENDEES_ONE_ROW:
