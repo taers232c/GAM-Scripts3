@@ -43,7 +43,8 @@ DELETE_ATTENDEES_SET = set([])
 
 # Delete email addresses that match a pattern
 # None: DELETE_ATTENDEES_PATTERN = None
-# Pattern: DELETE_ATTENDEES_PATTERN = re.compile(r'^.*@bar.com$')
+# Match attendees from a specific domain: DELETE_ATTENDEES_PATTERN = re.compile(r'^.+@bar.com$')
+# Match all attendees: DELETE_ATTENDEES_PATTERN = re.compile(r'^.+$')
 DELETE_ATTENDEES_PATTERN = None
 
 # Should all attendees to delete for an event be on one row
