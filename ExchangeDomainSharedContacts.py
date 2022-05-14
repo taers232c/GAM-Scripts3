@@ -12,7 +12,7 @@
 #  $ gam select DomainB redirect csv ./DomainBUsers.csv print users fields primaryemail,name
 #  $ gam select DomainA redirect csv ./DomainAContacts.csv print contacts fields email,familyname,givenname,name emailmatchpattern ".*@DomainB.com$"
 # 2: Find add, deletes, updates for DomainA domain shared contacts
-#  $ python3 SyncDomainSharedContacts.py DomainB.com ./DomainBUsers.csv ./DomainAContacts.csv ./DomainAContactUpdates.csv
+#  $ python3 ExchangeDomainSharedContacts.py DomainB.com ./DomainBUsers.csv ./DomainAContacts.csv ./DomainAContactUpdates.csv
 $ 3: Perform updates for DomainA domain shared contacts
 #  $ gam select DomainA redirect stdout ./DomainAContactDeletes.txt redirect stderr stdout loop ./DomainAContactUpdates.csv matchfield Action Delete gam delete contact "~ContactID"
 #  $ gam select DomainA redirect stdout ./DomainAContactUpdates.txt redirect stderr stdout loop ./DomainAContactUpdates.csv matchfield Action Update gam update contact "~ContactID" givenName "~givenName" familyname "~familyName" name "~fullName"
@@ -22,7 +22,7 @@ $ 3: Perform updates for DomainA domain shared contacts
 #  $ gam select DomainA redirect csv ./DomainAUsers.csv print users fields primaryemail,name
 #  $ gam select DomainB redirect csv ./DomainBContacts.csv print contacts fields email,familyname,givenname,name emailmatchpattern ".*@DomainA.com$"
 # 2: Find add, deletes, updates for DomainB domain shared contacts
-#  $ python3 SyncDomainSharedContacts.py DomainA.com ./DomainAUsers.csv ./DomainBContacts.csv ./DomainBContactUpdates.csv
+#  $ python3 ExchangeDomainSharedContacts.py DomainA.com ./DomainAUsers.csv ./DomainBContacts.csv ./DomainBContactUpdates.csv
 $ 3: Perform updates for DomainB domain shared contacts
 #  $ gam select DomainA redirect stdout ./DomainBContactDeletes.txt redirect stderr stdout loop ./DomainBContactUpdates.csv matchfield Action Delete gam delete contact "~ContactID"
 #  $ gam select DomainA redirect stdout ./DomainBContactUpdates.txt redirect stderr stdout loop ./DomainBContactUpdates.csv matchfield Action Update gam update contact "~ContactID" givenName "~givenName" familyname "~familyName" name "~fullName"
