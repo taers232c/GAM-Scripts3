@@ -14,7 +14,7 @@
 #    Syntax, Advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
 #				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users-Drive-Files
-#    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress
+#    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress pm not role owner em
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,emailAddress,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
 #    (n.b., driveFileTitle, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
