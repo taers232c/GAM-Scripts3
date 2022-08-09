@@ -40,27 +40,28 @@ GIVENNAME = 'givenName'
 FAMILYNAME = 'familyName'
 FULLNAME = 'fullName'
 
-userDomain = sys.argv[1]
+userDomains = set(sys.argv[1].lower().replace(',', ' ').split())
 
 userData = {}
 userSet = set()
 with open(sys.argv[2], 'r', encoding='utf-8') as inputFile:
   for user in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-    emailAddress = user['primaryEmail']
+    emailAddress = user['primaryEmail'].lower()
     _, domain = emailAddress.split('@')
-    if domain == userDomain:
-      userData[emailAddress] = {GIVENNAME: user[f'name.{GIVENNAME}'], FAMILYNAME: user[f'name.{FAMILYNAME}'], FULLNAME: user[f'name.{FULLNAME}']}
+    if domain in userDomains:
+      userData[emailAddress] = {GIVENNAME: user[f'name.{GIVENNAME}'].strip(), FAMILYNAME: user[f'name.{FAMILYNAME}'].strip(),
+                                FULLNAME: user[f'name.{FULLNAME}'].strip()}
       userSet.add(emailAddress)
 
 contactData = {}
 contactSet = set()
 with open(sys.argv[3], 'r', encoding='utf-8') as inputFile:
   for contact in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-    emailAddress = contact['Emails.1.address']
+    emailAddress = contact['Emails.1.address'].lower()
     _, domain = emailAddress.split('@')
-    if domain == userDomain:
-      contactData[emailAddress] = {GIVENNAME: contact['Given Name'], FAMILYNAME: contact['Family Name'], FULLNAME: contact['Name'],
-                                   CONTACTID: contact[CONTACTID]}
+    if domain in userDomains:
+      contactData[emailAddress] = {GIVENNAME: contact['Given Name'].strip(), FAMILYNAME: contact['Family Name'].strip(),
+                                   FULLNAME: contact['Name'].strip(), CONTACTID: contact[CONTACTID]}
       contactSet.add(emailAddress)
 
 addContacts = userSet-contactSet
@@ -72,8 +73,12 @@ with open(sys.argv[4], 'w', encoding='utf-8', newline='') as outputFile:
                              lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
   outputCSV.writeheader()
   for emailAddress in sorted(delContacts):
+    contact = contactData[emailAddress]
     outputCSV.writerow({'Action': 'Delete',
-                        CONTACTID: contactData[emailAddress][CONTACTID]})
+                        CONTACTID: contact[CONTACTID],
+                        GIVENNAME: contact[GIVENNAME],
+                        FAMILYNAME: contact[FAMILYNAME],
+                        FULLNAME: contact[FULLNAME]})
   for emailAddress in sorted(chkContacts):
     user = userData[emailAddress]
     contact = contactData[emailAddress]
@@ -84,6 +89,7 @@ with open(sys.argv[4], 'w', encoding='utf-8', newline='') as outputFile:
                             GIVENNAME: user[GIVENNAME],
                             FAMILYNAME: user[FAMILYNAME],
                             FULLNAME: user[FULLNAME]})
+        break
   for emailAddress in sorted(addContacts):
     user = userData[emailAddress]
     outputCSV.writerow({'Action': 'Add',
