@@ -28,7 +28,7 @@ import sys
 FILE_NAME = 'name'
 ALT_FILE_NAME = 'title'
 
-# You can ooperate on specific users or specific domains or operate on all users in all domains.
+# You can operate on specific users or specific domains or operate on all users in all domains.
 # For all users in all domains, set USER_LIST = [] and DOMAIN_LIST = []
 
 # Substitute your specific user(s) in the list below, e.g., USER_LIST = ['user1@domain.com',] USER_LIST = ['user1@domain.com', 'user2@domain.com',]
