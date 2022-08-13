@@ -49,8 +49,8 @@ with open(sys.argv[2], 'r', encoding='utf-8') as inputFile:
     emailAddress = user['primaryEmail'].lower()
     _, domain = emailAddress.split('@')
     if domain in userDomains:
-      userData[emailAddress] = {GIVENNAME: user[f'name.{GIVENNAME}'].strip(), FAMILYNAME: user[f'name.{FAMILYNAME}'].strip(),
-                                FULLNAME: user[f'name.{FULLNAME}'].strip()}
+      userData[emailAddress] = {GIVENNAME: user[f'name.{GIVENNAME}'], FAMILYNAME: user[f'name.{FAMILYNAME}'],
+                                FULLNAME: user[f'name.{FULLNAME}']}
       userSet.add(emailAddress)
 
 contactData = {}
@@ -60,8 +60,8 @@ with open(sys.argv[3], 'r', encoding='utf-8') as inputFile:
     emailAddress = contact['Emails.1.address'].lower()
     _, domain = emailAddress.split('@')
     if domain in userDomains:
-      contactData[emailAddress] = {GIVENNAME: contact['Given Name'].strip(), FAMILYNAME: contact['Family Name'].strip(),
-                                   FULLNAME: contact['Name'].strip(), CONTACTID: contact[CONTACTID]}
+      contactData[emailAddress] = {GIVENNAME: contact['Given Name'], FAMILYNAME: contact['Family Name'],
+                                   FULLNAME: contact['Name'], CONTACTID: contact[CONTACTID]}
       contactSet.add(emailAddress)
 
 addContacts = userSet-contactSet
