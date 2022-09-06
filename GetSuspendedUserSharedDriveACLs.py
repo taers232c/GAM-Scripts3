@@ -3,7 +3,7 @@
 # Purpose: Get all shared drive ACLs for a list of suspended users from a CSV file
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: Set USER_HEADERS
+# Customize: Set USER_HEADER
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -21,8 +21,8 @@ import csv
 import re
 import sys
 
-# The headers in the CSV file that contain the user email addresses
-USER_HEADERS = ['primaryEmail']
+# The header in the CSV file that contains the user email addresses
+USER_HEADER = 'primaryEmail'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -32,10 +32,9 @@ PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 userSet = set()
 inputFile = open(sys.argv[3], 'r', encoding='utf-8')
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  for header in USER_HEADERS:
-    user = row[header].lower()
-    if user:
-      userSet.add(user)
+  user = row[USER_HEADER].lower()
+  if user:
+    userSet.add(user)
 inputFile.close()
 
 outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
