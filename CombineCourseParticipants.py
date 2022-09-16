@@ -15,7 +15,7 @@
 #  $ Advanced: gam config csv_output_header_filter "courseId,courseName,userRole,profile.emailAddress" redirect csv ./CourseParticipants.csv print course-participants
 #    See: https://github.com/taers232c/GAMADV-XTD3/wiki/Classroom-Membership#display-course-membership
 # 2: From that list of group members, output a CSV file with headers primaryEmail,GroupsCount,Groups that shows the groups for each user
-#  $ python3 CompineCourseParticipants.py ./CourseParticipants.csv ./CompinedCourseParticipants.csv
+#  $ python3 CombineCourseParticipants.py ./CourseParticipants.csv ./CombinedCourseParticipants.csv
 
 """
 
