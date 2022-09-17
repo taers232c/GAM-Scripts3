@@ -12,7 +12,7 @@
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS, OUTPUT_UNMERGED_DATA
+# Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, RETAIN_MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS, OUTPUT_UNMERGED_DATA
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -82,7 +82,7 @@ outputFieldNames = dataFieldNames[:]
 mergeFieldNameMap = {}
 for fieldName in mergeRetainFields:
   if fieldName not in dataFieldNames:
-    mappedFieldName= fieldName
+    mappedFieldName = fieldName
   else:
     mappedFieldName = f'{fieldName}.merge'
   mergeFieldNameMap[fieldName] = mappedFieldName
