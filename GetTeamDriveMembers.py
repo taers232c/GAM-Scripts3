@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: Get members for Team Drives
+# Purpose: Get organizers and members for Team Drives
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DELIMITER, DOMAIN_LIST, INCLUDE_TYPES
@@ -15,7 +15,7 @@
 # 3: Delete duplicate Team Drives (some may have multiple organizers). Make sure that ID_FIELD = 'id' in DeleteDuplicateRows.py
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 4: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields id,domain,emailaddress,role,type,deleted
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields id,emailaddress,role,type,deleted
 # 5: From that list of ACLs, output a CSV file with headers "id,name,organizers,members"
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveMembers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveMembers.csv
@@ -27,12 +27,12 @@ import sys
 
 DELIMITER = ' ' # character that separates list members
 
-# If you want to limit members to a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
+# If you want to limit organizers/members to a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = []
 
 INCLUDE_TYPES = {
-  'user': True, # False - don't show user members, True - show user members
-  'group': True, # False - don't show group members, True - show group members
+  'user': True, # False - don't show user organizers/members, True - show user organizers/members
+  'group': True, # False - don't show group organizers/members, True - show group organizers/members
   }
 
 QUOTE_CHAR = '"' # Adjust as needed

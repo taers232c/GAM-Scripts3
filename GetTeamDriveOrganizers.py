@@ -3,7 +3,7 @@
 # Purpose: Get organizers for Team Drives
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: DOMAIN_LIST, ONE_ORGANIZER, SHOW_GROUP_ORGANIZERS, SHOW_USER_ORGANIZERS, SHOW_NO_ORGANIZER_DRIVES
+# Customize: DELIMITER, DOMAIN_LIST, INCLUDE_TYPES, ONE_ORGANIZER, SHOW_NO_ORGANIZER_DRIVES
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -25,14 +25,17 @@ import csv
 import re
 import sys
 
+DELIMITER = ' ' # character that separates list members
+
 # If you want to limit organizers to a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
 DOMAIN_LIST = []
 
+INCLUDE_TYPES = {
+  'user': True, # False - don't show user organizers, True - show user organizers
+  'group': True, # False - don't show group organizers, True - show group organizers
+  }
+
 ONE_ORGANIZER = False # False - show all organizers, True - show one organizer
-
-SHOW_GROUP_ORGANIZERS = True # False - don't show group organizers, True - show group organizers
-SHOW_USER_ORGANIZERS = True # False - don't show user organizers, True - show user organizers
-
 SHOW_NO_ORGANIZER_DRIVES = True # False - don't show drives with no organizers, True - show drives with no organizers
 
 QUOTE_CHAR = '"' # Adjust as needed
@@ -66,21 +69,18 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
-      orgtype = row[f'permissions.{permissions_N}.type']
-      if (orgtype == 'user' and not SHOW_USER_ORGANIZERS) or (orgtype == 'group' and not SHOW_GROUP_ORGANIZERS):
+      if not INCLUDE_TYPES[row[f'permissions.{permissions_N}.type']]:
         continue
-      emailAddress = row[f'permissions.{permissions_N}.emailAddress']
-      if DOMAIN_LIST:
-        domain = emailAddress[emailAddress.find('@')+1:]
-        if domain not in DOMAIN_LIST:
-          continue
-      organizers.append(emailAddress)
+      member = row[f'permissions.{permissions_N}.emailAddress']
+      if DOMAIN_LIST and member[member.find('@')+1:] not in DOMAIN_LIST:
+        continue
+      organizers.append(member)
       if ONE_ORGANIZER:
         break
   if organizers or SHOW_NO_ORGANIZER_DRIVES:
     outputCSV.writerow({'id': row['id'],
                         'name': teamDriveNames.get(row['id'], row['id']),
-                        'organizers': ' '.join(organizers)})
+                        'organizers': DELIMITER.join(organizers)})
 
 if inputFile != sys.stdin:
   inputFile.close()
