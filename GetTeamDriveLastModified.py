@@ -59,7 +59,7 @@ else:
 teamDriveProcessed = set()
 csvRows = []
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  teamDriveId = row['teamDriveId']
+  teamDriveId = row['driveId']
   if teamDriveId not in teamDriveProcessed:
     teamDriveProcessed.add(teamDriveId)
     csvRows.append({'id': teamDriveId,
