@@ -79,8 +79,10 @@ for row in inputCSV:
     GroupGroups.setdefault(email, [])
     GroupGroups[email].append(row['group'].lower())
 
+for group in groupParents:
+  groupParents[group].sort()
 for user, info in sorted(iter(UserGroups.items())):
-  for group in info['groups']:
+  for group in sorted(info['groups']):
     if group not in groupParents:
       getGroupParents(group)
     printGroupParents(group, {'primaryEmail': user, 'Group': group, 'Role': info['role'], 'parents': []})
