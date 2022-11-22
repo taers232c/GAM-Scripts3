@@ -18,9 +18,9 @@
 #    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #  $ Basic: gam all users print filelist id title permissions owners mimetype <PutQueryHere> > filelistperms.csv
 #  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype <PutQueryHere>
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
-#    (n.b., driveFileTitle, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, mimeType, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetSharedWithAnyoneDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: If desired, delete the ACLs
@@ -48,7 +48,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'allowFileDiscovery'],
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType',
+                                        'permissionId', 'role', 'allowFileDiscovery'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -62,7 +63,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'anyone':
       permissions_N = mg.group(1)
-      allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
+      allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery',
+                                   str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       if DESIRED_ALLOWFILEDISCOVERY in ('Any', allowFileDiscovery):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],

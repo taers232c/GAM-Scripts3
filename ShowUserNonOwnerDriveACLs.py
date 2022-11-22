@@ -9,9 +9,9 @@
 #  Python 3.x.y
 # Usage:
 # 1: Use print filelist to get selected ACLs
-#    Basic: gam user testuser@domain.com print filelist id title permissions owners > filelistperms.csv
-#    Advanced: gam redirect ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,emailAddress"
+#    Basic: gam user testuser@domain.com print filelist id title permissions owners mimetype > filelistperms.csv
+#    Advanced: gam redirect ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,emailAddress"
 #    that lists the driveFileIds/Titles for all ACLs except those indicating the user as owner
 #  $ python3 ShowUserNonOwnerDriveACLs.py filelistperms.csv localperms.csv
 """
@@ -32,7 +32,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'emailAddress'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType', 'emailAddress'],
+                           lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -50,6 +51,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                            'mimeType': row['mimeType'],
                             'emailAddress': emailAddress})
 
 if inputFile != sys.stdin:

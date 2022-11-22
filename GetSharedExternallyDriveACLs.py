@@ -25,9 +25,9 @@
 #  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
 #  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,mimetype <pm clauses>
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
-#    (n.b., role, type, emailAddress, domain and driveFileTitle are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, mimeType, role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetSharedExternallyDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: If desired, delete the ACLs

@@ -31,7 +31,7 @@
 # 8: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~organizer" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions,mimetype
 # Common code
-# 9: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain,deleted"
+# 9: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,mimeType,permissionId,role,type,emailAddress,domain,deleted"
 #    that lists the driveFileIds and permissionIds for all files
 #  $ python3 GetTeamDriveFileACLs.py filelistperms.csv TeamDrives.csv TeamDriveFileACLs.csv
 # 10: Inspect TeamDriveFileACLs.csv, use as desired

@@ -12,8 +12,8 @@
 # Usage:
 # 1: Get ACLs for all files, replace user@domain.com with your user selection in the command below
 #    For enhanced file selection in Advanced Gam see: https://github.com/taers232c/GAMADV-XTD3/wiki/Users-Drive-Files#display-file-lists
-#  $ Basic: gam user user@domain.com print filelist id title permissions > filelistperms.csv
-#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,name,permissions
+#  $ Basic: gam user user@domain.com print filelist id title permissions mimetype > filelistperms.csv
+#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,name,permissions,mimetype
 # 2: From that list of files, output a CSV file that lists one ACL per row
 #  $ python3 MakeOneItemPerRowACLs.py filelistperms.csv filelistpermsoipr.csv
 """

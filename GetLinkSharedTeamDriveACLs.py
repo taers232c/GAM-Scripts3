@@ -62,7 +62,8 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile,
-                           ['Owner', 'teamDriveId', 'teamDriveName', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'allowFileDiscovery',
+                           ['Owner', 'teamDriveId', 'teamDriveName', 'driveFileId', 'driveFileTitle', 'mimeType',
+                            'permissionId', 'role', 'allowFileDiscovery',
                             'resourceKey', 'linkShareMetadata.securityUpdateEligible', 'linkShareMetadata.securityUpdateEnabled',
                             'webViewLink'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)

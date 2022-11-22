@@ -45,9 +45,9 @@
 #    Change the query as desired.
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype <PutQueryHere>
 # Common code
-# 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
+# 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
-#    (n.b., driveFileTitle, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, mimeType, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetSharedWithAnyoneTeamDriveACLs.py filelistperms.csv deleteperms.csv
 # 12: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 13: If desired, delete the ACLs
@@ -78,7 +78,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'allowFileDiscovery'],
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType',
+                                        'permissionId', 'role', 'allowFileDiscovery'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
