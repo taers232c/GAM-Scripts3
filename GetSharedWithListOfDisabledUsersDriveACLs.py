@@ -23,8 +23,8 @@
 #  ...
 # 2: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #    If you don't want all files, use query/fullquery
-#  $ Basic: gam all users print filelist id title permissions owners > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress
+#  $ Basic: gam all users print filelist id title permissions owners mimetype> filelistperms.csv
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype
 # 3: From that list of ACLs, output a CSV file with the same headers as the input CSV file
 #    only including files that are shared exclusively with the users in Users.csv
 #  $ python3 GetSharedWithListOfDisabledUsersDriveACLs.py filelistperms.csv disabledusersperms.csv Users.csv

@@ -16,8 +16,8 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='anyoneWithLink'"
 #    Change the query as desired.
 #    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
-#  $ Basic: gam all users print filelist id title permissions owners <PutQueryHere> > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress <PutQueryHere>
+#  $ Basic: gam all users print filelist id title permissions owners mimetype <PutQueryHere> > filelistperms.csv
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype <PutQueryHere>
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
 #    (n.b., driveFileTitle, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
@@ -48,7 +48,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'allowFileDiscovery'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'allowFileDiscovery'],
+                           lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -66,6 +67,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                            'mimeType': row['mimeType'],
                             'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                             'role': row[f'permissions.{permissions_N}.role'],
                             'allowFileDiscovery': allowFileDiscovery})

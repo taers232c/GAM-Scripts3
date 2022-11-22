@@ -23,13 +23,13 @@
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype
 # 6: Go to step 9
 # Specific Team Drives
 # 7: If you want file ACLs for specific Team Drives make a CSV file TeamDrives.csv
 #    with three columns (organizer,id,name) that show an organizer, Team Drive ID and Team Drive Name
 # 8: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~organizer" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~organizer" print filelist select teamdriveid "~id" fields teamdriveid,id,title,permissions,mimetype
 # Common code
 # 9: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain,deleted"
 #    that lists the driveFileIds and permissionIds for all files
@@ -56,7 +56,7 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'teamDriveId', 'teamDriveName', 'driveFileId', 'driveFileTitle',
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'teamDriveId', 'teamDriveName', 'driveFileId', 'driveFileTitle', 'mimeType',
                                         'permissionId', 'role', 'type', 'emailAddress', 'domain', 'deleted'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
@@ -93,6 +93,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                           'teamDriveName': teamDriveNames.get(row['driveId'], row['driveId']),
                           'driveFileId': row['id'],
                           'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                          'mimeType': row['mimeType'],
                           'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                           'role': row[f'permissions.{permissions_N}.role'],
                           'type': v,

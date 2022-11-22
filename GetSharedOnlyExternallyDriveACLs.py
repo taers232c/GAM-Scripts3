@@ -16,7 +16,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic GAM: gam all users print filelist id title permissions owners > filelistperms.csv
+#  $ Basic GAM: gam all users print filelist id title permissions owners mimetype > filelistperms.csv
 #  $ Advanced GAM: You can have GAM do some pre-filtering
 #  $ EXCLUSIVE_DOMAINS = True:
 #    Add the following clause to the command for each domain in DOMAIN_LIST: pm not domain domainx.com em
@@ -59,8 +59,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle',
-                                        'permissionId', 'role', 'type', 'emailAddress', 'domain', 'mimeType'],
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType',
+                                        'permissionId', 'role', 'type', 'emailAddress', 'domain'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -103,12 +103,12 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       acls.append({'Owner': row['owners.0.emailAddress'],
                    'driveFileId': row['id'],
                    'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                   'mimeType': row['mimeType'],
                    'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                    'role': row[f'permissions.{permissions_N}.role'],
                    'type': v,
                    'emailAddress': emailAddress,
-                   'domain': domain,
-                   'mimeType': row['mimeType']})
+                   'domain': domain})
   for acl in acls:
     outputCSV.writerow(acl)
 

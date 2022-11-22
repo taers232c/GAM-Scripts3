@@ -10,11 +10,11 @@
 # Usage:
 # 1: Use print filelist to get selected ACLs
 #    Syntax, Basic GAM: gam <UserTypeEntity> print filelist [anyowner] [query <QueryDriveFile>] [fullquery <QueryDriveFile>]
-#    Example, Basic GAM: gam user testuser@domain.com print filelist id title permissions owners > filelistperms.csv
+#    Example, Basic GAM: gam user testuser@domain.com print filelist id title permissions owners mimetype > filelistperms.csv
 #    Syntax, Advanced GAM: gam <UserTypeEntity> print filelist [anyowner|(showownedby any|me|others)]
 #				[query <QueryDriveFile>] [fullquery <QueryDriveFile>] [select <DriveFileEntity>|orphans] [depth <Number>] [showparent]
 #    For a full description of print filelist, see: https://github.com/taers232c/GAMADV-XTD/wiki/Users-Drive-Files
-#    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress pm not role owner em
+#    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype pm not role owner em
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,emailAddress,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
 #    (n.b., driveFileTitle, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
@@ -40,7 +40,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain', 'allowFileDiscovery'],
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType',
+                                        'permissionId', 'role', 'type', 'emailAddress', 'domain', 'allowFileDiscovery'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -71,6 +72,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                            'mimeType': row['mimeType'],
                             'permissionId': f'id:{row[f"permissions.{permissions_N}.id"]}',
                             'role': row[f'permissions.{permissions_N}.role'],
                             'type': v,

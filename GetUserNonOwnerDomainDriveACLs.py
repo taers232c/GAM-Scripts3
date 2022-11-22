@@ -11,8 +11,8 @@
 #  Python 3.x.y
 # Usage:
 # 1: Use print filelist to get selected ACLs
-#    Basic: gam user testuser@domain.com print filelist id title permissions owners > filelistperms.csv
-#    Advanced: gam rediret csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress
+#    Basic: gam user testuser@domain.com print filelist id title permissions owners mimetype > filelistperms.csv
+#    Advanced: gam rediret csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs from the specified domains except those indicating the user as owner
 #  $ python3 GetUserNonOwnerDomainDriveACLs.py filelistperms.csv deleteperms.csv
@@ -42,7 +42,8 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'permissionId', 'role', 'type', 'emailAddress', 'domain'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType', 'permissionId', 'role', 'type', 'emailAddress', 'domain'],
+                           lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -72,6 +73,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),
+                            'mimeType': row['mimeType'],
                             'permissionId': f'id:{v}',
                             'role': row[f'permissions.{permissions_N}.role'],
                             'type': v,
