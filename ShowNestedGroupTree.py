@@ -9,7 +9,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get group members of type group
-#  $ gam redirect csv ./GroupMembers.csv print group-members fields email types group
+#  $ gam redirect csv ./GroupMembers.csv print group-members fields email,type types group
 # 2: From that list of group members, output a file showing hierarchial group membership
 #  $ python3 ShowNestedGroupTree.py ./GroupMembers.csv indented|list|json ./NextedGroupTree.txt
 """
@@ -34,11 +34,12 @@ LIST_DELIMITER = ','
 def printIndentedGroupTree(email, depth):
   outputFile.write(' '*depth+email+'\n')
   for member in sorted(Groups.get(email, [])):
-    printIndentedGroupTree(member, depth+INDENTED_INDENTATION)
+    if member[1] == 'GROUP':
+      printIndentedGroupTree(member[0], depth+INDENTED_INDENTATION)
 
 def printListGroupTree(email, nestedList):
   nestedList.append(email)
-  memberList = sorted(Groups.get(email, []))
+  memberList = [member[0] for member in sorted(Groups.get(email, [])) if member[1] == 'GROUP']
   if memberList:
     for member in memberList:
       printListGroupTree(member, nestedList)
@@ -48,7 +49,7 @@ def printListGroupTree(email, nestedList):
 
 def printJSONGroupTree(email, nestedList):
   nestedList.append(email)
-  memberList = sorted(Groups.get(email, []))
+  memberList = [member[0] for member in sorted(Groups.get(email, [])) if member[1] == 'GROUP']
   if memberList:
     for member in memberList:
       printJSONGroupTree(member, nestedList)
@@ -77,7 +78,7 @@ Groups = {}
 for row in inputCSV:
   group = row['group']
   Groups.setdefault(group, [])
-  Groups[group].append(row['email'])
+  Groups[group].append((row['email'], row['type']))
 if mode == INDENTED:
   for group in sorted(Groups):
     printIndentedGroupTree(group, 0)
