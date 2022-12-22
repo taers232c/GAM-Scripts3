@@ -1,15 +1,17 @@
 #!/usr/bin/env python3
 """
 # Purpose: Produce a file to show hierarchial group membership
-# Note: This requires Advanced GAM:
+# Note: This script can use Basic or Advanced GAM:
+#	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: INDENTED_INDENTATION, JSON_INDENTATION, LIST_DELIMITER
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
-# 1: Get group members of type group
-#  $ gam redirect csv ./GroupMembers.csv print group-members fields email,type types group
+# 1: Get group members email address and type
+#  Basic: $ gam print group-members fields email,type > ./GroupMembers
+#  Advanced: $ gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: From that list of group members, output a file showing hierarchial group membership
 #  $ python3 ShowNestedGroupTree.py ./GroupMembers.csv indented|list|json ./NextedGroupTree.txt
 """
