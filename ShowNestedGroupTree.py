@@ -46,13 +46,15 @@ def printListGroupTree(email, nestedList):
   else:
     outputFile.write(LIST_DELIMITER.join(nestedList)+'\n')
 
-def printJSONGroupTree(email, jsonList):
-  memberDict = {email: []}
+def printJSONGroupTree(email, nestedList):
+  nestedList.append(email)
   memberList = sorted(Groups.get(email, []))
   if memberList:
     for member in memberList:
-      printJSONGroupTree(member, memberDict[email])
-  jsonList.append(memberDict)
+      printJSONGroupTree(member, nestedList)
+      nestedList.pop()
+  else:
+    groupJSONList.append({nestedList[0]: nestedList[1:]})
 
 if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
@@ -82,7 +84,7 @@ if mode == INDENTED:
 elif mode == JSON:
   groupJSONList = []
   for group in sorted(Groups):
-    printJSONGroupTree(group, groupJSONList)
+    printJSONGroupTree(group, [])
   json.dump(groupJSONList, outputFile, indent=JSON_INDENTATION, sort_keys=True)
   outputFile.write('\n')
 else: # mode == LIST
