@@ -12,8 +12,16 @@
 # 1: Get group members email address and type
 #  Basic: $ gam print group-members fields email,type > ./GroupMembers
 #  Advanced: $ gam redirect csv ./GroupMembers.csv print group-members fields email,type
-# 2: From that list of group members, output a file showing hierarchial group membership
-#  $ python3 ShowNestedGroupTree.py ./GroupMembers.csv indented|list|json ./NextedGroupTree.txt
+# 2: If you want empty groups in the output proceed to step 4
+# 3: From the list of group members, output a file showing hierarchial group membership
+#  $ python3 ShowNestedGroupTree.py ./GroupMembers.csv indented|list|json ./NestedGroupTree.txt
+#    You're done
+# 4: Get a list of empty groups
+#  Basic: $ export GAM_CSV_ROW_FILTER="'membersCount:count=0','managersCount:count=0','ownersCount:count=0'"
+#         $ gam print groups memberscount managerscount ownerscount > EmptyGroups.csv
+#  Advanced: $ gam config csv_output_row_filter "'membersCount:count=0','managersCount:count=0','ownersCount:count=0'" redirect csv ./EmptyGroups.csv print groups memberscount managerscount ownerscount
+# 5: From the list of group members and empty groups, output a file showing hierarchial group membership
+#  $ python3 ShowNestedGroupTree.py ./GroupMembers.csv indented|list|json empty ./EmptyGroups.csv  ./NestedGroupTree.txt
 """
 
 import csv
@@ -59,15 +67,30 @@ def printJSONGroupTree(email, nestedList):
   else:
     groupJSONList.append({nestedList[0]: nestedList[1:]})
 
-if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
-  outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
+Groups = {}
+
+i = 3
+if (len(sys.argv) > i) and (sys.argv[i].lower()  == 'empty'):
+  i += 1
+  if len(sys.argv) > i:
+    inputFile = open(sys.argv[i], 'r', encoding='utf-8')
+    for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
+      Groups[row.get('email', row.get('Email', 'Unknown'))] =  []
+    inputFile.close()
+  else:
+    sys.stderr.write('Missing filename after option empty\n')
+    sys.exit(1)
+  i+= 1
+
+if (len(sys.argv) > i) and (sys.argv[i] != '-'):
+  outputFile = open(sys.argv[i], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 
 if len(sys.argv) > 2:
   mode = sys.argv[2].lower()
   if mode not in MODE_CHOICES:
-    sys.stderr.write(f'mode ({mode}) must be {"|".join(MODE_CHOICES)}\n')
+    sys.stderr.write(f'Option mode ({mode}) must be {"|".join(MODE_CHOICES)}\n')
     sys.exit(1)
 
 if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
@@ -76,7 +99,6 @@ else:
   inputFile = sys.stdin
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
 
-Groups = {}
 for row in inputCSV:
   group = row['group']
   Groups.setdefault(group, [])
