@@ -11,7 +11,7 @@
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Example, Basic GAM: gam all users print filelist id title owners permissions > filelistperms.csv
-#  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title owners permissions
+#  $ Example, Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id,name,owners.emailaddress,basicpermissions
 # 2: From that list of ACLs, output a CSV file with headers:
 #      Owner - email address of file owner
 #      Total - total files owned by Owner
