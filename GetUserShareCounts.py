@@ -28,6 +28,8 @@
 #      internalGroup - number of shares to an internal group
 #      externalUser - number of shares to an internal user
 #      internalUser - number of shares to an internal user
+#      deletedGroup - number of shares to a deleted group
+#      deletedUser - number of shares to a deleted user
 #  $ python3 GetUserShareCounts.py filelistperms.csv usersharecounts.csv
 """
 
@@ -65,6 +67,7 @@ HEADERS = [
   'internalDomain', 'internalDomainWithLink',
   'externalGroup', 'internalGroup',
   'externalUser', 'internalUser',
+  'deletedGroup', 'deletedUser',
   ]
 zeroCounts = {
   TOTAL_COUNTER: 0, SHARED_COUNTER: 0, SHARED_EXTERNAL_COUNTER: 0, SHARED_INTERNAL_COUNTER: 0,
@@ -73,12 +76,14 @@ zeroCounts = {
   'internalDomain': 0, 'internalDomainWithLink': 0,
   'externalGroup': 0, 'internalGroup': 0,
   'externalUser': 0, 'internalUser': 0,
+  'deletedGroup': 0, 'deletedUser': 0,
   }
 COUNT_CATEGORIES = {
   'anyone': {False: 'anyone', True: 'anyoneWithLink'},
   'domain': {False: {False: 'externalDomain', True: 'externalDomainWithLink'}, True: {False: 'internalDomain', True: 'internalDomainWithLink'}},
   'group': {False: 'externalGroup', True: 'internalGroup'},
   'user': {False: 'externalUser', True: 'internalUser'},
+  'deleted': {'group': 'deletedGroup', 'user': 'deletedUser'},
   }
 PERMISSIONS_N_TYPE = re.compile(r"permissions.(\d+).type")
 
@@ -114,6 +119,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           domain = row.get(f'permissions.{permissions_N}.domain', '')
           if not domain and v in ['user', 'group']:
             if row.get(f'permissions.{permissions_N}.deleted') == 'True':
+              userShareCounts[owner][COUNT_CATEGORIES['deleted'][v]] += 1
               continue
             emailAddress = row[f'permissions.{permissions_N}.emailAddress']
             domain = emailAddress[emailAddress.find('@')+1:]
