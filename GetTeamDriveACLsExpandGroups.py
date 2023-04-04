@@ -13,6 +13,7 @@
 # 2: Get group members
 #  $ gam redirect csv ./GroupMembers.csv print groups roles members,managers,owners delimiter " "
 # 3: Generate a CSV file with the same headers as TeamDriveACls.csv with type group ACLs replaced with type user ACLs for each member
+#    There is an additional header, permission.group, that shows the group email address from which the user ACLs are derived.
 #  $ python3 GetTeamDriveACLsExpandGroups.py TeamDriveACLs.csv GroupMembers.csv TeamDriveACLsExpandedGroups.csv
 """
 
@@ -28,6 +29,8 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+fieldnames = inputCSV.fieldnames[:]
+fieldnames.append('permission.group')
 
 GroupMembers = {}
 groupFile = open(sys.argv[2], 'r', encoding='utf-8')
@@ -43,7 +46,7 @@ if (len(sys.argv) > 3) and (sys.argv[3] != '-'):
   outputFile = open(sys.argv[3], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
-outputCSV = csv.DictWriter(outputFile, inputCSV.fieldnames,
+outputCSV = csv.DictWriter(outputFile, fieldnames,
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -55,7 +58,9 @@ for row in inputCSV:
     outputCSV.writerow(row)
   row['permission.type'] = 'user'
   row['permission.id'] = ''
-  for member in GroupMembers.get(row['permission.emailAddress'], []):
+  group = row['permission.emailAddress']
+  row['permission.group'] = group
+  for member in GroupMembers.get(group, []):
     row['permission.emailAddress'] = member
     _, domain = member.split('@')
     row['permission.domain'] = domain
