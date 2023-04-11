@@ -18,6 +18,7 @@
 #  $ python3 GetSharedFilePermissionsTypeRoleLists.py filelistperms.csv filetyperoleperms.csv
 """
 
+import copy
 import csv
 import re
 import sys
@@ -148,7 +149,7 @@ else:
   inputFile = sys.stdin
 
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  permCounts = ZERO_COUNTS.copy()
+  permCounts = copy.deepcopy(ZERO_COUNTS)
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v:
