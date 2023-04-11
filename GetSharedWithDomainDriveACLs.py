@@ -17,9 +17,9 @@
 #    Change the query as desired.
 #    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
-#    For Advanced GAM, add the following clause to the command for each domain: pm type domain domain xyz.com em
+#    For Advanced GAM, add the following clause to the command listing the domains: pm type domain domainlist abc.com,xyz.com em
 #  $ Basic GAM: gam all users print filelist id title permissions owners mimetype <PutQueryHere> > filelistperms.csv
-#  $ Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype <PutQueryHere>
+#  $ Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,basicpermissions,owners.emailaddress,mimetype <PutQueryHere>
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
 #    (n.b., driveFileTitle, mimeType, role, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)

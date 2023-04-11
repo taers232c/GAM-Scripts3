@@ -15,9 +15,8 @@
 #    DESIRED_ALLOWFILEDISCOVERY = 'True' - query "visibility='anyoneCanFind'"
 #    DESIRED_ALLOWFILEDISCOVERY = 'False' - query "visibility='anyoneWithLink'"
 #    Change the query as desired.
-#    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #  $ Basic: gam all users print filelist id title permissions owners mimetype <PutQueryHere> > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype <PutQueryHere>
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,basicpermissions,owners.emailaddress,mimetype <PutQueryHere>
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with anyone
 #    (n.b., driveFileTitle, mimeType, role and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
