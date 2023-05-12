@@ -25,9 +25,9 @@
 #  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
 #  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,mimetype <pm clauses>
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,type,emailAddress,domain"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,type,emailAddress,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
-#    (n.b., driveFileTitle, mimeType, role, type, emailAddress and domain are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, mimeType, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetSharedExternallyDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: If desired, delete the ACLs
@@ -60,7 +60,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType',
-                                        'permissionId', 'role', 'type', 'emailAddress', 'domain'],
+                                        'permissionId', 'role', 'type', 'emailAddress', 'domain', 'allowFileDiscovery'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -77,16 +77,18 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       if v == 'domain':
         emailAddress = ''
         domain = row[f'permissions.{permissions_N}.domain']
+        allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       elif v in ['user', 'group']:
         if row.get(f'permissions.{permissions_N}.deleted') == 'True':
           continue
         emailAddress = row[f'permissions.{permissions_N}.emailAddress']
         domain = emailAddress[emailAddress.find('@')+1:]
+        allowFileDiscovery = ''
       else: #anyone
         if not INCLUDE_ANYONE:
           continue
-        emailAddress = ''
-        domain = ''
+        domain = emailAddress = ''
+        allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       if ((row[f'permissions.{permissions_N}.role'] != 'owner') and
           ((v == 'anyone') or # Can only be true if INCLUDE_ANYONE = True
            (EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST) or
@@ -99,7 +101,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'role': row[f'permissions.{permissions_N}.role'],
                             'type': v,
                             'emailAddress': emailAddress,
-                            'domain': domain})
+                            'domain': domain,
+                            'allowFileDiscovery': allowFileDiscovery})
 
 if inputFile != sys.stdin:
   inputFile.close()
