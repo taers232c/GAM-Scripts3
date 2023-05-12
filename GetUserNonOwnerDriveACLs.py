@@ -17,7 +17,7 @@
 #    Example, Advanced GAM: gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype pm not role owner em
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,emailAddress,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs except those indicating the user as owner
-#    (n.b., driveFileTitle, mimeTtype, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
+#    (n.b., driveFileTitle, mimeType, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetUserNonOwnerDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: If desired, delete the ACLs
@@ -77,6 +77,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'role': row[f'permissions.{permissions_N}.role'],
                             'type': v,
                             'emailAddress': emailAddress,
+                            'domain': domain,
                             'allowFileDiscovery': allowFileDiscovery})
 
 if inputFile != sys.stdin:
