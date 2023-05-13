@@ -13,8 +13,9 @@
 # 1: Use print filelist to get selected ACLs
 #    Basic: gam user testuser@domain.com print filelist id title permissions owners mimetype > filelistperms.csv
 #    Advanced: gam rediret csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype
-# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain"
+# 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,emailAddress,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs from the specified domains except those indicating the user as owner
+#    (n.b., driveFileTitle, mimeType, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)
 #  $ python3 GetUserNonOwnerDomainDriveACLs.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed
 # 4: If desired, delete the ACLs
@@ -43,7 +44,7 @@ if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
 else:
   outputFile = sys.stdout
 outputCSV = csv.DictWriter(outputFile, ['Owner', 'driveFileId', 'driveFileTitle', 'mimeType',
-                                        'permissionId', 'role', 'type', 'emailAddress', 'domain'],
+                                        'permissionId', 'role', 'type', 'emailAddress', 'domain', 'allowFileDiscovery'],
                            lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -68,6 +69,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           continue
         emailAddress = row[f'permissions.{permissions_N}.emailAddress']
         domain = emailAddress[emailAddress.find('@')+1:]
+        allowFileDiscovery = ''
       else:
         continue
       if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (v != 'user' or row[f'permissions.{permissions_N}.role'] != 'owner' or emailAddress != row['owners.0.emailAddress']):
@@ -79,7 +81,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
                             'role': row[f'permissions.{permissions_N}.role'],
                             'type': v,
                             'emailAddress': emailAddress,
-                            'domain': domain})
+                            'domain': domain,
+                            'allowFileDiscovery': allowFileDiscovery})
 
 if inputFile != sys.stdin:
   inputFile.close()
