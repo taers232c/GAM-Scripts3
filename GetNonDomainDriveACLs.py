@@ -19,10 +19,10 @@
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic GAM: gam all users print filelist id title permissions owners mimetype > filelistperms.csv
 #  $ Advanced GAM: You can have GAM do some pre-filtering
-#  $ EXCLUSIVE_DOMAINS = True:
-#    Add the following clause to the command for each domain in DOMAIN_LIST: pm not domain domainx.com em
-#  $ EXCLUSIVE_DOMAINS = False:
-#    Add the following clause to the command for each domain in DOMAIN_LIST: pm domain domainx.com em
+#  $ EXCLUSIVE_DOMAINS = True: You're interested only in domains not in DOMAIN_LIST which would typically be your internal domains
+#    Add the following clause to the command listing the domains in DOMAIN_LIST: pm not domainlist domain1.com,domain2.com em
+#  $ EXCLUSIVE_DOMAINS = False: You're interested only in domains in DOMAIN_LIST which would typically be external domains
+#    Add the following clause to the command listing the domains in DOMAIN_LIST: pm domainlist domain1.com,domain2.com em
 #  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
 #  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,mimetype <pm clauses>
