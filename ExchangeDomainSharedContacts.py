@@ -30,6 +30,7 @@ $ 3: Perform updates for DomainB domain shared contacts
 """
 
 import csv
+import re
 import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
@@ -40,7 +41,17 @@ GIVENNAME = 'givenName'
 FAMILYNAME = 'familyName'
 FULLNAME = 'fullName'
 
+USE_REGEX_FOR_DOMAIN_MATCH = False # False: string match, True: regex match
+
 userDomains = set(sys.argv[1].lower().replace(',', ' ').split())
+if USE_REGEX_FOR_DOMAIN_MATCH:
+  domainPatterns = []
+  for domain in userDomains:
+    try:
+      domainPatterns.append(re.compile(domain))
+    except re.error as e:
+      sys.stderr.write(f'ERROR: {domain} invalid, {str(e)}\n')
+      sys.exit(1)
 
 userData = {}
 userSet = set()
@@ -48,10 +59,18 @@ with open(sys.argv[2], 'r', encoding='utf-8') as inputFile:
   for user in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     emailAddress = user['primaryEmail'].lower()
     _, domain = emailAddress.split('@')
-    if domain in userDomains:
-      userData[emailAddress] = {GIVENNAME: user[f'name.{GIVENNAME}'], FAMILYNAME: user[f'name.{FAMILYNAME}'],
-                                FULLNAME: user[f'name.{FULLNAME}']}
-      userSet.add(emailAddress)
+    if not USE_REGEX_FOR_DOMAIN_MATCH:
+      if domain in userDomains:
+        userData[emailAddress] = {GIVENNAME: user[f'name.{GIVENNAME}'], FAMILYNAME: user[f'name.{FAMILYNAME}'],
+                                  FULLNAME: user[f'name.{FULLNAME}']}
+        userSet.add(emailAddress)
+    else:
+      for pattern in domainPatterns:
+        if pattern.match(domain):
+          userData[emailAddress] = {GIVENNAME: user[f'name.{GIVENNAME}'], FAMILYNAME: user[f'name.{FAMILYNAME}'],
+                                    FULLNAME: user[f'name.{FULLNAME}']}
+          userSet.add(emailAddress)
+          break
 
 contactData = {}
 contactSet = set()
