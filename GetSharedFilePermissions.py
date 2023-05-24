@@ -11,8 +11,8 @@
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions owners mimetype > filelistperms.csv
 #  $ Basic: gam user user@domain.com print filelist id title permissions owners mimetype > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype pm not role owner em
-#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,title,permissions,owners.emailaddress pm not role owner em
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype pm not role owner em pmfilter
+#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,title,permissions,owners.emailaddress pm not role owner em pmfilter
 # 2: From that list of ACLs, output a CSV file that lists the shared file permissions
 #  $ python3 GetSharedFilePermissions.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed

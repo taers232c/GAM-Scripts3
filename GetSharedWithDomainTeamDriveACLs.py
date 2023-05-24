@@ -30,7 +30,7 @@
 #    Change the query as desired.
 #    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
-#    Add the following clause to the command for each domain: pm type domain domain xyz.com em
+#    Add the following clause to the command: pm type domain domainlist abc.com,xyz.com em pmfilter
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype <PutQueryHere>
 # 6: Go to step 11
 # Selected Team Drives
@@ -48,7 +48,7 @@
 #    Change the query as desired.
 #    Note!!! The visibility query will find files shared to your primary domain; it will not find files shared only to other domains.
 #    If you are looking for ACLs referencing specific domains, list them in DOMAIN_LIST.
-#    Add the following clause to the command for each domain: pm type domain domain xyz.com em
+#    Add the following clause to the command: pm type domain domainlist abc.com,xyz.com em pmfilter
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype <PutQueryHere>
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,domain,allowFileDiscovery"

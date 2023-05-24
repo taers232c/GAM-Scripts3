@@ -18,7 +18,7 @@
 #    Add the following clause to the command listing the domains in DOMAIN_LIST: pm domainlist domain1.com,domain2.com em
 #  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
-#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions <pm clauses>
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions <pm clauses> pmfilter
 # 2: From that list of ACLs, output a CSV file with headers:
 #      Type,ExternalShare,Count
 #  $ python3 GetExternalShareCounts.py filelistperms.csv externalsharecounts.csv

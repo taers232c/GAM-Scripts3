@@ -25,7 +25,7 @@
 #    Add the following clause to the command listing the domains in DOMAIN_LIST: pm domainlist domain1.com,domain2.com em
 #  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
-#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,mimetype <pm clauses>
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,mimetype <pm clauses> pmfilter
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,type,emailAddress,domain,allowFileDiscovery"
 #    that lists the driveFileIds and permissionIds for all ACLs shared with the selected domains.
 #    (n.b., driveFileTitle, mimeType, role, type, emailAddress, domain and allowFileDiscovery are not used in the next step, they are included for documentation purposes)

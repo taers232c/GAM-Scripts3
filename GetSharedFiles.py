@@ -11,8 +11,8 @@
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #  $ Basic: gam all users print filelist id title permissions mimetype > filelistperms.csv
 #  $ Basic: gam user user@domain.com print filelist id title permissions mimetype > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,mimetype pm not role owner em
-#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,title,permissions pm not role owner em
+#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,mimetype pm not role owner em pmfilter
+#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,title,permissions pm not role owner em pmfilter
 # 2: From that list of ACLs, output a CSV file that lists only the shared files.
 #  $ python3 GetSharedFiles.py filelistperms.csv sharedfiles.csv
 """

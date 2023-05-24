@@ -10,7 +10,7 @@
 # 1: Get all Team Drives
 #  $ gam redirect csv ./TeamDrives.csv print teamdrives fields id,name
 # 2: Get ACLs for all Team Drives
-#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields id,emailaddress,role,type,deleted pm type user em
+#  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields id,emailaddress,role,type,deleted pm type user em pmfilter
 # 3: Get suspended users
 #  $ gam redirect csv ./SuspendedUsers.csv print users query "isSuspended=True"
 # 4: From the list of ACLs, output a CSV file with headers "id,name,permissionId,role,emailAddress"
