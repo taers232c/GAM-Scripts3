@@ -27,7 +27,7 @@
 # 7: From that list of organizers, get the file lists for all Team Drives that have an organizer (matchfield organizer "^.+$")
 #    Add additional arguments to the following command to specify desired fields/options; e.g.,
 #    fields id,name,driveid,mimetype,size filepath
-#  $ gam redirect csv ./TeamDriveFileLists.csv multiprocess csv ./TeamDriveOrganizers.csv matchfield organizers "^.+$" gam user "~organizers" print filelist select teamdriveid "~id"
+#  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./TeamDriveFileLists.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id"
 # 8: You can identify all Team Drives without an organizer
 #  $ gam csv ./TeamDriveOrganizers.csv skipfield organizers "^.+$" gam info teamdrive teamdriveid "~id"
 """

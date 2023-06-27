@@ -24,7 +24,7 @@
 #    SHOW_USER_ORGANIZERS = True
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 6: Using the list of Team Drives and organizers, get a list of file ids and names sorted by modifiedTime descending
-#  $ gam redirect csv ./TeamDriveFileList.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" query "mimeType != 'application/vnd.google-apps.folder'" fields teamDriveId,id,name,modifiedtime orderby modifiedtime descending maxfiles 1
+#  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./TeamDriveFileList.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" query "mimeType != 'application/vnd.google-apps.folder'" fields teamDriveId,id,name,modifiedtime orderby modifiedtime descending maxfiles 1
 # 7: From that list of files, output a CSV file with headers "id,name,driveFileId,driveFileName,modifiedTime'
 #    that show the most recently modified file for each Team Drive
 #  $ python3 GetTeamDriveLastModified.py TeamDriveFileList.csv TeamDrives.csv TeamDriveLastModified.csv

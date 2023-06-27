@@ -27,7 +27,7 @@
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
-#  $ gam redirect csv ./TeamDriveFileACLs.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions
+#  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./TeamDriveFileACLs.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions
 #    You can add: config csv_output_row_filter "permissions.*.permissionDetails.0.permissionType:regex:file" between gam and redirect to have gam do some pre-filtering.
 # 6: Go to step 11
 # Selected Team Drives
