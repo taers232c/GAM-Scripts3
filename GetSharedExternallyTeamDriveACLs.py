@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User(s), show all drive file ACLs for Team Drive files shared outside of a list of specified domains
+# Purpose: Show all drive file ACLs for Team Drive files shared outside of a list of specified domains
 #          You specify a list of domains, DOMAIN_LIST, and indicate whether this list is exclusive/inclusive
 #          EXCLUSIVE_DOMAINS = True: exclude domains in DOMAIN_LIST from the output
 #          EXCLUSIVE_DOMAINS = False: include domains in DOMAIN_LIST in the output

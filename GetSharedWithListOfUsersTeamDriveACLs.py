@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User(s), show all drive file ACLs for Team Drive files shared with a list of users from a CSV file
+# Purpose: Show all drive file ACLs for Team Drive files shared with a list of users from a CSV file
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize:f Set USER_HEADERS, NON_INHERITED_ACLS_ONLY

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-# Purpose: For a Google Drive User(s), show all drive file ACLs for Team Drive files shared with selected groups.
+# Purpose: Show all drive file ACLs for Team Drive files shared with selected groups.
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set GROUP_LIST, DOMAIN_LIST, NON_INHERITED_ACLS_ONLY
