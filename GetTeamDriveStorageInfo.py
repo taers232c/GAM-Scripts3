@@ -24,7 +24,7 @@
 #    Set SHOW_USER_ORGANIZERS = True
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 7: Get Team Drive files
-#  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./TeamDriveFileCountsSize.csv multiprocess csv ./TeamDriveOrganizers.csv user "~organizers" print filecounts select teamdriveid "~id" showsize
+#  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./TeamDriveFileCountsSize.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filecounts select teamdriveid "~id" showsize
 # 8: Get Team Drive storage info
 #  $ python3 GetTeamDriveStorageInfo.py TeamDriveFileCountsSize.csv TeamDriveStorageInfo.csv
 
