@@ -9,7 +9,8 @@
 # New update method
 #  $ gam print cros fields serialnumber > CrosSNIDMap.csv
 #  $ python3 AddCrosIDfromSN.py ./CrosSNIDMap.csv ./CrosData.csv ./CrosDataID.csv
-#  $ gam csv CrosDataID.csv gam update cros "~deviceId" ...
+# An error message is generated for any serial number in CrosData.csv that is not in CrosSNIDMap.csv and the return code is 1
+#  $ gam config_csv_input_row_filter "deviceId:regex:^.+$" csv CrosDataID.csv gam update cros "~deviceId" ...
 #
 # Note: This script can use Standard or Advanced GAM:
 #	https://github.com/GAM-team/GAM
