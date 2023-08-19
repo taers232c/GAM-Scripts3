@@ -13,7 +13,7 @@
 #  $ Basic: gam print group-members fields email,role > GroupUsers.csv
 #  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,role
 # 2: From that list of group members, output a CSV file with headers group,role,mambers that can be used to sync groups
-#  $ python3 MakeGroupUpdates.py ./GroupMembers.csv ./GroupUpdates.csv
+#  $ python3 MakeGroupMembersSyncs.py ./GroupMembers.csv ./GroupUpdates.csv
 # 3: Preview the changes if desired
 #  $ gam csv ./GroupUpdates.csv gam update group "~group" sync "~role" preview "~members"
 # 3: Sync the groups
