@@ -18,7 +18,7 @@
 #  $ python3 MakeGroupMembersUpdates.py ./CurrentGroupMembers.csv ./DesiredGroupMembers.csv ./GroupUpdates.csv
 # 3: Preview the changes if desired
 #  $ gam redirect stdout ./GroupUpdates.log multiprocess redirect stderr stdout csv ./GroupUpdates.csv gam update group "~group" "~action" "~role" preview "~members"
-# 3: Sync the groups
+# 3: Update the groups
 #  $ gam redirect stdout ./GroupUpdates.log multiprocess redirect stderr stdout csv ./GroupUpdates.csv gam update group "~group" "~action" "~role" "~members"
 """
 
