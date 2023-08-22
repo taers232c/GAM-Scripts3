@@ -30,6 +30,11 @@ CURRENT_INPUT_ROLE = 'role'
 CURRENT_INPUT_EMAIL = 'email'
 
 DESIRED_INPUT_GROUP = 'group'
+# Set DESIRED_INPUT_ROLE to '' if no role information is available
+# deletes will be performed
+# adds will all be as members
+# no role changes will be performed
+# Use this option with extreme caution because it can remove all of a group's managers and owners if they are not present in DesiredGroupMembers.csv
 DESIRED_INPUT_ROLE = 'role'
 DESIRED_INPUT_EMAIL = 'email'
 
@@ -69,14 +74,15 @@ CurrentGroups = {}
 currentFile = open(sys.argv[1], 'r', encoding='utf-8')
 for row in csv.DictReader(currentFile, quotechar=QUOTE_CHAR):
   group = row[CURRENT_INPUT_GROUP].lower()
-  role = row[CURRENT_INPUT_ROLE].upper()
+  CurrentGroups.setdefault(group, {ROLE_MEMBER: set(), ROLE_MANAGER: set(), ROLE_OWNER: set(), 'ALL': set()})
   email = row[CURRENT_INPUT_EMAIL].lower()
+  role = row[CURRENT_INPUT_ROLE].upper()
   if role not in ROLES_SET:
     sys.stderr.write(f'ERROR: File: {currentFile}, Group: {group}, Email: {email}, Role: {role} Invalid\n')
     sysRC = 1
     continue
-  CurrentGroups.setdefault(group, {ROLE_MEMBER: set(), ROLE_MANAGER: set(), ROLE_OWNER: set(), 'ALL': set()})
-  CurrentGroups[group][role].add(email)
+  if DESIRED_INPUT_ROLE:
+    CurrentGroups[group][role].add(email)
   CurrentGroups[group]['ALL'].add(email)
 currentFile.close()
 if sysRC:
@@ -86,14 +92,15 @@ DesiredGroups = {}
 desiredFile = open(sys.argv[2], 'r', encoding='utf-8')
 for row in csv.DictReader(desiredFile, quotechar=QUOTE_CHAR):
   group = row[DESIRED_INPUT_GROUP].lower()
-  role = row[DESIRED_INPUT_ROLE].upper()
-  email = row[DESIRED_INPUT_EMAIL].lower()
-  if role not in ROLES_SET:
-    sys.stderr.write(f'ERROR: File: {desiredFile}, Group: {group}, Email: {email}, Role: {role} Invalid\n')
-    sysRC = 2
-    continue
   DesiredGroups.setdefault(group, {ROLE_MEMBER: set(), ROLE_MANAGER: set(), ROLE_OWNER: set(), 'ALL': set()})
-  DesiredGroups[group][role].add(email)
+  email = row[DESIRED_INPUT_EMAIL].lower()
+  if DESIRED_INPUT_ROLE:
+    role = row[DESIRED_INPUT_ROLE].upper()
+    if role not in ROLES_SET:
+      sys.stderr.write(f'ERROR: File: {desiredFile}, Group: {group}, Email: {email}, Role: {role} Invalid\n')
+      sysRC = 2
+      continue
+    DesiredGroups[group][role].add(email)
   DesiredGroups[group]['ALL'].add(email)
 desiredFile.close()
 if sysRC:
@@ -106,6 +113,7 @@ outputCSV.writeheader()
 for group in sorted(CurrentGroups):
   if group not in DesiredGroups:
     continue
+# Deletes are independent of role
   deletes = CurrentGroups[group]['ALL']-DesiredGroups[group]['ALL']
   if deletes:
     outputCSV.writerow({OUTPUT_ACTION: ACTION_DELETE,
@@ -115,25 +123,36 @@ for group in sorted(CurrentGroups):
   adds = DesiredGroups[group]['ALL']-CurrentGroups[group]['ALL']
   if adds:
     addItems = {ROLE_MEMBER: [], ROLE_MANAGER: [], ROLE_OWNER: []}
-    for email in adds:
-      findDesiredRole(group, email, ROLES_LIST, addItems)
+    if DESIRED_INPUT_ROLE:
+# There are only role adds if desired role is set
+      for email in adds:
+        findDesiredRole(group, email, ROLES_LIST, addItems)
+      for role in ROLES_LIST:
+        if addItems[role]:
+          outputCSV.writerow({OUTPUT_ACTION: ACTION_ADD,
+                              OUTPUT_GROUP: group,
+                              OUTPUT_ROLE: role,
+                              OUTPUT_MEMBERS: DELIMITER.join(addItems[role])})
+    else:
+# Otherwise all adds are members
+      outputCSV.writerow({OUTPUT_ACTION: ACTION_ADD,
+                          OUTPUT_GROUP: group,
+                          OUTPUT_ROLE: ROLE_MEMBER,
+                          OUTPUT_MEMBERS: DELIMITER.join(adds)})
+
+# There are only role changes if desired role is set
+  if DESIRED_INPUT_ROLE:
+    updateItems = {ROLE_MEMBER: [], ROLE_MANAGER: [], ROLE_OWNER: []}
     for role in ROLES_LIST:
-      if addItems[role]:
-        outputCSV.writerow({OUTPUT_ACTION: ACTION_ADD,
+      updates = CurrentGroups[group][role]-DesiredGroups[group][role]
+      for email in updates:
+        if email not in deletes:
+          findDesiredRole(group, email, SEARCH_ROLE_LISTS[role], updateItems)
+    for role in ROLES_LIST:
+      if updateItems[role]:
+        outputCSV.writerow({OUTPUT_ACTION: ACTION_UPDATE,
                             OUTPUT_GROUP: group,
                             OUTPUT_ROLE: role,
-                            OUTPUT_MEMBERS: DELIMITER.join(addItems[role])})
-  updateItems = {ROLE_MEMBER: [], ROLE_MANAGER: [], ROLE_OWNER: []}
-  for role in ROLES_LIST:
-    updates = CurrentGroups[group][role]-DesiredGroups[group][role]
-    for email in updates:
-      if email not in deletes:
-        findDesiredRole(group, email, SEARCH_ROLE_LISTS[role], updateItems)
-  for role in ROLES_LIST:
-    if updateItems[role]:
-      outputCSV.writerow({OUTPUT_ACTION: ACTION_UPDATE,
-                          OUTPUT_GROUP: group,
-                          OUTPUT_ROLE: role,
-                          OUTPUT_MEMBERS: DELIMITER.join(updateItems[role])})
+                            OUTPUT_MEMBERS: DELIMITER.join(updateItems[role])})
 
 outputFile.close()
