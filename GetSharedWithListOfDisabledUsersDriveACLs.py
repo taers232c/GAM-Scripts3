@@ -74,7 +74,7 @@ for row in inputCSV:
         continue
       if row[f'permissions.{permissions_N}.role'] == 'owner':
         continue
-      emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
+      emailAddress = row.get(f'permissions.{permissions_N}.emailAddress', '').lower()
       if not emailAddress:
         continue
       if emailAddress not in userSet:
