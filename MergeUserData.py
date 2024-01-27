@@ -34,6 +34,8 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 DATA_KEY_FIELD = 'primaryEmail'
 # Key field in merge file; common values are primaryEmail, Owner, User
 MERGE_KEY_FIELD = 'User'
+# Show keys fields be shifted to lower case
+LOWERCASE_KEY_FIELDS = True
 # Should key field in merge file be retained
 RETAIN_MERGE_KEY_FIELD = False
 # Merge fields to retain, leave empty for all fields
@@ -50,6 +52,8 @@ if DATA_KEY_FIELD not in dataFieldNames:
   sys.stderr.write(f'Data key field {DATA_KEY_FIELD} is not in {dataFileName} headers: {",".join(dataFieldNames)}\n')
   sys.exit(1)
 for row in dataCSV:
+  if LOWERCASE_KEY_FIELDS:
+    row[DATA_KEY_FIELD] = row[DATA_KEY_FIELD].lower()
   userData[row[DATA_KEY_FIELD]] = row
 dataFile.close()
 
@@ -96,6 +100,8 @@ outputCSV.writeheader()
 outputData = {}
 errors = False
 for row in mergeCSV:
+  if LOWERCASE_KEY_FIELDS:
+    row[MERGE_KEY_FIELD] = row[MERGE_KEY_FIELD].lower()
   k = row[MERGE_KEY_FIELD]
   if k in userData:
     orow = userData.pop(k)
