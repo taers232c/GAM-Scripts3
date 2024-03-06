@@ -3,7 +3,7 @@
 # Purpose: Get organizers for Team Drives
 # Note: This script requires Advanced GAM:
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: DELIMITER, DOMAIN_LIST, INCLUDE_TYPES, ONE_ORGANIZER, SHOW_NO_ORGANIZER_DRIVES
+# Customize: DELIMITER, DOMAIN_LIST, INCLUDE_TYPES, ONE_ORGANIZER, SHOW_NO_ORGANIZER_DRIVES, INCLUDE_FILE_ORGANIZERS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -37,6 +37,8 @@ INCLUDE_TYPES = {
 
 ONE_ORGANIZER = False # False - show all organizers, True - show one organizer
 SHOW_NO_ORGANIZER_DRIVES = True # False - don't show drives with no organizers, True - show drives with no organizers
+# If you're using the output to just get file lists and won't be processing ACLs, fileOrganizers will work; otherwise you only want organizers,
+INCLUDE_FILE_ORGANIZERS = False # False - do not include file organizers, True - include file organizers
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -61,11 +63,14 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 
+roles = {'organizer'}
+if INCLUDE_FILE_ORGANIZERS:
+  roles.add('fileOrganizer')
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   organizers = []
   for k, v in iter(row.items()):
     mg = PERMISSIONS_N_ROLE.match(k)
-    if mg and v == 'organizer':
+    if mg and v in roles:
       permissions_N = mg.group(1)
       if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
