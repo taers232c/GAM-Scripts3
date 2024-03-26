@@ -81,9 +81,9 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         continue
       if v == 'domain':
         emailAddress = ''
-        domain = row[f'permissions.{permissions_N}.domain']
+        domain = row[f'permissions.{permissions_N}.domain'].lower()
       elif v in ['user', 'group']:
-        emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+        emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
         domain = emailAddress[emailAddress.find('@')+1:]
       else: #anyone
         emailAddress = ''

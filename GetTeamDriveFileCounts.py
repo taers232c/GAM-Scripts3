@@ -73,7 +73,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       if row[f'permissions.{permissions_N}.type'] != 'user':
         continue
-      emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+      emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
       if DOMAIN_LIST:
         domain = emailAddress[emailAddress.find('@')+1:]
         if domain not in DOMAIN_LIST:

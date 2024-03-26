@@ -65,7 +65,7 @@ for row in inputCSV:
         allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery',
                                      str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
         emailAddress = ''
-        domain = row[f'permissions.{permissions_N}.domain']
+        domain = row[f'permissions.{permissions_N}.domain'].lower()
       else: #anyone
         allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery',
                                      str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))

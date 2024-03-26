@@ -52,7 +52,7 @@ else:
 accountUsers = set()
 usersFile = open(sys.argv[1], 'r', encoding='utf-8')
 for row in csv.DictReader(usersFile, quotechar=QUOTE_CHAR):
-  accountUsers.add(row['primaryEmail'])
+  accountUsers.add(row['primaryEmail'].lower())
 usersFile.close()
 
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
@@ -62,7 +62,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
-      emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+      emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
       if row[f'permissions.{permissions_N}.role'] != 'owner' and emailAddress not in accountUsers:
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],

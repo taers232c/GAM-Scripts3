@@ -106,7 +106,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         continue
       if NON_INHERITED_ACLS_ONLY and str(row.get(f'permissions.{permissions_N}.permissionDetails.0.inherited', False)) == 'True':
         continue
-      emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+      emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
       if emailAddress in userSet:
         outputCSV.writerow({'Owner': row['Owner'],
                             'driveFileId': row['id'],

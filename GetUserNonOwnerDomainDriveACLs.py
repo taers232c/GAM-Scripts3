@@ -67,12 +67,12 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       elif v in ['user', 'group']:
         if row.get(f'permissions.{permissions_N}.deleted') == 'True':
           continue
-        emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+        emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
         domain = emailAddress[emailAddress.find('@')+1:]
         allowFileDiscovery = ''
       else:
         continue
-      if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (v != 'user' or row[f'permissions.{permissions_N}.role'] != 'owner' or emailAddress != row['owners.0.emailAddress']):
+      if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (v != 'user' or row[f'permissions.{permissions_N}.role'] != 'owner' or emailAddress != row['owners.0.emailAddress'].lower()):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],
                             'driveFileId': row['id'],
                             'driveFileTitle': row.get(FILE_NAME, row.get(ALT_FILE_NAME, 'Unknown')),

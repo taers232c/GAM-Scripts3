@@ -49,10 +49,10 @@ GroupsWithInternalMembers = set()
 for row in inputCSV:
   if row['type'] in ['USER', 'GROUP']:
     group = row['group']
-    emailAddress = row['email']
+    emailAddress = row['email'].lower()
     atLoc = emailAddress.find('@')
     if atLoc > 1:
-      domain = emailAddress[atLoc+1:].lower()
+      domain = emailAddress[atLoc+1:]
     else:
       domain = 'unknown'
     if domain not in DOMAIN_LIST:

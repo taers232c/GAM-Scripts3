@@ -65,7 +65,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
     mg = PERMISSIONS_N_TYPE.match(k)
     if mg and v == 'domain':
       permissions_N = mg.group(1)
-      domain = row[f'permissions.{permissions_N}.domain']
+      domain = row[f'permissions.{permissions_N}.domain'].lower()
       allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (DESIRED_ALLOWFILEDISCOVERY in ('Any', allowFileDiscovery)):
         outputCSV.writerow({'Owner': row['owners.0.emailAddress'],

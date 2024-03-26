@@ -107,21 +107,21 @@ for row in inputCSV:
     if TYPE_LIST and vtype not in TYPE_LIST:
       continue
     if vtype == 'user':
-      emailAddress = v['emailAddress']
+      emailAddress = v['emailAddress'].lower()
       domain = emailAddress[emailAddress.find('@')+1:]
       if DOMAIN_LIST and domain not in DOMAIN_LIST:
         continue
       if USER_LIST and emailAddress not in USER_LIST:
         continue
     elif vtype == 'group':
-      emailAddress = v['emailAddress']
+      emailAddress = v['emailAddress'].lower()
       domain = emailAddress[emailAddress.find('@')+1:]
       if DOMAIN_LIST and domain not in DOMAIN_LIST:
         continue
       if GROUP_LIST and emailAddress not in GROUP_LIST:
         continue
     elif vtype == 'domain':
-      domain = v['domain']
+      domain = v['domain'].lower()
       if DOMAIN_LIST and domain not in DOMAIN_LIST:
         continue
       if DESIRED_ALLOWFILEDISCOVERY != 'Any':

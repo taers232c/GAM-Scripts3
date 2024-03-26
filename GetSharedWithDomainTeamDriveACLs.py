@@ -101,7 +101,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       if NON_INHERITED_ACLS_ONLY and str(row.get(f'permissions.{permissions_N}.permissionDetails.0.inherited', False)) == 'True':
         continue
-      domain = row[f'permissions.{permissions_N}.domain']
+      domain = row[f'permissions.{permissions_N}.domain'].lower()
       allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery', str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
       if (not DOMAIN_LIST or domain in DOMAIN_LIST) and (DESIRED_ALLOWFILEDISCOVERY in ('Any', allowFileDiscovery)):
         outputCSV.writerow({'Owner': row['Owner'],

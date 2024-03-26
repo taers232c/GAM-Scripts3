@@ -64,8 +64,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       if row.get(f'permissions.{permissions_N}.deleted') == 'True':
         continue
-      emailAddress = row[f'permissions.{permissions_N}.emailAddress']
-      domain = row[f'permissions.{permissions_N}.domain']
+      emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
+      domain = row[f'permissions.{permissions_N}.domain'].lower()
       if ((row[f'permissions.{permissions_N}.role'] != 'owner') and
           ((not USER_LIST and not DOMAIN_LIST) or
            (USER_LIST and emailAddress in USER_LIST) or

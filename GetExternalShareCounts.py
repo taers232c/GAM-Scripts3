@@ -83,7 +83,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         else:
           anyoneShareCount += 1
       elif v == 'domain':
-        domain = row[f'permissions.{permissions_N}.domain']
+        domain = row[f'permissions.{permissions_N}.domain'].lower()
         if ((EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST) or
             (not EXCLUSIVE_DOMAINS and domain not in DOMAIN_LIST)):
           continue
@@ -96,8 +96,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       else: # group, user
         if row.get(f'permissions.{permissions_N}.deleted') == 'True':
           continue
-        emailAddress = row[f'permissions.{permissions_N}.emailAddress']
-        domain = row.get(f'permissions.{permissions_N}.domain', '')
+        emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
+        domain = row.get(f'permissions.{permissions_N}.domain', '').lower()
         if not domain:
           domain = emailAddress[emailAddress.find('@')+1:]
         if ((EXCLUSIVE_DOMAINS and domain in DOMAIN_LIST) or

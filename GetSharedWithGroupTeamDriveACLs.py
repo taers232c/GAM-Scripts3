@@ -90,8 +90,8 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
       permissions_N = mg.group(1)
       if NON_INHERITED_ACLS_ONLY and str(row.get(f'permissions.{permissions_N}.permissionDetails.0.inherited', False)) == 'True':
         continue
-      emailAddress = row.get(f'permissions.{permissions_N}.emailAddress', '')
-      domain = row[f'permissions.{permissions_N}.domain']
+      emailAddress = row.get(f'permissions.{permissions_N}.emailAddress', '').lower()
+      domain = row[f'permissions.{permissions_N}.domain'].lower()
       if ((not GROUP_LIST and not DOMAIN_LIST) or
           (GROUP_LIST and emailAddress in GROUP_LIST) or
           (DOMAIN_LIST and domain in DOMAIN_LIST)):

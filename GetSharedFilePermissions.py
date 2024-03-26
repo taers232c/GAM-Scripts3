@@ -61,7 +61,7 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
         allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery',
                                      str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))
         emailAddress = ''
-        domain = row[f'permissions.{permissions_N}.domain']
+        domain = row[f'permissions.{permissions_N}.domain'].lower()
       else: #anyone
         allowFileDiscovery = row.get(f'permissions.{permissions_N}.allowFileDiscovery',
                                      str(row.get(f'permissions.{permissions_N}.withLink') == 'False'))

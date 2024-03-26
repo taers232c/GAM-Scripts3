@@ -93,7 +93,7 @@ for row in inputCSV:
       baseRow[k] = v
   for k, v in iter(attendees.items()):
     newRow = baseRow.copy()
-    emailAddress = v['email']
+    emailAddress = v['email'].lower()
     if emailAddress:
       domain = emailAddress[emailAddress.find('@')+1:]
       if ((not DOMAIN_LIST or domain in DOMAIN_LIST) and

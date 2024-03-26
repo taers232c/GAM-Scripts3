@@ -116,12 +116,12 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
           incrementCounter(SHARED_EXTERNAL_COUNTER)
           userShareCounts[owner][COUNT_CATEGORIES[v][row[f'permissions.{permissions_N}.{LINK_FIELD}'] == LINK_VALUE]] += 1
         else:
-          domain = row.get(f'permissions.{permissions_N}.domain', '')
+          domain = row.get(f'permissions.{permissions_N}.domain', '').lower()
           if not domain and v in ['user', 'group']:
             if row.get(f'permissions.{permissions_N}.deleted') == 'True':
               userShareCounts[owner][COUNT_CATEGORIES['deleted'][v]] += 1
               continue
-            emailAddress = row[f'permissions.{permissions_N}.emailAddress']
+            emailAddress = row[f'permissions.{permissions_N}.emailAddress'].lower()
             domain = emailAddress[emailAddress.find('@')+1:]
           internal = domain in DOMAIN_LIST
           incrementCounter([SHARED_EXTERNAL_COUNTER, SHARED_INTERNAL_COUNTER][internal])

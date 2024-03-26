@@ -85,7 +85,7 @@ for row in inputCSV:
   if row['type'] in ['USER', 'GROUP']:
     group = row['group']
     Groups.setdefault(group, [0, 0, 0, 0])
-    emailAddress = row['email']
+    emailAddress = row['email'].lower()
     if row['type'] == 'USER':
       Groups[group][USER_TOTAL] += 1
       if userMatchPattern and userMatchPattern.match(emailAddress):
