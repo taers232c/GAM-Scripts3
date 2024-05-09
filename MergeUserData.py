@@ -34,7 +34,7 @@ LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 DATA_KEY_FIELD = 'primaryEmail'
 # Key field in merge file; common values are primaryEmail, Owner, User
 MERGE_KEY_FIELD = 'User'
-# Show keys fields be shifted to lower case
+# Should keys fields be shifted to lower case
 LOWERCASE_KEY_FIELDS = True
 # Should key field in merge file be retained
 RETAIN_MERGE_KEY_FIELD = False
