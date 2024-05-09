@@ -5,14 +5,15 @@
 # A data CSV file is read and each row is stored in a dictionary under the key row[DATA_KEY_FIELD]
 # A merge CSV file is read and row[MERGE_KEY_FIELD] is looked up in the data dictionary
 # If the data row is found, the data row and merge row are combined and written to the output CSV file
-# If the data row is not found, an error message is generated.
+# If the data row is not found, an error message is generated if enabled
 # If a merge CSV file column header matches a data CSV file column header, ".merge" is appended to the
 # merge column header in the output CSV file
 #
 # Note: This script can use Basic or Advanced GAM:
 #	https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
-# Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, RETAIN_MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS, OUTPUT_UNMERGED_DATA
+# Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, RETAIN_MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS,
+#	     SHOW_ERROR_ON_NO_DATA_ROW, OUTPUT_UNMERGED_DATA
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -40,6 +41,10 @@ LOWERCASE_KEY_FIELDS = True
 RETAIN_MERGE_KEY_FIELD = False
 # Merge fields to retain, leave empty for all fields
 MERGE_RETAIN_FIELDS = []
+# Show an error if there is no data row for a merge row
+# Set to True if the data files and merge files should have the same rows
+# Set to False if the merge file is adding information to the data file
+SHOW_ERROR_ON_NO_DATA_ROW = True
 # Should data rows that have not been merged be output
 OUTPUT_UNMERGED_DATA = False
 
@@ -105,10 +110,10 @@ for row in mergeCSV:
   k = row[MERGE_KEY_FIELD]
   if k in userData:
     orow = userData.pop(k)
-    for fieldName in mergeFieldNameMap:
-      orow[mergeFieldNameMap[fieldName]] = row[fieldName]
+    for fieldName, mappedFieldName  in mergeFieldNameMap.items():
+      orow[mappedFieldName] = row[fieldName]
     outputData[k] = orow
-  else:
+  elif SHOW_ERROR_ON_NO_DATA_ROW:
     errors = 1
     sys.stderr.write(f'Merge key field {row[MERGE_KEY_FIELD]} in {mergeFileName} does not occur in {dataFileName}\n')
 if OUTPUT_UNMERGED_DATA:
