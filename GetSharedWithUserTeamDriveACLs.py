@@ -24,6 +24,7 @@
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
 #  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype
+# If you are looking for a share to a single external user, add this to the command above: query "'user1@domain.com' in readers or 'user1@domain.com' in writers"
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -34,6 +35,7 @@
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype
+# If you are looking for a share to a single external user, add this to the command above: query "'user1@domain.com' in readers or 'user1@domain.com' in writers"
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired users
