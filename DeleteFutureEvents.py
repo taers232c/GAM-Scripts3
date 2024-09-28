@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), output a CSV that shows all user organized events with a start date >= a specified date; they can then be deleted.
-# Note: This script requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELETE_EVENTS_WITH_ATTENDEES = True or False to determine whether events with attendees will be deleted.
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Produce a file to show hierarchial group membership
-# Note: This requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: SHOW_ROLE
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all shared drive file permissions for deleted groups/users
-# Note: This requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype pm deleted true em pmfilter
-#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype pm deleted true em pmfilter
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype pm deleted true em pmfilter
+#  $ gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype pm deleted true em pmfilter
 # 2: From that list of ACLs, output a CSV file that lists the shared file permissions
 #  $ python3 GetSharedFileDeletedPermissions.py filelistperms.csv deleteperms.csv
 # 3: Inspect deleteperms.csv, verify that it makes sense and then proceed

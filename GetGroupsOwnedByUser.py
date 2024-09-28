@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV file showing groups owned by users
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set SelectedUsers or pass a CSV file:field reference on the command line
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,7 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get group owners
-#  $ gam print groups owners delimiter " " > ./GroupOwners.csv
+#  $ gam redirect csv ./GroupOwners.csv print groups owners delimiter " "
 # 2: From that list of groups, output a CSV file with headers "User,GroupsOwnedByUser
 #  $ python3 GetGroupsOwnedByUser.py ./GroupOwners.csv ./GroupsOwnedByUser.csv
 # 3: If you only want groups owned by a select list of users, specify the CSV file name and field name that lists the users

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Produce a CSV file showing groups with external members, i.e, those in domains other than ones you specify.
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DELIMITER, DOMAIN_LIST, AGGREGATE_DOMAINS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,15 +10,14 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get group members
-#  $ Basic: gam print group-members fields email,type > GroupMembers.csv
-#  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,type
+#  $ gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: From that list of group members, output a CSV file with headers group,domain,count
 #  $ python3 GetGroupsWithExternalMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv
 # 3: If you want a list of the external members, add another filename to the command, the external members will be output to that file
 #  $ python3 GetGroupsWithExternalMembers.py ./GroupMembers.csv ./GroupsWithExternalMembers.csv ./ExternalMembers.csv
 # 4: If you want to delete the external members from their groups, you can do the following which uses one API call per member
 #  $ gam csv ./ExternalMembers.csv gam update group "~group" delete member "~email"
-# 5: With Advanced GAM, you can delete the members in batches
+# 5: You can delete the members in batches
 #  $ gam update group csvkmd ./ExternalMembers.csv keyfield group datafield email delete member csvdata email
 """
 

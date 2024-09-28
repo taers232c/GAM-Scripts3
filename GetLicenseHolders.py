@@ -1,19 +1,18 @@
 #!/usr/bin/env python3
 """
 # Purpose: From a collection of users, show the ones holding licenses.
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
 # 1: Get Licenses, all or selected
-#  $ gam print licenses > Licenses.csv
-#  $ gam print licenses sku <SKUIDList> > Licenses.csv
+#  $ gam redirect csv ./Licenses.csv print licenses
+#  $ gam redirect csv ./Licenses.csv print licenses sku <SKUIDList> 
 # 2: Get Users
-#    Basic GAM: gam print users [domain <DomainName>] [(query <QueryUser>)|(queries <QueryUserList>)] > Users.csv
-#    Advanced GAM: gam redirect csv ./Users.csv <UserTypeEntity> print users primaryEmail
+#    gam redirect csv ./Users.csv <UserTypeEntity> print users primaryEmail
 # 3: From those lists of Licenses and Users, output a CSV file showing the licenses held by users in Users.csv
 #  $ python3 GetLicenseHolders.py ./Licenses.csv ./Users.csv ./LicenseHolders.csv
 # 4: Inspect LicenseHolders.csv, verify that it makes sense and then proceed if desired

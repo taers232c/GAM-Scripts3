@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV file that merges sendas addresses with user data
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set INCLUDE_PRIMARY = True/False, OPTIONAL_MERGE_FIELDS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,9 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get Users
-#  Basic GAM:
-# $  gam print users fields primaryemail,... > ./Users.csv
-#  Advanced GAM: use one of the following to select a collection of users
+#  Use one of the following to select a collection of users
 # <UserTypeEntity> ::=
 #        (all users)|
 #        (users <UserList>)|

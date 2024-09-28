@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Get organizers for Team Drives
-# Note: This script requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DELIMITER, DOMAIN_LIST, INCLUDE_TYPES, ONE_ORGANIZER, SHOW_NO_ORGANIZER_DRIVES, INCLUDE_FILE_ORGANIZERS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

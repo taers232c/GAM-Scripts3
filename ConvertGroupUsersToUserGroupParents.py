@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Convert a CSV file showing group members to one showing groups and their parents for each user
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELIMITER to the single character that will separate parent groups
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get group members; omit field role if you're not interested the user's role
-#  $ Basic: gam print group-members fields email,type,role > GroupUsers.csv
-#  $ Advanced: gam redirect csv ./GroupUsers.csv print group-members fields email,type,role
+#  $ gam redirect csv ./GroupUsers.csv print group-members fields email,type,role
 # 2: From that list of group members, output a CSV file with headers primaryEmail,Group,Role,ParentsCount,Parents that shows the groups and their parents for each user
 #  $ python3 ConvertGroupUsersToUserGroupParents.py ./GroupUsers.csv ./UserGroupParents.csv
 """

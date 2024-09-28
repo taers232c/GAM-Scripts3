@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Get all drive file ACLs for Team Drive files shared with anyone/domain withlink
-# Note: This script requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3 - Version 6.04.17+
 # Customize: Set NON_INHERITED_ACLS_ONLY
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

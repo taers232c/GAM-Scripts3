@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Convert output from print events to get unique list of attendee emal/names; you can filter for specific attendees.
-# Note: This script requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set ATTENDEE_LIST, DOMAIN_LIST, ATTENDEE_PATTERN, SHOW_ATENDEES_WITH_NO_NAME
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Show the number of CrOS devices in each Org Unit
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set SHOW_STATUS,SHOW_TOTALS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,9 +10,9 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get OrgUnits
-#  $ gam print ous > OrgUnits.csv
+#  $ gam redirect csv ./OrgUnits.csv print ous
 # 2: Get CrOS devices; omit status if you don't want status info
-#  $ gam print cros ou status > CrOS.csv
+#  $ gam redirect csv ./CrOS.csv print cros ou status
 # 3: From those lists of Org Units and CrOS devices, output a CSV file with CrOS device counts for each Org Unit
 #  $ python3 GetOrgUnitCrOSCounts.py ./OrgUnits.csv ./CrOS.csv ./OrgUnitCrOSCounts.csv
 """

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV that shows the changes required to update current group memberships to match desired group memberships
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set CURRENT, DESIRED and OUTPUT field names
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get current group members
-#  $ Basic: gam print group-members fields email,role > GroupUsers.csv
-#  $ Advanced: gam redirect csv ./CurrentGroupMembers.csv print group-members fields email,role
+#  $ gam redirect csv ./CurrentGroupMembers.csv print group-members fields email,role
 # 2: Produce a CSV file DesiredGroupMembers.csv with headers group,role,email that lists the desired group members
 # 3: From those lists of group members, output a CSV file with headers action,group,role,email that indicates
 #    the changes necessary to make th current group members match the desired group members

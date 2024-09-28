@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), get all drive file ACLs for files shared with anyone/domain allowfilediscovery
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM - Version 6.07+
-#	https://github.com/taers232c/GAMADV-XTD3 - Version 6.04.17+
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
+#	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions owners mimetype query "(visibility='anyoneCanFind' or visibility='domainCanFind')" > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,mimetype query "(visibility='anyoneCanFind' or visibility='domainCanFind')"
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,permissions,owners.emailaddress,mimetype query "(visibility='anyoneCanFind' or visibility='domainCanFind')"
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,permissionId,role,type,domain,allowFileDiscovery"
 #    that lists the driveFileIds, permissionIds and details for all ACLs shared with anyone/domain allowFileDiscovery
 #  $ python3 GetAllowFileDiscoveryDriveACLs.py filelistperms.csv deleteperms.csv

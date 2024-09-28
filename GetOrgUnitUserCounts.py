@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Show the number of Users in each Org Unit
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set SHOW_SUSPENDED, SHOW_SUSPENSION_REASON and SHOW_TOTALS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,9 +10,9 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get OrgUnits
-#  $ gam print ous > OrgUnits.csv
+#  $ gam redirect csv ./OrgUnits.csv print ous
 # 2: Get Users; omit suspended if you don't want suspension info
-#  $ gam print users ou suspended > Users.csv
+#  $ gam redirect csv ./Users.csv print users ou suspended
 # 3: From those lists of Users and Org Units, output a CSV file with user counts for each Org Unit
 #  $ python3 GetOrgUnitUserCounts.py ./OrgUnits.csv ./Users.csv ./OrgUnitUserCounts.csv
 """

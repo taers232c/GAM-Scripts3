@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Convert a CSV file showing group members to one that can be fed into Gam to sync members
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set INPUT and OUTPUT field names
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get group members
-#  $ Basic: gam print group-members fields email,role > GroupUsers.csv
-#  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,role
+#  $ gam redirect csv ./GroupMembers.csv print group-members fields email,role
 # 2: From that list of group members, output a CSV file with headers group,role,mambers that can be used to sync groups
 #  $ python3 MakeGroupMembersSyncs.py ./GroupMembers.csv ./GroupUpdates.csv
 # 3: Preview the changes if desired

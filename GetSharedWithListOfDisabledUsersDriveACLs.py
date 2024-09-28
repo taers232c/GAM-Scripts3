@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared exclusively with a list of users from a CSV file
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_HEADERS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -23,8 +23,7 @@
 #  ...
 # 2: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
 #    If you don't want all files, use query/fullquery
-#  $ Basic: gam all users print filelist id title permissions owners mimetype> filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype
 # 3: From that list of ACLs, output a CSV file with the same headers as the input CSV file
 #    only including files that are shared exclusively with the users in Users.csv
 #  $ python3 GetSharedWithListOfDisabledUsersDriveACLs.py filelistperms.csv disabledusersperms.csv Users.csv

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all shared file permissions organized into lists by type and role
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set SHOW_USERS, SHOW_GROUPS, SHOW_DOMAINS, SHOW_ANYONES, SHOW_COUNTS, LIST_DELIMITER
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,10 +10,8 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions owners mimetype > filelistperms.csv
-#  $ Basic: gam user user@domain.com print filelist id title permissions owners mimetype > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,mimetype,basicpermissions,owners.emailaddress pm not role owner em pmfilter
-#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,name,mimetype,basicpermissions,owners.emailaddress pm not role owner em pmfilter
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,name,mimetype,basicpermissions,owners.emailaddress pm not role owner em pmfilter
+#  $ gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,name,mimetype,basicpermissions,owners.emailaddress pm not role owner em pmfilter
 # 2: From that list of ACLs, output a CSV file that lists the shared file permissions organized into lists by type and role
 #  $ python3 GetSharedFilePermissionsTypeRoleLists.py filelistperms.csv filetyperoleperms.csv
 """

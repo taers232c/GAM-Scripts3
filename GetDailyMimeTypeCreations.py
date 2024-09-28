@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), output a CSV file showing the number of files created by day by mimeType
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set REVERSE
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic GAM: gam all users print filelist id name createdTime mimetype > filelist.csv
-#  $ Advanced GAM: gam config auto_batch_min 1 redirect csv ./filelist.csv multiprocess all users print filelist fields id,createdtime,mimetype
+#  $ gam config auto_batch_min 1 redirect csv ./filelist.csv multiprocess all users print filelist fields id,createdtime,mimetype
 # 2: From that list of ACLs, output a CSV file with headers:
 #      Owner,createdTime,mimeType
 #  $ python3 GetDailyMimeTypeCreations.py filelist.csv mimetypecreations.csv

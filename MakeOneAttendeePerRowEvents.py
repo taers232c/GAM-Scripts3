@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Convert output from print events to put one attendee per row; you can filter for specific attendees.
-# Note: This script requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set ATTENDEE_LIST, DOMAIN_LIST, ATTENDEE_PATTERN, DROP_GENERAL_COLUMNS, DROP_ATTENDEE_COLUMNS.
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

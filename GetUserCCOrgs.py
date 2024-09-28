@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Move root users to an Org Unit based on their work address countryCode
-# Note: This script requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set ORG_UNIT_FORMAT_MAP or ORG_UNIT_DICT_MAP
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

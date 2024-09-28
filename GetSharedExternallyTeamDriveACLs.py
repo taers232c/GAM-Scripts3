@@ -7,7 +7,8 @@
 #          You can include/exclude shares to anyone in the ouput
 #          INCLUDE_ANYONE = True: include shares to anyone in the output
 #          INCLUDE_ANYONE = False: exclude shares to anyone from the output
-# Note: This script requires Advanced GAM:
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST, EXCLUSIVE_DOMAINS, INCLUDE_ANYONE, NON_INHERITED_ACLS_ONLY
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3

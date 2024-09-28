@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV file showing delegators for delegates
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set SELECTED_DELEGATES, ONE_DELEGATOR_PER_ROW
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get delegates
-#  $ Basic: gam all users print delegates > ./AllDelegates.csv
-#  $ Advanced: gam redirect csv ./AllDelegates.csv all users print delegates shownames
+#  $ gam redirect csv ./AllDelegates.csv all users print delegates shownames
 # 2: From that list of delegates, output a CSV file with headers "Delegate,Delegate Email,Delegators
 #  $ python3 ShowDelegators.py ./AllDelegates.csv ./AllDelegators.csv
 # 3: With SELECTED_DELEGATES and ONE_DELEGATOR_PER_ROW = True, it's easy to delete a delegate from delegator(s)

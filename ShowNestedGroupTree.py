@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Produce a file to show hierarchial group membership
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: INDENTED_INDENTATION, JSON_INDENTATION, LIST_DELIMITER
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,16 +10,13 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get group members email address and type
-#  Basic: $ gam print group-members fields email,type > ./GroupMembers
-#  Advanced: $ gam redirect csv ./GroupMembers.csv print group-members fields email,type
+#  $ gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: If you want empty groups in the output proceed to step 4
 # 3: From the list of group members, output a file showing hierarchial group membership
 #  $ python3 ShowNestedGroupTree.py ./GroupMembers.csv indented|list|json ./NestedGroupTree.txt
 #    You're done
 # 4: Get a list of empty groups
-#  Basic: $ export GAM_CSV_ROW_FILTER="'membersCount:count=0','managersCount:count=0','ownersCount:count=0'"
-#         $ gam print groups memberscount managerscount ownerscount > EmptyGroups.csv
-#  Advanced: $ gam config csv_output_row_filter "'membersCount:count=0','managersCount:count=0','ownersCount:count=0'" redirect csv ./EmptyGroups.csv print groups memberscount managerscount ownerscount
+#  $ gam config csv_output_row_filter "'membersCount:count=0','managersCount:count=0','ownersCount:count=0'" redirect csv ./EmptyGroups.csv print groups memberscount managerscount ownerscount
 # 5: From the list of group members and empty groups, output a file showing hierarchial group membership
 #  $ python3 ShowNestedGroupTree.py ./GroupMembers.csv indented|list|json empty ./EmptyGroups.csv  ./NestedGroupTree.txt
 """

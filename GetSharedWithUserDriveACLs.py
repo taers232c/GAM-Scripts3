@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with selected users or all users in selected domains.
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_LIST and DOMAIN_LIST.
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions owners mimetype > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype pm type user notrole owner em pmfilter
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist fields id,title,permissions,owners.emailaddress,mimetype pm type user notrole owner em pmfilter
 # If you are looking for a share to a single external user, add this to the command above: query "'user1@domain.com' in readers or 'user1@domain.com' in writers"
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,permissionId,role,emailAddress"
 #    that lists the driveFileIds and permissionIds for all ACLs with the desired users

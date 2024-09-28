@@ -9,8 +9,8 @@
 # If a merge CSV file column header matches a data CSV file column header, ".merge" is appended to the
 # merge column header in the output CSV file
 #
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, RETAIN_MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS,
 #	     SHOW_ERROR_ON_NO_DATA_ROW, OUTPUT_UNMERGED_DATA
@@ -19,8 +19,8 @@
 #  Python 3.x.y
 # Usage:
 # 1: Generate the two data files, e.g.:
-#  $ gam print users fields primaryemail,name,phones,organizations > ./Data.csv
-#  $ gam all users print sendas > ./Merge.csv
+#  $ gam redirect csv ./Data.csv  print users fields primaryemail,name,phones,organizations
+#  $ gam redirect csv ./Merge.csv all users print sendas
 # 2: Merge files
 #  $ python3 MergeUserData.py ./Data.csv ./Merge.csv ./Output.csv
 """

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), output a CSV file showing the share type counts for files shared by the user(s) externally
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DOMAIN_LIST to the list of domains you consider internal. Set LINK_FIELD and LINK_VALUE.
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic GAM: gam all users print filelist id title permissions > filelistperms.csv
-#  $ Advanced GAM: You can have GAM do some pre-filtering
+#  $ You can have GAM do some pre-filtering
 #  $ EXCLUSIVE_DOMAINS = True: You're interested only in domains not in DOMAIN_LIST which would typically be your internal domains
 #    Add the following clause to the command listing the domains in DOMAIN_LIST: pm not domainlist domain1.com,domain2.com em
 #  $ EXCLUSIVE_DOMAINS = False: You're interested only in domains in DOMAIN_LIST which would typically be external domains

@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a print filelist file, write multiple parents into separate rows.
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
 # 1: Get all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions parents ... > filelist.csv
-#  $ Basic: gam user user@domain.com print filelist id title permissions parents ... > filelist.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelist.csv multiprocess all users print filelist fields id,name,permissions,parents
-#  $ Advanced: gam redirect csv ./filelist.csv user user@domain.com print filelist fields id,name,permissions,parents ...
+#  $ gam config auto_batch_min 1 redirect csv ./filelist.csv multiprocess all users print filelist fields id,name,permissions,parents
+#  $ gam redirect csv ./filelist.csv user user@domain.com print filelist fields id,name,permissions,parents ...
 # 3: From that list of files, output a CSV file with the same headers but just 'parents,parents.id,parents.isRoot'
 #  $ python3 MakeOneParentPerRow.py filelist.csv filelistoppr.csv
 """

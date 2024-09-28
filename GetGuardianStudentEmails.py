@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV file showing guardians with student emails
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
@@ -11,8 +11,7 @@
 # 1: Get guardians
 #  $ gam print guardians > ./Guardians.csv
 # 2: Get student emails,
-#  Basic GAM: gam print users fields primaryemail,id > Students.csv
-#  Advanced GAM: use one of the following to select a collection of users
+#  Use one of the following to select a collection of users
 # <UserTypeEntity> ::=
 #        (all users)|
 #        (users <UserList>)|

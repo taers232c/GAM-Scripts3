@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Print an Org Unit tree with Users/CrOS devices fields
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Change QUOTE_CHAR, SHOW_EMPTY_OUS, SHOW_LABELS, FIELD_DELIMITER, INDENT_SPACES, LINE_TERMINATOR as required/desired
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,17 +10,17 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get Org Units
-#  $ gam print ous > OrgUnits.csv
+#  $ gam redirect csv ./OrgUnits.csv print ous
 # 1: Get Users/CrOS devices, specify the fields you want displayed: orgUnitPath must be specified
-#  $ gam print users fields primaryEmail,orgunitpath,name > Users.csv
-#  $ gam print cros fields deviceid,orgunitpath,notes > CrOS.csv
+#  $ gam redirect csv ./Users.csv print users fields primaryEmail,orgunitpath,name
+#  $ gam redirect csv ./CrOS.csv print cros fields deviceid,orgunitpath,notes
 # 3: From the lists of Org Units and Users/CrOS devices, print a tree
 #    Omit the third parameter or specify - to write to stdout
 #  $ python3 PrintOrgUnitTree.py ./OrgUnits.csv ./Users.csv ./OrgUnitTree.txt
 #  $ python3 PrintOrgUnitTree.py ./OrgUnits.csv ./CrOS.csv
 # 4: You can pipe data into the script, replace the second parameter with -
 #  $ gam print users fields primaryEmail,orgunitpath,name | python PrintOrgUnitTree.py ./OrgUnits.csv - ./OrgUnitTree.txt
-# 5: With Advanced GAM you can select subsets of Users/CrOS devices; this requires an additional API call per User/CrOS device to get the specified fields
+# 5: You can select subsets of Users/CrOS devices; this requires an additional API call per User/CrOS device to get the specified fields
 #  $ gam group students print users fields primaryEmail,orgunitpath,name | python PrintOrgUnitTree.py ./OrgUnits.csv - ./OrgUnitTree.txt
 """
 

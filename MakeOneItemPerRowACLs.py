@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Convert output from print filelist to put one ACL per row; you can filter for specific ACLs.
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_LIST, GROUP_LIST. DOMAIN_LIST, ROLE_LIST, TYPE_LIST, DESIRED_ALLOWFILEDISCOVERY,
 #	DROP_GENERAL_COLUMNS, DROP_PERMISSION_COLUMNS.
@@ -11,9 +11,8 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, replace user@domain.com with your user selection in the command below
-#    For enhanced file selection in Advanced Gam see: https://github.com/taers232c/GAMADV-XTD3/wiki/Users-Drive-Files#display-file-lists
-#  $ Basic: gam user user@domain.com print filelist id title permissions mimetype > filelistperms.csv
-#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,name,permissions,mimetype
+#    For enhanced file selection Gam see: https://github.com/taers232c/GAMADV-XTD3/wiki/Users-Drive-Files#display-file-lists
+#  $ gam redirect csv ./filelistperms.csv user user@domain.com print filelist fields id,name,permissions,mimetype
 # 2: From that list of files, output a CSV file that lists one ACL per row
 #  $ python3 MakeOneItemPerRowACLs.py filelistperms.csv filelistpermsoipr.csv
 """

@@ -1,15 +1,15 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV file showing the number of groups per domain in a multi-domain workspace
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or python3 -V
 #  Python 3.x.y
 # Usage:
 # 1: Get groups
-#  $ gam print groups email > ./Groups.csv
+#  $ gam redirect csv ./Groups.csv print groups email
 # 2: From that list of groups, output a CSV file with headers "Domain,Groups" that shows the
 #    number of groups per domain
 #  $ python3 CountGroupsByDomain.py ./Groups.csv ./GroupsPerDomain.csv

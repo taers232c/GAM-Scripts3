@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Convert a CSV file showing course participants one per row to single row per course
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set DELIMITER to the single character that will separate participants
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,9 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get course participants
-#  $ Basic: gam print course-participants > CourseParticipants..csv
-#    See: https://github.com/GAM-team/GAM/wiki/Managing-Google-Classroom#printing-course-participants
-#  $ Advanced: gam config csv_output_header_filter "courseId,courseName,userRole,profile.emailAddress" redirect csv ./CourseParticipants.csv print course-participants
+#  $ gam config csv_output_header_filter "courseId,courseName,userRole,profile.emailAddress" redirect csv ./CourseParticipants.csv print course-participants
 #    See: https://github.com/taers232c/GAMADV-XTD3/wiki/Classroom-Membership#display-course-membership
 # 2: From that list of group members, output a CSV file with headers primaryEmail,GroupsCount,Groups that shows the groups for each user
 #  $ python3 CombineCourseParticipants.py ./CourseParticipants.csv ./CombinedCourseParticipants.csv

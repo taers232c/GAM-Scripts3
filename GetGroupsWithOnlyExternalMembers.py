@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
 # Purpose: Produce a CSV file showing groups with only external members, i.e, those in domains other than ones you specify.
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DELIMITER, DOMAIN_LIST, AGGREGATE_DOMAINS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
@@ -10,8 +10,7 @@
 #  Python 3.x.y
 # Usage:
 # 1: Get group members
-#  $ Basic: gam print group-members fields email,type > GroupMembers.csv
-#  $ Advanced: gam redirect csv ./GroupMembers.csv print group-members fields email,type
+#  $ gam redirect csv ./GroupMembers.csv print group-members fields email,type
 # 2: From that list of group members, output a CSV file with headers group,domain,count
 #  $ python3 GetGroupsWithOnlyExternalMembers.py ./GroupMembers.csv ./GroupsWithOnlyExternalMembers.csv
 """

@@ -1,16 +1,15 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User, get all drive file ACLs for files except those indicating the user as owner
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
 # 1: Use print filelist to get selected ACLs
-#    Basic: gam user testuser@domain.com print filelist id title permissions owners mimetype > filelistperms.csv
-#    Advanced: gam redirect ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype
+#    gam redirect csv ./filelistperms.csv user testuser@domain.com print filelist fields id,title,permissions,owners.emailaddress,mimetype
 # 2: From that list of ACLs, output a CSV file with headers "Owner,driveFileId,driveFileTitle,mimeType,emailAddress"
 #    that lists the driveFileIds/Titles for all ACLs except those indicating the user as owner
 #  $ python3 ShowUserNonOwnerDriveACLs.py filelistperms.csv localperms.csv

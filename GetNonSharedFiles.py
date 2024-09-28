@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all non-shared drive files
-# Note: This script can use Basic or Advanced GAM:
-#	https://github.com/GAM-team/GAM
+# Note: This script can use GAM7 or Advanced GAM:
+#       https://github.com/GAM-team/GAM                                                                                                                               
 #	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
 # Usage:
 # 1: Get ACLs for all files, if you don't want all users, replace all users with your user selection in the command below
-#  $ Basic: gam all users print filelist id title permissions > filelistperms.csv
-#  $ Basic: gam user user@domain.com print filelist id title permissions > filelistperms.csv
-#  $ Advanced: gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
-#  $ Advanced: gam redirect csv ./filelistperms.csv user user@domain.com print filelist id title permissions
+#  $ gam config auto_batch_min 1 redirect csv ./filelistperms.csv multiprocess all users print filelist id title permissions
+#  $ gam redirect csv ./filelistperms.csv user user@domain.com print filelist id title permissions
 # 2: From that list of ACLs, output a CSV file that lists only the non-shared files.
 #  $ python3 GetNonSharedFiles.py filelistperms.csv nonsharedfiles.csv
 """
