@@ -10,8 +10,8 @@
 # merge column header in the output CSV file
 #
 # Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
+#   https://github.com/GAM-team/GAM
+#   https://github.com/taers232c/GAMADV-XTD3
 # Customize: DATA_KEY_FIELD, MERGE_KEY_FIELD, RETAIN_MERGE_KEY_FIELD, MERGE_RETAIN_FIELDS,
 #	     SHOW_ERROR_ON_NO_DATA_ROW, OUTPUT_UNMERGED_DATA
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
