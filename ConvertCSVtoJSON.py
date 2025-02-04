@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a CSV file with JSON columns, produce a file with no header row (optional) and only JSON data.
-# Customize: Set QUOTE_CHAR, LINE_TERMINATOR, MERGE_NON_JSON_DATA, NON_JSON_DATA_SKIP_FIELDS, MAKE_LIST, HEADER_ROW
+# Customize: Set INPUT_QUOTE_CHAR, OUTPUT_QUOTE_CHAR, LINE_TERMINATOR, MERGE_NON_JSON_DATA, NON_JSON_DATA_SKIP_FIELDS, MAKE_LIST, HEADER_ROW
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y
@@ -15,7 +15,8 @@ import csv
 import json
 import sys
 
-QUOTE_CHAR = "'" # Adjust as needed
+INPUT_QUOTE_CHAR = "'" # Adjust as needed
+OUTPUT_QUOTE_CHAR = "'" # Adjust as desired; can be empty ""
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
 MERGE_NON_JSON_DATA = False # True - Merge data from non-JSON columns; False to omit data from non-JSON columns
@@ -44,7 +45,7 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
   inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 else:
   inputFile = sys.stdin
-inputCSV = csv.DictReader(inputFile, quotechar=QUOTE_CHAR)
+inputCSV = csv.DictReader(inputFile, quotechar=INPUT_QUOTE_CHAR)
 plainFields = []
 jsonFields = []
 for fieldName in inputCSV.fieldnames:
@@ -71,7 +72,7 @@ else:
   if HEADER_ROW:
     outputFile.write('JSON'+LINE_TERMINATOR)
   for jsonRow in jsonRows:
-    outputFile.write(QUOTE_CHAR+json.dumps(jsonRow, ensure_ascii=False, sort_keys=True)+QUOTE_CHAR+LINE_TERMINATOR)
+    outputFile.write(OUTPUT_QUOTE_CHAR+json.dumps(jsonRow, ensure_ascii=False, sort_keys=True)+OUTPUT_QUOTE_CHAR+LINE_TERMINATOR)
 if inputFile != sys.stdin:
   inputFile.close()
 if outputFile != sys.stdout:
