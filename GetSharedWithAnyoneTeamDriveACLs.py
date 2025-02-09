@@ -17,8 +17,8 @@
 #  $ gam redirect csv ./TeamDriveACLs.csv multiprocess csv ./TeamDrives.csv gam print drivefileacls "~id" fields emailaddress,role,type
 # 3: Customize GetTeamDriveOrganizers.py for this task:
 #    Set ONE_ORGANIZER = True
-#    Set SHOW_GROUP_ORGANIZERS = False
-#    Set SHOW_USER_ORGANIZERS = True
+#    Set INCLUDE_TYPES user = True
+#    Set INCLUDE_TYPES group = False
 # 4: From that list of ACLs, output a CSV file with headers "id,name,organizers"
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
