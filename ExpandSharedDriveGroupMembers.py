@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 """
 # Purpose: Read a CSV file showing group members and a CSV file showing Shared Drive membership
-#          and output a CSV file showing the individual group members
+#          and output a CSV file showing the individual group members as members of the Shared Drives.
+#          The output CSV file has additional columns: email, level, subgroup
+#          email - The email address of the user
+#          level - At what level of the group expansion does the user appear; level 0 is the top level
+#          subgroup - The group that contains the user
 # Note: This script can use GAM7 or Advanced GAM:
 #       https://github.com/GAM-team/GAM
 #	https://github.com/taers232c/GAMADV-XTD3
