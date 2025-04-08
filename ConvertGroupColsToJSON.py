@@ -26,6 +26,9 @@ GROUP_JSON_SKIP_FIELDS = [
   'kind',
   ]
 
+# Set INCLUDE_XXX_ATTRIBUTES = True
+# to include deprecated or merged attributes
+
 INCLUDE_DEPRECATED_ATTRIBUTES = False
 GROUP_DEPRECATED_ATTRIBUTES = [
   'allowGoogleCommunication',
@@ -76,32 +79,26 @@ GROUP_MODERATE_MEMBERS_ATTRIBUTES = [
   'whoCanModifyMembers',
   ]
 
-def clearFields(include, fields):
+def includeFields(include, fields):
   if not include:
     for field in fields:
       row.pop(field, None)
 
-inputFile = open(sys.argv[1], 'r', encoding='utf-8')
-
-outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
-outputFieldnames = ['email', 'id', 'JSON-settings']
-outputCSV = csv.DictWriter(outputFile, outputFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
-outputCSV.writeheader()
-
-for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  groupEmail = row.pop('email')
-  groupId = row.pop('id', '')
-  groupName = row.pop('name', '')
-  groupDescription = row.pop('description', '')
-  clearFields(False, GROUP_JSON_SKIP_FIELDS)
-  clearFields(INCLUDE_DEPRECATED_ATTRIBUTES, GROUP_DEPRECATED_ATTRIBUTES)
-  clearFields(INCLUDE_DISCOVER_ATTRIBUTES, GROUP_DISCOVER_ATTRIBUTES)
-  clearFields(INCLUDE_ASSIST_CONTENT_ATTRIBUTES, GROUP_ASSIST_CONTENT_ATTRIBUTES)
-  clearFields(INCLUDE_MODERATE_CONTENT_ATTRIBUTES, GROUP_MODERATE_CONTENT_ATTRIBUTES)
-  clearFields(INCLUDE_MODERATE_MEMBERS_ATTRIBUTES, GROUP_MODERATE_MEMBERS_ATTRIBUTES)
-  outputCSV.writerow({'email': groupEmail,
-                      'id': groupId,
-                      'JSON-settings': json.dumps(row, ensure_ascii=False, sort_keys=True)})
-
-inputFile.close()
-outputFile.close()
+with open(sys.argv[1], 'r', encoding='utf-8') as inputFile:
+  with open(sys.argv[2], 'w', encoding='utf-8', newline='') as outputFile:
+    outputCSV = csv.DictWriter(outputFile, ['email', 'id', 'JSON-settings'], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+    outputCSV.writeheader()
+    for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
+      groupEmail = row.pop('email')
+      groupId = row.pop('id', '')
+      groupName = row.pop('name', '')
+      groupDescription = row.pop('description', '')
+      includeFields(False, GROUP_JSON_SKIP_FIELDS)
+      includeFields(INCLUDE_DEPRECATED_ATTRIBUTES, GROUP_DEPRECATED_ATTRIBUTES)
+      includeFields(INCLUDE_DISCOVER_ATTRIBUTES, GROUP_DISCOVER_ATTRIBUTES)
+      includeFields(INCLUDE_ASSIST_CONTENT_ATTRIBUTES, GROUP_ASSIST_CONTENT_ATTRIBUTES)
+      includeFields(INCLUDE_MODERATE_CONTENT_ATTRIBUTES, GROUP_MODERATE_CONTENT_ATTRIBUTES)
+      includeFields(INCLUDE_MODERATE_MEMBERS_ATTRIBUTES, GROUP_MODERATE_MEMBERS_ATTRIBUTES)
+      outputCSV.writerow({'email': groupEmail,
+                          'id': groupId,
+                          'JSON-settings': json.dumps(row, ensure_ascii=False, sort_keys=True)})
