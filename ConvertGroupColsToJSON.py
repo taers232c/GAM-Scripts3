@@ -11,17 +11,80 @@
 """
 
 import csv
+import json
 import sys
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
 
-GROUP_JSON_SKIP_FIELDS = ['adminCreated', 'directMembersCount', 'members', 'aliases', 'nonEditableAliases', 'kind']
+GROUP_JSON_SKIP_FIELDS = [
+  'adminCreated',
+  'directMembersCount',
+  'members',
+  'aliases',
+  'nonEditableAliases',
+  'kind',
+  ]
+
+INCLUDE_DEPRECATED_ATTRIBUTES = False
+GROUP_DEPRECATED_ATTRIBUTES = [
+  'allowGoogleCommunication',
+  'favoriteRepliesOnTop',
+  'maxMessageBytes',
+  'messageDisplayFont',
+  'whoCanAddReferences',
+  'whoCanMarkFavoriteReplyOnOwnTopic',
+  ]
+
+INCLUDE_DISCOVER_ATTRIBUTES = False
+GROUP_DISCOVER_ATTRIBUTES = [
+  'showInGroupDirectory',
+  ]
+
+INCLUDE_ASSIST_CONTENT_ATTRIBUTES = False
+GROUP_ASSIST_CONTENT_ATTRIBUTES = [
+  'whoCanAssignTopics',
+  'whoCanEnterFreeFormTags',
+  'whoCanHideAbuse',
+  'whoCanMakeTopicsSticky',
+  'whoCanMarkDuplicate',
+  'whoCanMarkFavoriteReplyOnAnyTopic',
+  'whoCanMarkNoResponseNeeded',
+  'whoCanModifyTagsAndCategories',
+  'whoCanTakeTopics',
+  'whoCanUnassignTopic',
+  'whoCanUnmarkFavoriteReplyOnAnyTopic',
+  ]
+
+INCLUDE_MODERATE_CONTENT_ATTRIBUTES = False
+GROUP_MODERATE_CONTENT_ATTRIBUTES = [
+  'whoCanApproveMessages',
+  'whoCanDeleteAnyPost',
+  'whoCanDeleteTopics',
+  'whoCanLockTopics',
+  'whoCanMoveTopicsIn',
+  'whoCanMoveTopicsOut',
+  'whoCanPostAnnouncements',
+  ]
+
+INCLUDE_MODERATE_MEMBERS_ATTRIBUTES = False
+GROUP_MODERATE_MEMBERS_ATTRIBUTES = [
+  'whoCanAdd',
+  'whoCanApproveMembers',
+  'whoCanBanUsers',
+  'whoCanInvite',
+  'whoCanModifyMembers',
+  ]
+
+def clearFields(include, fields):
+  if not include:
+    for field in fields:
+      row.pop(field, None)
 
 inputFile = open(sys.argv[1], 'r', encoding='utf-8')
 
 outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
-outputFieldnames = ['email', 'id', 'name', 'description', 'JSON-settings']
+outputFieldnames = ['email', 'id', 'JSON-settings']
 outputCSV = csv.DictWriter(outputFile, outputFieldnames, lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
@@ -30,13 +93,15 @@ for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
   groupId = row.pop('id', '')
   groupName = row.pop('name', '')
   groupDescription = row.pop('description', '')
-  for field in GROUP_JSON_SKIP_FIELDS:
-    row.pop(field, None)
+  clearFields(False, GROUP_JSON_SKIP_FIELDS)
+  clearFields(INCLUDE_DEPRECATED_ATTRIBUTES, GROUP_DEPRECATED_ATTRIBUTES)
+  clearFields(INCLUDE_DISCOVER_ATTRIBUTES, GROUP_DISCOVER_ATTRIBUTES)
+  clearFields(INCLUDE_ASSIST_CONTENT_ATTRIBUTES, GROUP_ASSIST_CONTENT_ATTRIBUTES)
+  clearFields(INCLUDE_MODERATE_CONTENT_ATTRIBUTES, GROUP_MODERATE_CONTENT_ATTRIBUTES)
+  clearFields(INCLUDE_MODERATE_MEMBERS_ATTRIBUTES, GROUP_MODERATE_MEMBERS_ATTRIBUTES)
   outputCSV.writerow({'email': groupEmail,
                       'id': groupId,
-                      'name': groupName,
-                      'description': groupDescription,
-                      'JSON-settings': row})
+                      'JSON-settings': json.dumps(row, ensure_ascii=False, sort_keys=True)})
 
 inputFile.close()
 outputFile.close()
