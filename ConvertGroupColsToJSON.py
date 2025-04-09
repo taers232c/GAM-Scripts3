@@ -81,8 +81,8 @@ GROUP_MODERATE_MEMBERS_ATTRIBUTES = [
 
 def includeFields(include, fields):
   if not include:
-    for field in fields:
-      row.pop(field, None)
+    for ifield in fields:
+      row.pop(ifield, None)
 
 with open(sys.argv[1], 'r', encoding='utf-8') as inputFile:
   with open(sys.argv[2], 'w', encoding='utf-8', newline='') as outputFile:
@@ -99,6 +99,11 @@ with open(sys.argv[1], 'r', encoding='utf-8') as inputFile:
       includeFields(INCLUDE_ASSIST_CONTENT_ATTRIBUTES, GROUP_ASSIST_CONTENT_ATTRIBUTES)
       includeFields(INCLUDE_MODERATE_CONTENT_ATTRIBUTES, GROUP_MODERATE_CONTENT_ATTRIBUTES)
       includeFields(INCLUDE_MODERATE_MEMBERS_ATTRIBUTES, GROUP_MODERATE_MEMBERS_ATTRIBUTES)
+      for field, value in iter(row.items()):
+        if value == 'TRUE':
+          row[field] = 'true'
+        elif value == 'FALSE':
+          row[field] = 'false'
       outputCSV.writerow({'email': groupEmail,
                           'id': groupId,
                           'JSON-settings': json.dumps(row, ensure_ascii=False, sort_keys=True)})
