@@ -3,9 +3,6 @@
 # Purpose: Show browser extension information
 # See: https://cloud.google.com/blog/products/chrome-enterprise/enhanced-extension-reporting-with-chrome-browsers-takeout-api
 #
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: MAX_BROWSERS_TO_PROCESS, MAX_ITEMS_PER_LIST, DESIRED_COLUMN_ORDER, SORT_COLUMN, SEPARATOR
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

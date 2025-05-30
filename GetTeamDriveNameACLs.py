@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 # Purpose: Get ACLs for Team Drives, add Team Drive name (and optional additional fields)  to row
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set ONE_ACL_PER_ROW,ADDITIONAL_TEAM_DRIVE_FIELDS as desired
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

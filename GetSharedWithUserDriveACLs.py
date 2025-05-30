@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all drive file ACLs for files shared with selected users or all users in selected domains.
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set USER_LIST and DOMAIN_LIST.
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a CSV file, look up user email addresses and add Org Unit information
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DATA_EMAIL_HEADER, DATA_ORGUNIT_HEADER, USER_EMAIL_HEADER, USER_ORGUNIT_HEADER, UNKNOWN_ORGUNIT
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

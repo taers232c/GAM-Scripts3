@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 # Purpose: Get ACLs for Team Drives, expand type group ACls into the constituent type user ACLs. permission.id is deleted for the users as it is not known
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set RETAIN_GROUP_ACL_ROW as desired
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

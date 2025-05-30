@@ -2,9 +2,6 @@
 """
 # Purpose: Get all shared drive ACLs for a list of suspended users from a CSV file;
 #    the user's primary email and aliases are checked
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y

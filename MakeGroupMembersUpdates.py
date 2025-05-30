@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 # Purpose: Make a CSV that shows the changes required to update current group memberships to match desired group memberships
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set CURRENT, DESIRED and OUTPUT field names
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

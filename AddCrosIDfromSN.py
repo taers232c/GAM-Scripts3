@@ -12,9 +12,6 @@
 # An error message is generated for any serial number in CrosData.csv that is not in CrosSNIDMap.csv and the return code is 1
 #  $ gam config_csv_input_row_filter "deviceId:regex:^.+$" csv CrosDataID.csv gam update cros "~deviceId" ...
 #
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DATA_SN_HEADER
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

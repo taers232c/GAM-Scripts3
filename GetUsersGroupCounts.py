@@ -4,9 +4,6 @@
 # threshold not specified - output all users
 # threshold 0 - output all users belonging to at least 1 group
 # threshold N - output all users belonging to more than N groups
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
 #  Python 3.x.y

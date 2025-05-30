@@ -9,9 +9,6 @@
 # If a user CSV file column header matches a data CSV file column header, ".user" is appended to the
 # user column header in the output CSV file
 #
-# Note: This script can use GAM7 or Advanced GAM:
-#	https://github.com/GAM-team/GAM
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: DATA_KEY_FIELD, USER_KEY_FIELD, RETAIN_USER_KEY_FIELD, USER_APPEND_FIELDS, WRITE_UNMATCHED_DATA_ROWS
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

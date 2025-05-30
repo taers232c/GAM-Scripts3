@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 # Purpose: For a Google Drive User(s), show all shared file permissions organized into lists by type and role
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Customize: Set SHOW_USERS, SHOW_GROUPS, SHOW_DOMAINS, SHOW_ANYONES, SHOW_COUNTS, LIST_DELIMITER
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V

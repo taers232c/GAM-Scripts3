@@ -1,9 +1,6 @@
 #!/usr/bin/env python3
 """
 # Purpose: Add <DriveFilePermissionList> to a list of files/folders
-# Note: This script can use GAM7 or Advanced GAM:
-#       https://github.com/GAM-team/GAM                                                                                                                               
-#	https://github.com/taers232c/GAMADV-XTD3
 # Definitions:
 # <DriveFileACLRole> :: =commenter|editor|organizer|owner|reader|writer
 # <DriveFilePermissionScope> ::= anyone|anyonewithlink|user:<EmailAddress>|group:<EmailAddress>|domain:<DomainName>|domainwithlink:<DomainName>
