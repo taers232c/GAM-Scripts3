@@ -26,14 +26,14 @@ import sys
 DELIMITER = ' ' # character that separates list members
 
 # If you want to limit organizers to a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-DOMAIN_LIST = []
+DOMAIN_LIST = ['domain.com']
 
 INCLUDE_TYPES = {
   'user': True, # False - don't show user organizers, True - show user organizers
   'group': True, # False - don't show group organizers, True - show group organizers
   }
 
-ONE_ORGANIZER = False # False - show all organizers, True - show one organizer
+ONE_ORGANIZER = True # False - show all organizers, True - show one organizer
 SHOW_NO_ORGANIZER_DRIVES = True # False - don't show drives with no organizers, True - show drives with no organizers
 # If you're using the output to just get file lists and won't be processing ACLs, fileOrganizers will work; otherwise you only want organizers,
 INCLUDE_FILE_ORGANIZERS = False # False - do not include file organizers, True - include file organizers
