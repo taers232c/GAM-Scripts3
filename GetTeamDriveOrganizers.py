@@ -26,7 +26,7 @@ import sys
 DELIMITER = ' ' # character that separates list members
 
 # If you want to limit organizers to a specific list of domains, use the list below, e.g., DOMAIN_LIST = ['domain.com',] DOMAIN_LIST = ['domain1.com', 'domain2.com',]
-DOMAIN_LIST = ['domain.com']
+DOMAIN_LIST = []
 
 INCLUDE_TYPES = {
   'user': True, # False - don't show user organizers, True - show user organizers
