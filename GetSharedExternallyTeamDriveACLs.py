@@ -7,6 +7,8 @@
 #          You can include/exclude shares to anyone in the ouput
 #          INCLUDE_ANYONE = True: include shares to anyone in the output
 #          INCLUDE_ANYONE = False: exclude shares to anyone from the output
+#	   NON_INHERITED_ACLS_ONLY = True: exclude inherited ACLs
+#	   NON_INHERITED_ACLS_ONLY = False: include inherited ACLs
 # Customize: Set DOMAIN_LIST, EXCLUSIVE_DOMAINS, INCLUDE_ANYONE, NON_INHERITED_ACLS_ONLY
 # Python: Use python or python3 below as appropriate to your system; verify that you have version 3
 #  $ python -V   or   python3 -V
@@ -27,7 +29,14 @@
 #    that shows the organizers for each Team Drive
 #  $ python3 GetTeamDriveOrganizers.py TeamDriveACLs.csv TeamDrives.csv TeamDriveOrganizers.csv
 # 5: Get ACLs for all team drive files
-#  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype
+#  $ You can have GAM do some pre-filtering
+#  $ EXCLUSIVE_DOMAINS = True: You're interested only in domains not in DOMAIN_LIST which would typically be your internal domains
+#    Add the following clause to the command listing the domains in DOMAIN_LIST: pm not domainlist domain1.com,domain2.com em
+#  $ EXCLUSIVE_DOMAINS = False: You're interested only in domains in DOMAIN_LIST which would typically be external domains
+#    Add the following clause to the command listing the domains in DOMAIN_LIST: pm domainlist domain1.com,domain2.com em
+#  $ INCLUDE_ANYONE = True
+#    Add the following clause to the command: pm type anyone em
+#  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype <pm clauses> pmfilter
 # 6: Go to step 11
 # Selected Team Drives
 # 7: If you want Team Drives for a specific set of organizers, replace <UserTypeEntity> with your user selection in the command below
@@ -37,7 +46,14 @@
 # 9: Delete duplicate Team Drives (some may have multiple organizers).
 #  $ python3 DeleteDuplicateRows.py ./AllTeamDrives.csv ./TeamDrives.csv
 # 10: Get ACLs for all team drive files
-#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype
+#  $ You can have GAM do some pre-filtering
+#  $ EXCLUSIVE_DOMAINS = True: You're interested only in domains not in DOMAIN_LIST which would typically be your internal domains
+#    Add the following clause to the command listing the domains in DOMAIN_LIST: pm not domainlist domain1.com,domain2.com em
+#  $ EXCLUSIVE_DOMAINS = False: You're interested only in domains in DOMAIN_LIST which would typically be external domains
+#    Add the following clause to the command listing the domains in DOMAIN_LIST: pm domainlist domain1.com,domain2.com em
+#  $ INCLUDE_ANYONE = True
+#    Add the following clause to the command: pm type anyone em
+#  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype <pm clauses> pmfilter
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,mimeType,permissionId,role,type,emailAddress,domain"
 #    that lists the driveFileIds and permissionIds for all ACLs except those from the specified domains.
