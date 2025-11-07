@@ -36,6 +36,8 @@
 #    Add the following clause to the command listing the domains in DOMAIN_LIST: pm domainlist domain1.com,domain2.com em
 #  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
+#  $ NON_INHERITED_ACLS_ONLY = True
+#    Add the following clause to the command: pm inherited false em
 #  $ gam config csv_input_row_filter "organizers:regex:^.+$" redirect csv ./filelistperms.csv multiprocess csv ./TeamDriveOrganizers.csv gam user "~organizers" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype <pm clauses> pmfilter
 # 6: Go to step 11
 # Selected Team Drives
@@ -53,6 +55,8 @@
 #    Add the following clause to the command listing the domains in DOMAIN_LIST: pm domainlist domain1.com,domain2.com em
 #  $ INCLUDE_ANYONE = True
 #    Add the following clause to the command: pm type anyone em
+#  $ NON_INHERITED_ACLS_ONLY = True
+#    Add the following clause to the command: pm inherited false em
 #  $ gam redirect csv ./filelistperms.csv multiprocess csv ./TeamDrives.csv gam user "~User" print filelist select teamdriveid "~id" fields teamdriveid,id,name,permissions,mimetype <pm clauses> pmfilter
 # Common code
 # 11: From that list of ACLs, output a CSV file with headers "Owner,teamDriveId,teamDriveName,driveFileId,driveFileTitle,mimeType,permissionId,role,type,emailAddress,domain"
