@@ -10,7 +10,7 @@
 #  $ gam config csv_output_header_filter From redirect csv ./Froms.csv <UserTypeEntity> print messages query "{in:inbox OR has:userlabels}"
 #      See: https://support.google.com/mail/answer/7190 for additional query options
 # 2: From that list of message Froms, output a CSV file with headers "From,Count" that shows the
-#    number of messages per from address srted from most to least
+#    number of messages per from address sorted from most to least
 #  $ python3 CountFroms.py ./Froms.csv ./FromCounts.csv
 """
 
