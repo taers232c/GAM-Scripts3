@@ -15,10 +15,14 @@
 import csv
 import sys
 
-# Name of key field
-KEY_FIELD = 'key'
-# Name of value field
-VALUE_FIELD = 'value'
+# Name of input key field
+INPUT_KEY_FIELD = 'key'
+# Name of input value field
+INPUT_VALUE_FIELD = 'value'
+# Name of output key field
+OUTPUT_KEY_FIELD = 'key'
+# Name of output value field
+OUTPUT_VALUE_FIELD = 'value'
 
 QUOTE_CHAR = '"' # Adjust as needed
 LINE_TERMINATOR = '\n' # On Windows, you probably want '\r\n'
@@ -30,20 +34,20 @@ if (len(sys.argv) > 1) and (sys.argv[1] != '-'):
 else:
   inputFile = sys.stdin
 for row in csv.DictReader(inputFile, quotechar=QUOTE_CHAR):
-  key = row[KEY_FIELD]
+  key = row[INPUT_KEY_FIELD]
   keyValues.setdefault(key, set())
-  keyValues[key].add(row[VALUE_FIELD])
+  keyValues[key].add(row[INPUT_VALUE_FIELD])
 
 if (len(sys.argv) > 2) and (sys.argv[2] != '-'):
   outputFile = open(sys.argv[2], 'w', encoding='utf-8', newline='')
 else:
   outputFile = sys.stdout
 
-outputCSV = csv.DictWriter(outputFile, [KEY_FIELD, VALUE_FIELD], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
+outputCSV = csv.DictWriter(outputFile, [OUTPUT_KEY_FIELD, OUTPUT_VALUE_FIELD], lineterminator=LINE_TERMINATOR, quotechar=QUOTE_CHAR)
 outputCSV.writeheader()
 
 for key, values in sorted(iter(keyValues.items())):
-  outputCSV.writerow({KEY_FIELD: key, VALUE_FIELD: ' '.join(values)})
+  outputCSV.writerow({OUTPUT_KEY_FIELD: key, OUTPUT_VALUE_FIELD: ' '.join(values)})
 
 inputFile.close()
 if outputFile != sys.stdout:
